@@ -3,12 +3,9 @@ const webpack = require('webpack')
     , babel = require('./babel.config')
     , {isHot, isProd} = require('./env.config')
 
-const config = env => ({
-  entry: entries(env, './main.js'),
-  output: {
-    filename: 'bundle.js',
-    path: `${__dirname}/public`,
-  },
+const config = env => (input, output) => ({
+  entry: entries(env, input),
+  output,
   devtool: 'source-map',
   resolve: {
     extensions: [ '.jsx', '.js', '.json' ],
@@ -55,7 +52,7 @@ const plugins = env => isHot(env) ? [
 
 function devServer(env) {
   if (isProd(env)) return
-  const {FIREBASE_SERVE_URL} = env  
+  const {FIREBASE_SERVE_URL} = env
   return {
     hot: true,
     proxy: FIREBASE_SERVE_URL && {
@@ -64,4 +61,21 @@ function devServer(env) {
   }
 }
 
-module.exports = config(process.env)
+const conf = config(process.env)
+
+module.exports = [
+  conf('./main.js', {
+    filename: 'bundle.js',
+    path: `${__dirname}/build/public`,
+  }),
+
+  conf('./background.js', {
+    filename: 'background.js',
+    path: `${__dirname}/build/extension`,
+  }),
+
+  conf('./contentScript.js', {
+    filename: 'contentScript.js',
+    path: `${__dirname}/build/extension`,
+  }),
+]
