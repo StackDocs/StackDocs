@@ -70,12 +70,12 @@ module.exports = [
   }),
 
   conf('./chrome/src/background.js', {
-    filename: 'background.js',
+    filename: 'background.bundle.js',
     path: `${__dirname}/chrome/build`,
   }),
 
   conf('./chrome/src/contentScript.js', {
-    filename: 'contentScript.js',
+    filename: 'contentScript.bundle.js',
     path: `${__dirname}/chrome/build`,
   }),
 ]
