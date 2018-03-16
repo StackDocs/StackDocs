@@ -1,3 +1,12 @@
+# FOR CHROMELIGHTS:
+
+```
+npm run build
+npm start
+```
+
+
+
 # Get started:
 
 ```

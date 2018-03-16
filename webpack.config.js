@@ -64,18 +64,18 @@ function devServer(env) {
 const conf = config(process.env)
 
 module.exports = [
-  conf('./main.js', {
+  conf('./client/index.js', {
     filename: 'bundle.js',
-    path: `${__dirname}/build/public`,
+    path: `${__dirname}/public`,
   }),
 
-  conf('./background.js', {
-    filename: 'background.js',
-    path: `${__dirname}/build/extension`,
+  conf('./chrome/src/background.js', {
+    filename: 'background.bundle.js',
+    path: `${__dirname}/chrome/build`,
   }),
 
-  conf('./contentScript.js', {
-    filename: 'contentScript.js',
-    path: `${__dirname}/build/extension`,
+  conf('./chrome/src/contentScript.js', {
+    filename: 'contentScript.bundle.js',
+    path: `${__dirname}/chrome/build`,
   }),
 ]
