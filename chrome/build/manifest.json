@@ -1,0 +1,28 @@
+{
+  "name": "ChromeLights",
+  "description" : "Base Level Extension",
+  "version": "0.1",
+  "manifest_version": 2,
+  "page_action": {
+    "default_icon": "placeholder-icon.png",
+    "default_title": "ChromeLights"
+  },
+  "background": {
+    "scripts": ["background.bundle.js"],
+    "persistent": false
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://stackoverflow.com/*", "http://docs.sequelizejs.com/"],
+      "match_about_blank": true,
+      "css": ["style.css"],
+      "js": ["contentScript.bundle.js"]
+      }
+    ],
+    "permissions": [
+      "activeTab",
+      "tabs",
+      "storage"
+    ]
+}

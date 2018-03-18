@@ -74,7 +74,7 @@ module.exports = [
     path: `${__dirname}/chrome/build`,
   }),
 
-  conf('./chrome/src/contentScript.js', {
+  conf('./chrome/src/index.js', {
     filename: 'contentScript.bundle.js',
     path: `${__dirname}/chrome/build`,
   }),
