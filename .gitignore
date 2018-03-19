@@ -8,3 +8,8 @@ functions/node_modules
 public/bundle.js
 public/bundle.js.map
 functions/lib.js
+
+chrome/build/background.bundle.js
+chrome/build/background.bundle.js.map
+chrome/build/contentScript.bundle.js
+chrome/build/contentScript.bundle.js.map
