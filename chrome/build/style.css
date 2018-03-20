@@ -101,3 +101,24 @@ box-shadow:-15px 0 50px rgba(0,0,0,0.15);
   background-color: rgb(52, 96, 207);
   margin: auto;
 }
+
+
+
+/****************************************************
+*                                                   *
+*                   highlights                      *
+*                                                   *
+*****************************************************/
+
+
+.chromelights-highlights {
+  cursor: pointer;
+  background-color: rgb(221, 221, 221);
+  transition: background-color 0.3s;
+}
+
+.chromelights-highlights:hover {
+  background-color: yellow;
+  transition: background-color 0.3s;
+}
+

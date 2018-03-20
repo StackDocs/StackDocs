@@ -11,7 +11,7 @@ const findDomPath = (el) => {
   // }
 
   const domPath = unique(currentNode);
-  console.log({domPath});
+  console.log('unique: ', {domPath});
 
   return domPath;
 };
