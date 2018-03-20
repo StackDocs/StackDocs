@@ -29,8 +29,8 @@ function toggleSidebar() {
 }
 
 //this is just hardcoded at the moment, for testing purposes
-const pathOne = ["HTML", "BODY", "DIV", "DIV", "DIV", "PRE", "CODE", "CODE", "SPAN"]
-const str1 = 'pool';
+const pathOne = '#answer-27664932 > .post-layout > .answercell > .post-text > :nth-child(2) > code';
+const str1 = 'git';
 
 findToHighlight(pathOne, str1);
 
