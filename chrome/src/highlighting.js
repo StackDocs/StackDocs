@@ -1,40 +1,20 @@
 //This function finds the path to the highlighted node (bottom-up)
+import unique from 'unique-selector';
 
 const findDomPath = (el) => {
   let currentNode = el || window.getSelection().anchorNode.parentElement;
-  let domPath = [];
+  // let domPath = [];
 
-  while (currentNode) {
-    domPath.unshift(currentNode.tagName);
-    currentNode = currentNode.parentElement;
-  }
+  // while (currentNode) {
+  //   domPath.unshift(currentNode.tagName);
+  //   currentNode = currentNode.parentElement;
+  // }
+
+  const domPath = unique(currentNode);
+  console.log({domPath});
 
   return domPath;
 };
-
-/*
-  We might need this function if the word we are looking to highlight occurs
-  more than once in the same HTML element, but the function currently doesn't work
-*/
-
-
-// const findOccurrenceNum = (path, str) => {
-//   let occurrences = [];
-//   const selector = path[path.length - 1];
-//   const element = document.getElementsByTagName(selector);
-
-//   for (var i = 0; i < element.length; i++) {
-//     const elPath = findDomPath(element[i]);
-//     if (elPath.join() === path.join() && element[i].innerText.includes(str)) {
-//       occurrences.push(element[i].className);
-//     }
-//   }
-//   console.log({occurrences});
-//   const selectedInd = window.getSelection().baseNode;
-//   console.log({selectedInd});
-
-//   return occurrences;
-// };
 
 
 export const createHighlightedObj = () => {
@@ -62,14 +42,13 @@ export const findToHighlight = (path, str) => {
   //if the DOM element's path is the same as the path you're trying to target,
   //highlight that value
 
-  const selector = path[path.length - 1];
-  const element = document.getElementsByTagName(selector);
+  const element = document.querySelectorAll(path);
 
   for (var i = 0; i < element.length; i++) {
     const currentEl = element[i];
-    const elPath = findDomPath(currentEl);
+    const elPath = unique(currentEl);
 
-    if (element[i].innerText.includes(str) && elPath.join() === path.join()) {
+    if (element[i].innerText.includes(str) && elPath === path) {
       element[i].style['background-color'] = 'yellow';
     }
   }
