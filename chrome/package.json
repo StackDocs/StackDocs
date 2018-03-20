@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "fireview": "0.0.8",
     "mark.js": "^8.11.1",
     "unique-selector": "^0.3.6"
   }

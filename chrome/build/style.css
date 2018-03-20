@@ -102,7 +102,15 @@ box-shadow:-15px 0 50px rgba(0,0,0,0.15);
   margin: auto;
 }
 
-
+/* Body of the sidebar */
+.higlight-annotations{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(197, 213, 253);
+  margin: auto;
+}
 
 /****************************************************
 *                                                   *

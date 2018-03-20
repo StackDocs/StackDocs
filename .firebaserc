@@ -1,5 +1,6 @@
 {
   "projects": {
-    "development": "chromelights-bb54c"
+    "development": "chromelights-bb54c",
+    "test3": "chromelights-bb54c"
   }
 }
