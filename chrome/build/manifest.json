@@ -5,7 +5,7 @@
   "manifest_version": 2,
   "page_action": {
     "default_icon": "placeholder-icon.png",
-    "default_title": "ChromeLights"
+    "default_title": "ChromeLights2"
   },
   "background": {
     "scripts": ["background.bundle.js"],
@@ -14,13 +14,14 @@
 
   "content_scripts": [
     {
-      "matches": ["https://stackoverflow.com/*", "http://docs.sequelizejs.com/"],
+      "matches": ["http://docs.sequelizejs.com/*", "http://expressjs.com/*", "https://reactjs.org/*"],
       "match_about_blank": true,
       "css": ["style.css"],
       "js": ["contentScript.bundle.js"]
       }
     ],
     "permissions": [
+      "http://docs.sequelizejs.com/*",
       "activeTab",
       "tabs",
       "storage"
