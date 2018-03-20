@@ -7,5 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "mark.js": "^8.11.1",
+    "unique-selector": "^0.3.6"
+  }
 }
