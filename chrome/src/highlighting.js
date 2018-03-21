@@ -18,20 +18,21 @@ const findDomPath = (el) => {
 
 
 export const createHighlightedObj = () => {
-  const string = window.getSelection().toString();
-
+  const newString = window.getSelection().toString();
+  const url = document.location.href;
   const wholeDoc = document.documentElement.innerHTML;
   const domPath = findDomPath();
 
   const selObj  = {
-    string,
+    newString,
     wholeDoc,
     domPath,
+    url,
   };
 
-  console.log(window.getSelection());
-  console.log(selObj);
-
+  // console.log(window.getSelection());
+  // console.log(selObj);
+  return selObj;
 };
 
 //This is the function that does the final search for the element
@@ -60,4 +61,16 @@ for (var i = 0; i < elements.length; i++) {
   if (elements[i].innerText.includes('unshift')) {
     console.log('elements', elements[i]);
   }
+}
+
+export const urlEncode = url => {
+  let newUrl = url.split('');
+  for(let i = 0; i < url.length; i++){
+    if(url.slice(i,i+8) === "https://"){
+      newUrl.splice(i,8)
+    } else if(url.slice(i,i+7) === "http://"){
+      newUrl.splice(i,7)
+    }
+  }
+  return newUrl.join("")
 }
