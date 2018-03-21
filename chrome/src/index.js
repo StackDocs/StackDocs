@@ -1,3 +1,5 @@
+/*global chrome */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Mark from 'mark.js';
@@ -17,7 +19,7 @@ chrome.runtime.onMessage.addListener(function (request) {
 
 function toggleSidebar() {
   const activeHighlights = document.getElementsByClassName('activeHighlight');
-  if (activeHighlights.length) return;
+  if (activeHighlights.length > 1) return;
 
   if (!sidebarInTransition && sidebarExpanded) {
     sidebarInTransition = true;
@@ -68,17 +70,22 @@ markInstance2.mark(str2, {
 document.addEventListener('mouseup', createHighlightedObj);
 
 const highlightedElements = document.getElementsByClassName('chromelights-highlights');
+
 for (let i = 0; i < highlightedElements.length; i++) {
   highlightedElements[i].addEventListener('click', (event) => {
     console.log(event.target.innerText);
-    toggleSidebar();
+    const self = highlightedElements[i];
 
     const alreadyActive = document.getElementsByClassName('activeHighlight');
 
-    for (let j = 0; j < alreadyActive.length; j++) {
-      alreadyActive[j].classList.remove('activeHighlight');
-    }
-
     highlightedElements[i].classList.toggle('activeHighlight');
+
+    toggleSidebar();
+
+    for (let j = 0; j < alreadyActive.length; j++) {
+      if (alreadyActive[j] !== self) {
+        alreadyActive[j].classList.remove('activeHighlight');
+      }
+    }
   });
 }
