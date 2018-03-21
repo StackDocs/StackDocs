@@ -4,7 +4,7 @@ import Mark from 'mark.js';
 
 import Sidebar from '~/chrome/Sidebar';
 
-import { findToHighlight, createHighlightedObj } from './highlighting';
+import { createHighlightedObj } from './highlighting';
 
 let sidebarExpanded = false;
 let sidebarInTransition = false;
@@ -16,6 +16,9 @@ chrome.runtime.onMessage.addListener(function (request) {
 });
 
 function toggleSidebar() {
+  const activeHighlights = document.getElementsByClassName('activeHighlight');
+  if (activeHighlights.length) return;
+
   if (!sidebarInTransition && sidebarExpanded) {
     sidebarInTransition = true;
     const sidebar = document.getElementById('chromelights-sidebar');
@@ -41,21 +44,41 @@ function toggleSidebar() {
 
 //this is just hardcoded at the moment, for testing purposes
 const pathOne = '.manual-user-index > :nth-child(5)';
-const str1 = 'git';
+const pathTwo = '#example-usage';
 
-// findToHighlight(pathOne, str1);
+const str1 = 'Sequelize is a promise-based ORM for Node.js v4 and up. It supports the dialects PostgreSQL, MySQL, SQLite and MSSQL and features solid transaction support, relations, read replication and more.';
+const str2 = 'Example Usage';
 
 const markInstance = new Mark(pathOne);
 console.log('hard coded pathOne: ', pathOne);
-markInstance.mark('Sequelize is a promise-based ORM for Node.js v4 and up. It supports the dialects PostgreSQL, MySQL, SQLite and MSSQL and features solid transaction support, relations, read replication and more.', { acrossElements: true, separateWordSearch: false, className: 'chromelights-highlights'});
+markInstance.mark(str1, {
+  acrossElements: true,
+  separateWordSearch: false,
+  className: 'chromelights-highlights'
+});
 
+const markInstance2 = new Mark(pathTwo);
+
+markInstance2.mark(str2, {
+  acrossElements: true,
+  separateWordSearch: false,
+  className: 'chromelights-highlights'
+});
 
 document.addEventListener('mouseup', createHighlightedObj);
 
 const highlightedElements = document.getElementsByClassName('chromelights-highlights');
 for (let i = 0; i < highlightedElements.length; i++) {
-  highlightedElements[i].addEventListener('click', () => {
-    console.log('You clicked highlighted text!');
+  highlightedElements[i].addEventListener('click', (event) => {
+    console.log(event.target.innerText);
+    toggleSidebar();
+
+    const alreadyActive = document.getElementsByClassName('activeHighlight');
+
+    for (let j = 0; j < alreadyActive.length; j++) {
+      alreadyActive[j].classList.remove('activeHighlight');
+    }
+
+    highlightedElements[i].classList.toggle('activeHighlight');
   });
 }
-
