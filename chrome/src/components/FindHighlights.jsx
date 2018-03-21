@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { firestore } from '~/fire';
 import ReactDOM from 'react-dom';
-import { findToHighlight, urlEncode } from '../highlighting';
+import { urlEncode } from '../highlighting';
 
 //Firestore
 const Highlights = firestore.collection('Highlights');

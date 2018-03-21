@@ -3,7 +3,6 @@ import { firestore } from "~/fire";
 import ReactDOM from "react-dom";
 import {
   createHighlightedObj,
-  findToHighlight,
   urlEncode
 } from "../highlighting";
 
@@ -87,7 +86,3 @@ export default class CreateHighlights extends Component {
   }
 }
 
-
-// export const setStateHighlight = (highlightText) => {
-//   this.setState({ highlightText })
-// }
