@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './src/components/header';
+import Header from './src/components/Header';
 import HighlightAnnotations from './src/containers/HighlightAnnotations';
 
 const App = () => {
