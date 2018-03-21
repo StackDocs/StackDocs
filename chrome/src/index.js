@@ -30,6 +30,10 @@ function toggleSidebar() {
     sidebar.parentNode.removeChild(sidebar);
     sidebarInTransition = false;
     }, 500);
+
+    const clickedHighlights = document.getElementsByClassName('activeHighlight');
+    clickedHighlights[0].classList.remove('activeHighlight');
+
   } else if (!sidebarInTransition) {
     sidebarInTransition = true;
     const sidebar = document.createElement('div');
