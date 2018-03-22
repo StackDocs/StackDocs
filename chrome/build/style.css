@@ -125,6 +125,12 @@ box-shadow:-15px 0 50px rgba(0,0,0,0.15);
   transition: background-color 0.3s;
 }
 
+.activeHighlight {
+  cursor: pointer;
+  background-color: yellow;
+  transition: background-color 0.3s;
+}
+
 .chromelights-highlights:hover {
   background-color: yellow;
   transition: background-color 0.3s;
