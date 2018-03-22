@@ -78,4 +78,8 @@ module.exports = [
     filename: 'contentScript.bundle.js',
     path: `${__dirname}/chrome/build`,
   }),
+  conf('./chrome/src/options.js', {
+    filename: 'options.bundle.js',
+    path: `${__dirname}/chrome/build`,
+  }),
 ]

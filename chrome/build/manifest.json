@@ -18,6 +18,7 @@
     "default_title": "ChromeLights2",
     "default_popup": "credentials.html"
   },
+  "options_page": "options.html",
   "background": {
     "scripts": ["background.bundle.js"],
     "persistent": false
@@ -38,6 +39,6 @@
       "storage",
       "identity"
     ],
-    "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'"
+    "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://apis.google.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'"
 }
 
