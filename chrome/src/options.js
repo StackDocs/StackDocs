@@ -5,6 +5,6 @@ import firebase, {auth} from '~/fire';
 const google = new firebase.auth.GoogleAuthProvider;
 
 auth.onAuthStateChanged(user => {
-  if (user) return console.log(user.uid);
+  if (user) return console.log(user);
   auth.signInWithPopup(google);
 })

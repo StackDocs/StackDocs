@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "05581b5afed3340aa920"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "73cbafd687c3e0ba2a31"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -740,7 +740,7 @@ console.log('hello');
 var google = new __WEBPACK_IMPORTED_MODULE_0__fire__["b" /* default */].auth.GoogleAuthProvider();
 
 __WEBPACK_IMPORTED_MODULE_0__fire__["a" /* auth */].onAuthStateChanged(function (user) {
-  if (user) return console.log(user.uid);
+  if (user) return console.log(user);
   __WEBPACK_IMPORTED_MODULE_0__fire__["a" /* auth */].signInWithPopup(google);
 });
 ;

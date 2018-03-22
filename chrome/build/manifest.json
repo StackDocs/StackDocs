@@ -15,8 +15,7 @@
   },
   "page_action": {
     "default_icon": "placeholder-icon.png",
-    "default_title": "ChromeLights2",
-    "default_popup": "credentials.html"
+    "default_title": "ChromeLights2"
   },
   "options_page": "options.html",
   "background": {
