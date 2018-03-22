@@ -5,7 +5,10 @@ import HighlightAnnotations from './src/containers/HighlightAnnotations';
 import AskOrAnnotate from './src/components/AskOrAnnotate';
 import FindHighlights from './src/components/FindHighlights';
 import CreateHighlights from './src/components/CreateHighlights';
-
+import shadowCSS from './src/shadow.css';
+console.log('SHADOW CSS', shadowCSS);
+import shadowCSS2 from './src/shadowCSS';
+console.log('SHADOW CSS 2', shadowCSS2);
 // const styles = `
 // * {
 //   padding: 0;
@@ -130,7 +133,6 @@ import CreateHighlights from './src/components/CreateHighlights';
 // *                                                   *
 // *****************************************************/
 
-
 // .chromelights-highlights {
 //   cursor: pointer;
 //   background-color: rgb(221, 221, 221);
@@ -150,7 +152,6 @@ import CreateHighlights from './src/components/CreateHighlights';
 
 // `;
 
-
 export default class Sidebar extends Component {
   constructor(props) {
     super(props);
@@ -169,10 +170,9 @@ export default class Sidebar extends Component {
     });
   }
 
-
-//add components that are rendered depending on views here:
-//to redirect switch views from your component pass the setView as props
-//and change the view in your component's button, form etc.
+  //add components that are rendered depending on views here:
+  //to redirect switch views from your component pass the setView as props
+  //and change the view in your component's button, form etc.
 
   selectComponents() {
     switch (this.state.view) {
@@ -199,23 +199,19 @@ export default class Sidebar extends Component {
     console.log('state: ', this.state);
   }
 
+  //components that will always show got here in the render
+  //components that will be only rendered in certain views
+  //go above in the selectComponents functions' switch statement
 
-//components that will always show got here in the render
-//components that will be only rendered in certain views
-//go above in the selectComponents functions' switch statement
-
-
-render() {
-  // const styles = '#chromelights-header {background-color: green}';
+  render() {
+    // const styles = '#chromelights-header {background-color: green}';
     return (
       <ShadowDOM>
-      <div>
-        <Header setView={this.setView} />
-        {this.selectComponents()}
-        <link href="styles.css" rel="stylesheet" />
-      </div>
+        <div style={shadowCSS2}>
+          <Header setView={this.setView} />
+          {this.selectComponents()}
+        </div>
       </ShadowDOM>
     );
   }
 }
-
