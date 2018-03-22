@@ -13,3 +13,5 @@ chrome/build/background.bundle.js
 chrome/build/background.bundle.js.map
 chrome/build/contentScript.bundle.js
 chrome/build/contentScript.bundle.js.map
+fire/seedHtml.json
+

@@ -1,0 +1,38 @@
+User story: A user goes to a website to highlight text and post a question. Then another use sees the question, clicks on the highlight, posts an answer and then likes it (vain). 
+Steps:
+    1. Highlighted section gets sent to database. The question has a reference to the highlight so it will be rendered when clicked. The question has a reference to the user. 
+    2. New user signs into page and highlight is rendered because it has an association to the URL. The user clicks on the highlight and sees the user and question and unique form to submit answer. Submits answer. 
+    3. Comment (should be different than question because it will be a different form and either be associated with a highlight or a question) gets added to database and rendered with question when highlight is clicked. 
+1. Highlights
+    1. unique ID
+    2. url reference (to pull on page load)
+    3. domPath
+    4. Text thats been highlighted
+2. Questions
+    1. unique ID
+    2. User ID
+    3. Highlight ID
+    4. Content
+    5. Time stamp
+    6. upvotes
+    7. downvotes
+    
+3. Comments (including answers to questions)
+    1. unique ID
+    2. User ID
+    3. Highlight ID (if annotation, otherwise null)
+    4. Question ID (if answer, otherwise null)
+    5. Content
+    6. Time stamp
+    7. upvotes
+    8. downvotes
+4. Users
+    1. uniqueID
+    2. displayName
+    3. userName
+    4. email
+    5. avatar
+    
+5. Urls
+    1. website URL
+    2. highlights
