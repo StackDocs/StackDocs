@@ -93,6 +93,8 @@ function startAuth(interactive) {
   });
 }
 
+window.startAuth = startAuth;
+
 /**
  * Starts the sign-in process.
  */
