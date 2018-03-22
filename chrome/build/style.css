@@ -13,9 +13,12 @@ width: 30%;
 background-color: white;
 z-Index: 16777271;
 box-shadow:-15px 0 50px rgba(0,0,0,0.15);
+font-family: 'Courier New', Courier, monospace
 }
 
-
+#hightlight-title {
+  color: green;
+}
 /****************************************************
 *                                                   *
 *               Sidebar Animation                   *
@@ -97,7 +100,7 @@ box-shadow:-15px 0 50px rgba(0,0,0,0.15);
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: green;
   background-color: rgb(52, 96, 207);
   margin: auto;
 }
