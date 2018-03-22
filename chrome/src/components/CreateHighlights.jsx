@@ -16,7 +16,7 @@ export default class CreateHighlights extends Component {
     super(props);
     this.state = {
       message: "",
-      highlightText: ''
+      highlightText: document.getSelection().toString()
     };
   }
 
@@ -30,24 +30,27 @@ export default class CreateHighlights extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    let { newString, wholeDoc, domPath, url } = createHighlightedObj();
-    this.setState({
-      highlightText: newString
-    })
-    let submitUrl = urlEncode(url);
-    console.log("asdfjhao;sfj", submitUrl);
+
+    const { newString, domPath } = createHighlightedObj();
+
+    const submitUrl = urlEncode(document.URL);
+
+    const userId = 'TBD';
+
+    // console.log("asdfjhao;sfj", submitUrl);
+
     let { value } = event.target;
     let newFireHL = {
       newString,
-      submitUrl,
-      domPath
+      domPath,
+      userId
     };
 
     Websites.doc(submitUrl).set({
       content: wholeDoc
     });
 
-    Highlights.add(newFireHL)
+    Highlights.add(newHighlightEntry)
       .then(newDoc => {
         console.log("added highlight:", newDoc.id, newDoc);
         return newDoc.id;
@@ -86,3 +89,16 @@ export default class CreateHighlights extends Component {
   }
 }
 
+// url: {
+//   1234234t5098: {
+//     domPath: asdofihj,
+//     url,
+//     newString,
+//     comments: {
+//       comment ids?
+//     }
+//   },
+//   20158798sadogij: {
+//     createHighlightedObj
+//   }
+// }

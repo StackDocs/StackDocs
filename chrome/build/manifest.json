@@ -1,11 +1,21 @@
+
+
 {
   "name": "ChromeLights",
   "description" : "Base Level Extension",
   "version": "0.1",
   "manifest_version": 2,
+  "oauth2": {
+    "client_id": "http://851772945859-2c935hiq3ftnpu6a87btv8fjefhunm8f.apps.googleusercontent.com/",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
   "page_action": {
     "default_icon": "placeholder-icon.png",
-    "default_title": "ChromeLights2"
+    "default_title": "ChromeLights2",
+    "default_popup": "credentials.html"
   },
   "background": {
     "scripts": ["background.bundle.js"],
@@ -24,6 +34,7 @@
       "http://docs.sequelizejs.com/*",
       "activeTab",
       "tabs",
-      "storage"
+      "storage",
+      "identity"
     ]
 }
