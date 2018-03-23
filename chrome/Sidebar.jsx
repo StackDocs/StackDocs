@@ -4,8 +4,9 @@ import Header from './src/components/Header';
 import HighlightAnnotations from './src/containers/HighlightAnnotations';
 import AskOrAnnotate from './src/components/AskOrAnnotate';
 import FindHighlights from './src/components/FindHighlights';
-import CreateHighlights from './src/components/CreateHighlights';
+import CreateEntry from './src/components/CreateEntry';
 import shadowCSS from './src/shadow.css';
+
 
 export default class Sidebar extends Component {
   constructor(props) {
@@ -37,8 +38,8 @@ export default class Sidebar extends Component {
         return <HighlightAnnotations />;
       case 'askOrAnnotate':
         return <AskOrAnnotate selectEntryType={this.selectEntryType} />;
-      case 'submission':
-        return <CreateHighlights />;
+      case 'createEntry':
+        return <CreateEntry currentEntryType={this.state.currentEntryType} />;
       default:
         return <HighlightAnnotations />;
     }
