@@ -4,8 +4,6 @@ const chance = require('chance')(123);
 const toonAvatar = require('cartoon-avatar');
 const Promise = require('bluebird');
 
-
-
 // Initialize firebase-admin.
 admin.initializeApp({
   "apiKey": "AIzaSyAKaRAd1hVazZ242hd9_u3TPEBDN8AzamQ",
@@ -17,7 +15,6 @@ admin.initializeApp({
 });
 
 const firestore = admin.firestore()
-
 const urlPages = firestore.collection("urlPages");
   
 // Import seeds.
@@ -41,19 +38,6 @@ const urlPages = firestore.collection("urlPages");
 // });
 
 
-// const obj = {
-//     comments : [{},{},{}],
-//     content : "Unlike Tommy I actually know how hooks work. Its a hook the happens before something is destroyed :D",
-//     date: new.Date(),
-//     downVote : 2,
-//     highlight: "beforeDestroy Hooks",
-//     title: "What is this?",
-//     upVote: 99,
-//     user: "Glen Adams"
-// }
-
-
-
 // In order of association 
 // const numUrlPages = 5;  // urlPages has many highlights
 // const numHighlights = 5;  // highlight has many annotations and has many questions
@@ -69,7 +53,6 @@ const manualUrlPages = [
     "en.wikipedia.org/wiki/Dog",
     "en.wikipedia.org/wiki/Zebra"
 ]
-
 // const addUrlPage = manualUrlPages.map((url, i) => seed.doc(url,{ hightlights: []}))
 
 
@@ -83,7 +66,6 @@ const manualUrlPages = [
 // });
 
 
-const emails = chance.unique(chance.email, numUsers);
 
 // Add a new document with a generated id.
 // var addDoc = db.collection('cities').add({
@@ -94,6 +76,7 @@ const emails = chance.unique(chance.email, numUsers);
 // });
 
 
+const emails = chance.unique(chance.email, numUsers);
 
 function doTimes (n, fn) {
   const results = [];
@@ -102,7 +85,6 @@ function doTimes (n, fn) {
   }
   return results;
 }
-
 
 function randDate(){
     let newDate = new Date()
@@ -121,19 +103,6 @@ function randPhoto (gender) {
   });
   return toonAvatar.generate_avatar({ gender: gender, id: id });
 }
-
-// function randHighlight (allUrlPages) {
-//     const url = chance.pick(allUrlPages);
-//     return seed.doc("auto_id",{
-//         userName: user.userName,
-//         urlPage: url.id,
-//         domPath: randContent(),
-//         date: randDate(),
-//         upVote: Math.floor(Math.random() * 100),
-//         downVotes: Math.floor(Math.random() * 100)
-//       })
-// }
-
 
 function randTitle () {
   const numWords = chance.natural({
@@ -217,9 +186,9 @@ function generateComments(allEntries){
   return users;
 }
 
-function fetchHighlightsByUrl(url){
+async function fetchHighlightsByUrl(url){
   const hlArr = [];
-  urlPages.doc(url).collection('Highlights').get()
+  await urlPages.doc(url).collection('Highlights').get()
     .then(querySnapshot => {
       querySnapshot.forEach(highlight => {
         hlArr.push(highlight.data());
@@ -229,22 +198,34 @@ function fetchHighlightsByUrl(url){
     return hlArr;
 }
 
-let allHighlights = [];
-
-
-
 seed = () => {
   const allUsers = generateUsers()
   let allHighlights = [];
-  manualUrlPages.forEach(url => {
-    let hlArr = fetchHighlightsByUrl(url)
-    allHighlights = [...allHighlights,...hlArr]
+  
+  manualUrlPages.forEach( async url => {
+    let hlArr = await fetchHighlightsByUrl(url)
+    // console.log(hlArr)
+    allHighlights.concat(hlArr)
+    console.log(allHighlights,"in the loop")
   })
   // const entries = generateEntries(allUsers, allHighlights)
   // console.log("allEntries", entries)
   console.log("allHighlights", allHighlights)
-  console.log("allUsers", allUsers)
-
+  // console.log("allUsers", allUsers)
 }
 
 seed();
+
+
+
+// function randHighlight (allUrlPages) {
+//     const url = chance.pick(allUrlPages);
+//     return seed.doc("auto_id",{
+//         userName: user.userName,
+//         urlPage: url.id,
+//         domPath: randContent(),
+//         date: randDate(),
+//         upVote: Math.floor(Math.random() * 100),
+//         downVotes: Math.floor(Math.random() * 100)
+//       })
+// }
