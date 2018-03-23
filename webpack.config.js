@@ -40,8 +40,8 @@ const config = env => (input, output) => ({
 
 const entries = (env, entry) =>
   isHot(env)
-    ? ['react-hot-loader/patch', entry]
-    : entry
+    ? ['react-hot-loader/patch', 'babel-polyfill', entry]
+    : ['babel-polyfill', entry]
 
 const plugins = env => isHot(env) ? [
   new webpack.HotModuleReplacementPlugin,  // Enable HMR globally

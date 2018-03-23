@@ -31,9 +31,9 @@ export default class Sidebar extends Component {
   selectComponents() {
     switch (this.state.view) {
       case 'login':
-        return <HighlightAnnotations />;
+        return <CreateHighlights />;
       case 'home':
-        return <HighlightAnnotations />;
+        return <CreateHighlights />;
       case 'askOrAnnotate':
         return <AskOrAnnotate selectEntryType={this.selectEntryType} />;
       case 'submission':
