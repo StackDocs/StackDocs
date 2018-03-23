@@ -13,11 +13,15 @@ export default class Interactive extends Component {
     const { downVote, upVote, comments } = this.props;
     return (
       <div>
-        <ThumbsUp />
-        <ThumbsDown />
+        <ThumbsUp onClick={() => console.log('thumbs up!')}/>
+        {upVote}
+        <ThumbsDown onClick={() => console.log('thumbs down !')}/>
+        {downVote}
         <Comment />
+        {comments.length}
 
       </div>
     );
   }
 }
+
