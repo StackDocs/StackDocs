@@ -11,6 +11,8 @@ import { createHighlightedObj } from './highlighting';
 let sidebarExpanded = false;
 let sidebarInTransition = false;
 
+console.log('localSTORAGE', localStorage);
+
 chrome.runtime.onMessage.addListener(function (request) {
   if (request.callFunction === 'toggleSidebar') {
     toggleSidebar();

@@ -5,6 +5,11 @@ import firebase, {auth} from '~/fire';
 const google = new firebase.auth.GoogleAuthProvider;
 
 auth.onAuthStateChanged(user => {
-  if (user) return console.log(user);
+  if (user) {
+    const userName = user.displayName;
+    const userId = user.uid;
+    localStorage["userId"] = userId;
+    return console.log(user);
+  }
   auth.signInWithPopup(google);
-})
+});

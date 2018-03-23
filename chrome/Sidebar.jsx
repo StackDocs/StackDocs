@@ -4,13 +4,15 @@ import HighlightAnnotations from './src/containers/HighlightAnnotations';
 import AskOrAnnotate from './src/components/AskOrAnnotate';
 import FindHighlights from './src/components/FindHighlights';
 import CreateHighlights from './src/components/CreateHighlights';
+import Login from './src/components/Login';
 
 export default class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'home',
-      currentEntryType: ''
+      view: 'login',
+      currentEntryType: '',
+      user: ''
     };
 
     this.setView = this.setView.bind(this);
@@ -31,7 +33,7 @@ export default class Sidebar extends Component {
   selectComponents() {
     switch (this.state.view) {
       case 'login':
-        return <HighlightAnnotations />;
+        return <Login />;
       case 'home':
         return <HighlightAnnotations />;
       case 'askOrAnnotate':
