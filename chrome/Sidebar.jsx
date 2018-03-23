@@ -2,19 +2,16 @@ import React from 'react';
 import Header from './src/components/Header';
 import HighlightAnnotations from './src/containers/HighlightAnnotations';
 import FindHighlights from './src/components/FindHighlights';
-import CreateHighlights from './src/components/CreateHighlights';
+import HighlightDev from './src/containers/HighlightDev';
 
 const App = () => {
   return (
   <div>
     <Header />
-    <CreateHighlights />
-    <HighlightAnnotations />
+    <HighlightDev />
     </div>
   )
 }
 
 
 export default App
-
-// <FindHighlights />

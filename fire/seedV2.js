@@ -1,37 +1,43 @@
 const admin = require("firebase-admin");
 seed = require('./frans-firestore-seed');
+const chance = require('chance')(123);
+const toonAvatar = require('cartoon-avatar');
 
- 
+
+
 // Initialize firebase-admin.
 admin.initializeApp({
-    "apiKey": "AIzaSyAKaRAd1hVazZ242hd9_u3TPEBDN8AzamQ",
-    "databaseURL": "https://chromelights-bb54c.firebaseio.com",
-    "storageBucket": "chromelights-bb54c.appspot.com",
-    "authDomain": "chromelights-bb54c.firebaseapp.com",
-    "messagingSenderId": "851772945859",
-    "projectId": "chromelights-bb54c"
+  "apiKey": "AIzaSyAKaRAd1hVazZ242hd9_u3TPEBDN8AzamQ",
+  "databaseURL": "https://chromelights-bb54c.firebaseio.com",
+  "storageBucket": "chromelights-bb54c.appspot.com",
+  "authDomain": "chromelights-bb54c.firebaseapp.com",
+  "messagingSenderId": "851772945859",
+  "projectId": "chromelights-bb54c"
 });
-  
+
+const firestore = admin.firestore()
+
+const urlPages = firestore.collection("urlPages");
   
 // Import seeds.
-let messagesCollection = seed.collection("messages", [
-    seed.doc("threesCompany", {
-        content: "Hello firestore-seed.",
-        created: new Date(),
-    }),
-    seed.doc("happyDays", {
-        content: "Good bye firestore-seed.",
-        created: new Date(),
-    })
-]);
+// let messagesCollection = seed.collection("messages", [
+//     seed.doc("threesCompany", {
+//         content: "Hello firestore-seed.",
+//         created: new Date(),
+//     }),
+//     seed.doc("happyDays", {
+//         content: "Good bye firestore-seed.",
+//         created: new Date(),
+//     })
+// ]);
 
-console.log(messagesCollection)
+// console.log(messagesCollection)
 
-messagesCollection.importDocuments(admin).then(() => {
-    console.log("Successfully imported documents.");
-}).catch(e => {
-    console.log("Failed to import documents: " + e);
-});
+// messagesCollection.importDocuments(admin).then(() => {
+//     console.log("Successfully imported documents.");
+// }).catch(e => {
+//     console.log("Failed to import documents: " + e);
+// });
 
 
 // const obj = {
@@ -45,10 +51,7 @@ messagesCollection.importDocuments(admin).then(() => {
 //     user: "Glen Adams"
 // }
 
-//Used this seed file for convenience. Not meant for extra credit submission.  
 
-
-const toonAvatar = require('cartoon-avatar');
 
 // In order of association 
 // const numUrlPages = 5;  // urlPages has many highlights
@@ -66,10 +69,10 @@ const manualUrlPages = [
     "en.wikipedia.org/wiki/Zebra"
 ]
 
-const addUrlPage = manualUrlPages.map((url, i) => seed.doc(url,{ hightlights: []}))
+// const addUrlPage = manualUrlPages.map((url, i) => seed.doc(url,{ hightlights: []}))
 
 
-let urlPageCollection = seed.collection("urlPages", addUrlPage);
+// let urlPageCollection = seed.collection("urlPages", addUrlPage);
 
 
 // urlPageCollection.importDocuments(admin).then(() => {
@@ -79,15 +82,15 @@ let urlPageCollection = seed.collection("urlPages", addUrlPage);
 // });
 
 
-// const emails = chance.unique(chance.email, numUsers);
+const emails = chance.unique(chance.email, numUsers);
 
 // Add a new document with a generated id.
-var addDoc = db.collection('cities').add({
-    name: 'Tokyo',
-    country: 'Japan'
-}).then(ref => {
-    console.log('Added document with ID: ', ref.id);
-});
+// var addDoc = db.collection('cities').add({
+//     name: 'Tokyo',
+//     country: 'Japan'
+// }).then(ref => {
+//     console.log('Added document with ID: ', ref.id);
+// });
 
 
 
@@ -118,17 +121,17 @@ function randPhoto (gender) {
   return toonAvatar.generate_avatar({ gender: gender, id: id });
 }
 
-function randHighlight (allUrlPages) {
-    const url = chance.pick(allUrlPages);
-    return seed.doc("auto_id",{
-        userName: user.userName,
-        urlPage: url.id,
-        domPath: randContent(),
-        date: randDate(),
-        upVote: Math.floor(Math.random() * 100),
-        downVotes: Math.floor(Math.random() * 100)
-      })
-}
+// function randHighlight (allUrlPages) {
+//     const url = chance.pick(allUrlPages);
+//     return seed.doc("auto_id",{
+//         userName: user.userName,
+//         urlPage: url.id,
+//         domPath: randContent(),
+//         date: randDate(),
+//         upVote: Math.floor(Math.random() * 100),
+//         downVotes: Math.floor(Math.random() * 100)
+//       })
+// }
 
 
 function randTitle () {
@@ -151,49 +154,52 @@ function randContent () {
     return chance.n(chance.paragraph, numPars).join(' ')
 }
 
+//sed.doc('auto_id',obj)
 function randEntry (allUsers, urlHighlights) {
   const user = chance.pick(allUsers);
-  const highlight = chance.pick(highlight);
+  const highlight = chance.pick(urlHighlights);
   const randomEntryNum = Math.floor(Math.random() * 2);
   const entryType = ["question", "annotation"][randomEntryNum];
   let firstName = chance.first({gender: gender});
   let lastName =  chance.last();
   let userName = this.lastName+randomUserNum;
-  return seed.doc('auto_id',{
+  return {
     userName: user.userName,
     highlightId: highlight.id,
     content: randContent(),
     date: randDate(),
     upVote: Math.floor(Math.random() * 100),
     downVotes: Math.floor(Math.random() * 100)
-  });
+  };
 }
 
+//sed.doc('auto_id',obj)
 function randComments (allEntries){
   const entry = chance.pick(allEntries);
-  return seed.doc("auto_id",{
+  return {
       userName: entry.userName,
       entryId: entry.id,
       content: randContent(),
       date: randDate(),
       upVote: Math.floor(Math.random() * 100),
       downVotes: Math.floor(Math.random() * 100)
-  })
+  }
 }
 
+//seed.doc(`${userName}`,obj)
 function randUser () {
   let randomUserNum = Math.floor(Math.random() * 90);
   const gender = chance.gender();
   let firstName = chance.first({gender: gender});
   let lastName =  chance.last();
   let userName = this.lastName+randomUserNum;
-  return seed.doc(`${userName}`,{
+  return {
     firstName,
     lastName,
     avatar: randPhoto(gender),
     email: emails.pop(),
     displayName: this.firstName+" "+ this.lastName,
-  });
+  };
 }
 
 function generateUsers() {
@@ -206,7 +212,7 @@ function generateEntries (users,urlHighlights) {
 }
 
 function generateComments(allEntries){
-  const comments = doTimes(numComments, randComments(allEntries));
+  const comments = doTimes(numComments, () => randComments(allEntries));
   return users;
 }
 
@@ -222,11 +228,18 @@ function fetchHighlightsByUrl(url){
     return hlArr;
 }
 
-function seed (urls) {
+seed = () => {
   const allUsers = generateUsers()
-  let allHightlights = urls.map(url => fetchHighlightsByUrl(url))
-  const entries = generateEntries(allUsers, allHighlights)
+  let allHighlights = [];
+  manualUrlPages.forEach(url => {
+    let hlArr = fetchHighlightsByUrl(url)
+    allHighlights = [...allHighlights,...hlArr]
+  })
+  // const entries = generateEntries(allUsers, allHighlights)
+  // console.log("allEntries", entries)
+  console.log("allHighlights", allHighlights)
+  console.log("allUsers", allUsers)
 
 }
 
-seed(manualUrlPages);
+seed();

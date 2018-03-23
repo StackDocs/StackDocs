@@ -36,3 +36,12 @@ Steps:
 5. Urls
     1. website URL
     2. highlights
+
+
+domPath
+".mw-parser-output > :nth-child(3)"
+newString
+"sweet, edible fruit"
+submitUrl
+"en.wikipedia.org/wiki/Apple"
+

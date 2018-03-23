@@ -9,7 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node dev",
     "build": "webpack",
-    "seed": "node fire/seed",
+    "seed": "node fire/seedV2",
     "watch-lib": "npm run build-lib -- -w",
     "build-lib": "webpack --config lib/webpack.config.js",
     "build-lib-prod": "npm run build-lib -- -p",
@@ -34,7 +34,9 @@
     "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "cartoon-avatar": "^1.0.2",
+    "chance": "^1.0.13",
     "chokidar": "^1.7.0",
     "firebase": "^4.7.0",
     "firebase-admin": "^5.11.0",
