@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Map } from 'fireview'
 import { firestore as fs } from '~/fire'
 // import HighlightedText from '../components/HighlightedText'
-import Annotations from '../components/Annotations'
+import Entry from '../components/Entry'
 import Interactive from '../components/Interactive'
 
 export default class HighlightAnnotations extends Component {
@@ -36,9 +36,8 @@ export default class HighlightAnnotations extends Component {
                         title,
                     }) => (
                         <div>
-                            <h3>{title}</h3>
-                            {console.log(typeof date)}
-                            <Annotations
+                            <Entry
+                                title={title}
                                 content={content}
                                 user={user}
                                 date="March 20, 2018"

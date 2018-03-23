@@ -15,7 +15,8 @@ export default class CreateHighlights extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: "",
+      title: '',
+      content: "",
       highlightText: ''
     };
   }
