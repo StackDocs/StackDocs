@@ -43,6 +43,7 @@
     "react-dom": "^16.1.0",
     "style-loader": "^0.20.3",
     "unique-selector": "^0.3.6",
-    "url-loader": "^1.0.1"
+    "url-loader": "^1.0.1",
+    "svg-react-loader": "^0.4.5"
   }
 }
