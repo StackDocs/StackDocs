@@ -39,6 +39,7 @@
     "minimist": "^1.2.0",
     "react": "^16.1.0",
     "react-dom": "^16.1.0",
+    "svg-react-loader": "^0.4.5",
     "unique-selector": "^0.3.6"
   }
 }
