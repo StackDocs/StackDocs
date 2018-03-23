@@ -186,28 +186,25 @@ function generateComments(allEntries){
   return users;
 }
 
-async function fetchHighlightsByUrl(url){
-  const hlArr = [];
-  await urlPages.doc(url).collection('Highlights').get()
-    .then(querySnapshot => {
-      querySnapshot.forEach(highlight => {
-        hlArr.push(highlight.data());
-      });
-    })
-    .catch(error => console.log('error: ', error));
-    return hlArr;
+async function fetchHighlightsByUrl(urls){
+  let hlArr = [];
+  urls.forEach( async url => {
+    await urlPages.doc(url).collection('Highlights').get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(highlight => {
+          hlArr.push(highlight.data());
+        });
+      })
+      .catch(error => console.log('error: ', error));
+  })
+
+  return hlArr;
 }
 
-seed = () => {
+
+seed = async () => {
   const allUsers = generateUsers()
-  let allHighlights = [];
-  
-  manualUrlPages.forEach( async url => {
-    let hlArr = await fetchHighlightsByUrl(url)
-    // console.log(hlArr)
-    allHighlights.concat(hlArr)
-    console.log(allHighlights,"in the loop")
-  })
+  const allHighlights = await fetchHighlightsByUrl(manualUrlPages)
   // const entries = generateEntries(allUsers, allHighlights)
   // console.log("allEntries", entries)
   console.log("allHighlights", allHighlights)
