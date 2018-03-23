@@ -208,6 +208,7 @@ export default class Sidebar extends Component {
     return (
       <ShadowDOM>
         <div>
+          <style type="text/css">{shadowCSS}</style>
           <Header setView={this.setView} />
           {this.selectComponents()}
         </div>
