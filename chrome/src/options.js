@@ -1,15 +1,25 @@
-console.log('hello')
+/* global chrome */
 
-import firebase, {auth} from '~/fire';
+// console.log('hello')
 
-const google = new firebase.auth.GoogleAuthProvider;
+// import firebase, {auth} from '~/fire';
 
-auth.onAuthStateChanged(user => {
-  if (user) {
-    const userName = user.displayName;
-    const userId = user.uid;
-    localStorage["userId"] = userId;
-    return console.log(user);
-  }
-  auth.signInWithRedirect(google);
-});
+// const google = new firebase.auth.GoogleAuthProvider;
+
+// export const loginWithGoogle = () => {
+//   auth.onAuthStateChanged(user => {
+//     if (user) {
+//       // const userName = user.displayName;
+//       const userId = user.uid;
+//       chrome.storage.local.set({'user': userId}, () => {
+//         console.log(user);
+//       });
+//       return;
+//     }
+//     auth.signInWithRedirect(google)
+//     .then((result) => {
+//       chrome.storage.local.set({'user': result.displayName});
+//       console.log(result);
+//     });
+//   });
+// };

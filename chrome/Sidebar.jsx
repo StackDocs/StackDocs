@@ -5,7 +5,9 @@ import HighlightAnnotations from './src/containers/HighlightAnnotations';
 import AskOrAnnotate from './src/components/AskOrAnnotate';
 import FindHighlights from './src/components/FindHighlights';
 import CreateHighlights from './src/components/CreateHighlights';
+import Login from './src/components/Login';
 import shadowCSS from './src/shadow.css';
+
 
 export default class Sidebar extends Component {
   constructor(props) {
