@@ -2,6 +2,7 @@ const admin = require("firebase-admin");
 seed = require('./frans-firestore-seed');
 const chance = require('chance')(123);
 const toonAvatar = require('cartoon-avatar');
+const Promise = require('bluebird');
 
 
 
@@ -227,6 +228,10 @@ function fetchHighlightsByUrl(url){
     .catch(error => console.log('error: ', error));
     return hlArr;
 }
+
+let allHighlights = [];
+
+
 
 seed = () => {
   const allUsers = generateUsers()
