@@ -5,10 +5,10 @@ import Mark from "mark.js";
 import { createHighlightedObj, urlEncode } from "../highlighting";
 
 //Firestore
-const Highlights = firestore.collection("Highlights");
+// const Highlights = firestore.collection("Highlights");
 const Annotations = firestore.collection("Annotations");
-const urlPages = firestore.collection("urlPages");
-const Websites = firestore.collection("Websites");
+const UrlPages = firestore.collection("UrlPages");
+// const Websites = firestore.collection("Websites");
 
 export default class CreateHighlights extends Component {
   constructor(props) {
@@ -71,11 +71,18 @@ export default class CreateHighlights extends Component {
     };
     console.log("newFireHL", newFireHL);
 
-    Websites.doc(submitUrl)
+    UrlPages.doc(submitUrl)
       .collection("newCollection")
       .add(newFireHL)
       .then(entry => console.log("added entry: ", entry))
+      .then(() => {
+        this.setState({
+          message: '',
+          highlightText: ''
+        })
+      })
       .catch(error => console.log("error: ", error));
+    this.state
   };
 
   render() {

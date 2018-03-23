@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import ShadowDOM from 'react-shadow';
 import Header from './src/components/Header';
+import { firestore } from '~/fire';
+import Mark from 'mark.js';
 import HighlightAnnotations from './src/containers/HighlightAnnotations';
 import AskOrAnnotate from './src/components/AskOrAnnotate';
-import FindHighlights from './src/components/FindHighlights';
+// import FindHighlights from './src/components/FindHighlights';
 import CreateHighlights from './src/components/CreateHighlights';
 import shadowCSS from './src/shadow.css';
+import { urlEncode } from './src/highlighting';
 
 export default class Sidebar extends Component {
   constructor(props) {
@@ -18,6 +21,12 @@ export default class Sidebar extends Component {
     this.setView = this.setView.bind(this);
     this.selectEntryType = this.selectEntryType.bind(this);
   }
+
+  componentDidMount() {
+    fetchHighlights();
+    console.log('component mounting....');
+  }
+
 
   setView(view) {
     this.setState({
@@ -70,3 +79,34 @@ export default class Sidebar extends Component {
     );
   }
 }
+
+
+const hlArr = [];
+const UrlPages = firestore.collection('UrlPages');
+
+const fetchHighlights = () => {
+  let encodedDocUrl = urlEncode(document.location.href);
+  console.log('encoded URL:', encodedDocUrl);
+  UrlPages.doc(encodedDocUrl).collection('newCollection').get()
+    .then(querySnapshot => {
+      console.log('querysnapshot: ', querySnapshot);
+      querySnapshot.forEach(highlight => {
+        console.log('highlight: ', highlight);
+        hlArr.push(highlight.data());
+      });
+      return 'next';
+    })
+    .then(() => {
+      console.log('highlight arr: ', hlArr);
+      hlArr.map(hl => {
+        console.log('in hl map', hl.domPath, hl.newString);
+        const markInstance = new Mark(hl.domPath);
+        markInstance.mark(hl.newString, {
+          acrossElements: true,
+          separateWordSearch: false,
+          className: 'chromelights-highlights'
+        });
+      });
+    })
+    .catch(error => console.log('error: ', error));
+};
