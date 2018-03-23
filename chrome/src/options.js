@@ -11,5 +11,5 @@ auth.onAuthStateChanged(user => {
     localStorage["userId"] = userId;
     return console.log(user);
   }
-  auth.signInWithPopup(google);
+  auth.signInWithRedirect(google);
 });

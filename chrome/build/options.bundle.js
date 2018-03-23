@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "944edbb9f45bdaef4b09"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "21c2b4be398acae43dc4"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -746,7 +746,7 @@ __WEBPACK_IMPORTED_MODULE_0__fire__["a" /* auth */].onAuthStateChanged(function 
     localStorage["userId"] = userId;
     return console.log(user);
   }
-  __WEBPACK_IMPORTED_MODULE_0__fire__["a" /* auth */].signInWithPopup(google);
+  __WEBPACK_IMPORTED_MODULE_0__fire__["a" /* auth */].signInWithRedirect(google);
 });
 ;
 
