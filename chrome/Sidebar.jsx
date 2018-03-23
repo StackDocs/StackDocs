@@ -7,8 +7,8 @@ import FindHighlights from './src/components/FindHighlights';
 import CreateHighlights from './src/components/CreateHighlights';
 import shadowCSS from './src/shadow.css';
 console.log('SHADOW CSS', shadowCSS);
-import shadowCSS2 from './src/shadowCSS';
-console.log('SHADOW CSS 2', shadowCSS2);
+// import shadowCSS2 from './src/shadowCSS';
+// console.log('SHADOW CSS 2', shadowCSS2);
 // const styles = `
 // * {
 //   padding: 0;
@@ -207,7 +207,7 @@ export default class Sidebar extends Component {
     // const styles = '#chromelights-header {background-color: green}';
     return (
       <ShadowDOM>
-        <div style={shadowCSS2}>
+        <div>
           <Header setView={this.setView} />
           {this.selectComponents()}
         </div>
@@ -215,3 +215,17 @@ export default class Sidebar extends Component {
     );
   }
 }
+
+//WORKAROUND
+// render() {
+//   // const styles = '#chromelights-header {background-color: green}';
+//   return (
+//     <ShadowDOM>
+//       <div style={shadowCSS2}>
+//         <Header setView={this.setView} />
+//         {this.selectComponents()}
+//       </div>
+//     </ShadowDOM>
+//   );
+// }
+// }
