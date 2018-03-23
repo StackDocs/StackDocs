@@ -1,3 +1,7 @@
+/**********************************************************************/
+/* CSS for content of the extension sidebar should go into shadow.css */
+/**********************************************************************/
+
 * {
   padding: 0;
   margin: 0;
@@ -16,9 +20,6 @@ box-shadow:-15px 0 50px rgba(0,0,0,0.15);
 font-family: 'Courier New', Courier, monospace
 }
 
-#hightlight-title {
-  color: green;
-}
 /****************************************************
 *                                                   *
 *               Sidebar Animation                   *
@@ -102,16 +103,6 @@ font-family: 'Courier New', Courier, monospace
   align-items: center;
   color: green;
   background-color: rgb(52, 96, 207);
-  margin: auto;
-}
-
-/* Body of the sidebar */
-.higlight-annotations{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgb(197, 213, 253);
   margin: auto;
 }
 

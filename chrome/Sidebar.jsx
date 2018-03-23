@@ -6,151 +6,6 @@ import AskOrAnnotate from './src/components/AskOrAnnotate';
 import FindHighlights from './src/components/FindHighlights';
 import CreateHighlights from './src/components/CreateHighlights';
 import shadowCSS from './src/shadow.css';
-console.log('SHADOW CSS', shadowCSS);
-// import shadowCSS2 from './src/shadowCSS';
-// console.log('SHADOW CSS 2', shadowCSS2);
-// const styles = `
-// * {
-//   padding: 0;
-//   margin: 0;
-// }
-
-// #chromelights-sidebar {
-// padding: 0;
-// position: fixed;
-// top: 0;
-// right: 0;
-// height: 100%;
-// width: 30%;
-// background-color: white;
-// z-Index: 16777271;
-// box-shadow:-15px 0 50px rgba(0,0,0,0.15);
-// font-family: 'Courier New', Courier, monospace
-// }
-
-// #hightlight-title {
-//   color: green;
-// }
-// /****************************************************
-// *                                                   *
-// *               Sidebar Animation                   *
-// *                                                   *
-// *****************************************************/
-
-// .animated {
-//   -webkit-animation-duration: 0.5s;
-//   animation-duration: 0.5s;
-//   -webkit-animation-fill-mode: both;
-//   animation-fill-mode: both;
-// }
-
-// @-webkit-keyframes slideInRight {
-//   from {
-//     -webkit-transform: translate3d(100%, 0, 0);
-//     transform: translate3d(100%, 0, 0);
-//     visibility: visible;
-//   }
-
-//   to {
-//     -webkit-transform: translate3d(0, 0, 0);
-//     transform: translate3d(0, 0, 0);
-//   }
-// }
-
-// @keyframes slideInRight {
-//   from {
-//     -webkit-transform: translate3d(100%, 0, 0);
-//     transform: translate3d(100%, 0, 0);
-//     visibility: visible;
-//   }
-
-//   to {
-//     -webkit-transform: translate3d(0, 0, 0);
-//     transform: translate3d(0, 0, 0);
-//   }
-// }
-
-// .slideInRight {
-//   -webkit-animation-name: slideInRight;
-//   animation-name: slideInRight;
-// }
-
-// @-webkit-keyframes slideOutRight {
-//   from {
-//     -webkit-transform: translate3d(0, 0, 0);
-//     transform: translate3d(0, 0, 0);
-//   }
-
-//   to {
-//     visibility: hidden;
-//     -webkit-transform: translate3d(100%, 0, 0);
-//     transform: translate3d(100%, 0, 0);
-//   }
-// }
-
-// @keyframes slideOutRight {
-//   from {
-//     -webkit-transform: translate3d(0, 0, 0);
-//     transform: translate3d(0, 0, 0);
-//   }
-
-//   to {
-//     visibility: hidden;
-//     -webkit-transform: translate3d(100%, 0, 0);
-//     transform: translate3d(100%, 0, 0);
-//   }
-// }
-
-// .slideOutRight {
-//   -webkit-animation-name: slideOutRight;
-//   animation-name: slideOutRight;
-// }
-
-// #chromelights-header {
-//   width: 100%;
-//   height: 60px;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   color: green;
-//   background-color: rgb(52, 96, 207);
-//   margin: auto;
-// }
-
-// /* Body of the sidebar */
-// .higlight-annotations{
-//   width: 100%;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   background-color: rgb(197, 213, 253);
-//   margin: auto;
-// }
-
-// /****************************************************
-// *                                                   *
-// *                   highlights                      *
-// *                                                   *
-// *****************************************************/
-
-// .chromelights-highlights {
-//   cursor: pointer;
-//   background-color: rgb(221, 221, 221);
-//   transition: background-color 0.3s;
-// }
-
-// .activeHighlight {
-//   cursor: pointer;
-//   background-color: yellow;
-//   transition: background-color 0.3s;
-// }
-
-// .chromelights-highlights:hover {
-//   background-color: yellow;
-//   transition: background-color 0.3s;
-// }
-
-// `;
 
 export default class Sidebar extends Component {
   constructor(props) {
@@ -204,7 +59,6 @@ export default class Sidebar extends Component {
   //go above in the selectComponents functions' switch statement
 
   render() {
-    // const styles = '#chromelights-header {background-color: green}';
     return (
       <ShadowDOM>
         <div>
@@ -216,17 +70,3 @@ export default class Sidebar extends Component {
     );
   }
 }
-
-//WORKAROUND
-// render() {
-//   // const styles = '#chromelights-header {background-color: green}';
-//   return (
-//     <ShadowDOM>
-//       <div style={shadowCSS2}>
-//         <Header setView={this.setView} />
-//         {this.selectComponents()}
-//       </div>
-//     </ShadowDOM>
-//   );
-// }
-// }
