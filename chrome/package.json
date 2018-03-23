@@ -11,6 +11,9 @@
   "dependencies": {
     "fireview": "0.0.8",
     "mark.js": "^8.11.1",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-shadow": "^16.2.0",
     "unique-selector": "^0.3.6"
   }
 }

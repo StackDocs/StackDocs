@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import ShadowDOM from 'react-shadow';
 import Header from './src/components/Header';
 import HighlightAnnotations from './src/containers/HighlightAnnotations';
 import AskOrAnnotate from './src/components/AskOrAnnotate';
 import FindHighlights from './src/components/FindHighlights';
 import CreateHighlights from './src/components/CreateHighlights';
+import shadowCSS from './src/shadow.css';
 
 export default class Sidebar extends Component {
   constructor(props) {
@@ -23,10 +25,9 @@ export default class Sidebar extends Component {
     });
   }
 
-
-//add components that are rendered depending on views here:
-//to redirect switch views from your component pass the setView as props
-//and change the view in your component's button, form etc.
+  //add components that are rendered depending on views here:
+  //to redirect switch views from your component pass the setView as props
+  //and change the view in your component's button, form etc.
 
   selectComponents() {
     switch (this.state.view) {
@@ -53,18 +54,19 @@ export default class Sidebar extends Component {
     console.log('state: ', this.state);
   }
 
-
-//components that will always show got here in the render
-//components that will be only rendered in certain views
-//go above in the selectComponents functions' switch statement
+  //components that will always show got here in the render
+  //components that will be only rendered in certain views
+  //go above in the selectComponents functions' switch statement
 
   render() {
     return (
-      <div>
-        <Header setView={this.setView} />
-        {this.selectComponents()}
-      </div>
+      <ShadowDOM>
+        <div>
+          <style type="text/css">{shadowCSS}</style>
+          <Header setView={this.setView} />
+          {this.selectComponents()}
+        </div>
+      </ShadowDOM>
     );
   }
 }
-
