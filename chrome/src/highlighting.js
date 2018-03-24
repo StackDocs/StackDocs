@@ -3,30 +3,34 @@ import unique from 'unique-selector';
 
 export const createHighlightedObj = () => {
   const newString = window.getSelection().toString();
-  const currentNode = newString.length ?
-    window.getSelection().anchorNode.parentElement : null;
+  const url = document.location.href;
+  const currentNode = newString.length
+    ? window.getSelection().anchorNode.parentElement
+    : null;
 
   const domPath = currentNode ? unique(currentNode) : null;
 
-  const selObj  = {
+  const selObj = {
     newString,
-    domPath
+    domPath,
+    url
   };
+
+  // console.log({selObj});
 
   return selObj;
 };
 
 
-// const url = document.location.href;
-
 export const urlEncode = url => {
   let newUrl = url.split('');
-  for (let i = 0; i < url.length; i++){
-    if (url.slice(i, i + 8) === 'https://'){
+  for (let i = 0; i < 9; i++) {
+    if (url.slice(i, i + 8) === 'https://') {
       newUrl.splice(i, 8);
-    } else if (url.slice(i, i + 7) === 'http://'){
+    } else if (url.slice(i, i + 7) === 'http://') {
       newUrl.splice(i, 7);
     }
   }
-  return newUrl.join('');
+  const urlUpdate = newUrl.join('');
+  return urlUpdate.split('/').join('%%%');
 };
