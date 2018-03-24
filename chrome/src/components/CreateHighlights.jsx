@@ -57,40 +57,16 @@ export default class CreateHighlights extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-<<<<<<< HEAD
-
-    const { newString, domPath } = createHighlightedObj();
-
-    const submitUrl = urlEncode(document.URL);
-
-    const userId = 'TBD';
-
-    // console.log("asdfjhao;sfj", submitUrl);
-
-    let { value } = event.target;
-    let newFireHL = {
-=======
     const { newString, domPath, url } = this.state.highlightObj;
     const submitUrl = urlEncode(url);
     const messageSubmit = this.state.message;
     const newFireHL = {
->>>>>>> master
       newString,
       domPath,
       userId
     };
     console.log("newFireHL", newFireHL);
 
-<<<<<<< HEAD
-    Websites.doc(submitUrl).set({
-      content: wholeDoc
-    });
-
-    Highlights.add(newHighlightEntry)
-      .then(newDoc => {
-        console.log("added highlight:", newDoc.id, newDoc);
-        return newDoc.id;
-=======
     UrlPages.doc(submitUrl)
       .collection("newCollection")
       .add(newFireHL)
@@ -106,7 +82,6 @@ export default class CreateHighlights extends Component {
             content: messageSubmit,
             highlightID: highlight.id
           });
->>>>>>> master
       })
       .then(() => {
         this.setState({
@@ -144,20 +119,3 @@ export default class CreateHighlights extends Component {
     );
   }
 }
-<<<<<<< HEAD
-
-// url: {
-//   1234234t5098: {
-//     domPath: asdofihj,
-//     url,
-//     newString,
-//     comments: {
-//       comment ids?
-//     }
-//   },
-//   20158798sadogij: {
-//     createHighlightedObj
-//   }
-// }
-=======
->>>>>>> master

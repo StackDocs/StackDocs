@@ -10,6 +10,7 @@ import CreateHighlights from './src/components/CreateHighlights';
 import Login from './src/components/Login';
 import shadowCSS from './src/shadow.css';
 import { urlEncode } from './src/highlighting';
+import { addHighlightIds } from './src/index.js'
 
 
 export default class Sidebar extends Component {
@@ -110,6 +111,9 @@ const fetchHighlights = () => {
           className: `chromelights-highlights ${hl[1]}`
         });
       });
+    })
+    .then(() => {
+      addHighlightIds();
     })
     .catch(error => console.log('error: ', error));
 };
