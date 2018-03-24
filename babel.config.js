@@ -8,6 +8,6 @@ const babel = module.exports = env => ({
       'stage-2',
       'react',
     ],
-    plugins: isHot(env) && ['react-hot-loader/babel']
+    plugins: isHot(env) && ['react-hot-loader/babel', 'transform-async-to-generator']
   }
 })

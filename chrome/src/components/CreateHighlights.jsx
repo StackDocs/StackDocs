@@ -1,23 +1,25 @@
 import React, { Component } from "react";
 import { firestore } from "~/fire";
 import ReactDOM from "react-dom";
-import {
-  createHighlightedObj,
-  urlEncode
-} from "../highlighting";
+import Mark from "mark.js";
+import { createHighlightedObj, urlEncode } from "../highlighting";
 
 //Firestore
-const Highlights = firestore.collection("Highlights");
+// const Highlights = firestore.collection("Highlights");
 const Annotations = firestore.collection("Annotations");
-const Websites = firestore.collection("Websites");
+const UrlPages = firestore.collection("UrlPages");
+// const Websites = firestore.collection("Websites");
 
 export default class CreateHighlights extends Component {
   constructor(props) {
     super(props);
     this.state = {
       message: "",
-      highlightText: ''
+      highlightText: "",
+      highlightObj: {},
+      markInstance: ""
     };
+    this.onHighlightClick = this.onHighlightClick.bind(this);
   }
 
   handleChange = event => {
@@ -28,46 +30,67 @@ export default class CreateHighlights extends Component {
     });
   };
 
+  async onHighlightClick(event) {
+    try {
+      event.preventDefault();
+      const highlightObj = createHighlightedObj();
+      console.log("onHighlightClick: ", highlightObj);
+      if (this.state.markInstance) this.state.markInstance.unmark();
+      console.log("DOM path", highlightObj.domPath);
+      const markInstance = await new Mark(highlightObj.domPath);
+      this.setState(
+        {
+          highlightObj,
+          markInstance,
+          highlightText: highlightObj.newString
+        },
+        () => {
+          markInstance.mark(this.state.highlightObj.newString, {
+            acrossElements: true,
+            separateWordSearch: false,
+            className: "chromelights-highlights"
+          });
+        }
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   onSubmit = event => {
     event.preventDefault();
-    let { newString, wholeDoc, domPath, url } = createHighlightedObj();
-    this.setState({
-      highlightText: newString
-    })
-    let submitUrl = urlEncode(url);
-    console.log("asdfjhao;sfj", submitUrl);
-    let { value } = event.target;
-    let newFireHL = {
+    const { newString, domPath, url } = this.state.highlightObj;
+    const submitUrl = urlEncode(url);
+    const messageSubmit = this.state.message;
+    const { value } = event.target;
+    const newFireHL = {
       newString,
       submitUrl,
+      messageSubmit,
       domPath
     };
+    console.log("newFireHL", newFireHL);
 
-    Websites.doc(submitUrl).set({
-      content: wholeDoc
-    });
-
-    Highlights.add(newFireHL)
-      .then(newDoc => {
-        console.log("added highlight:", newDoc.id, newDoc);
-        return newDoc.id;
-      })
-      .then(docId => {
-        Annotations.add({
-          content: this.state.message,
-          highLightId: docId
-        }).then(newAnn => {
-          console.log("Annotation added: ", newAnn);
-        });
+    UrlPages.doc(submitUrl)
+      .collection("newCollection")
+      .add(newFireHL)
+      .then(entry => console.log("added entry: ", entry))
+      .then(() => {
+        this.setState({
+          message: '',
+          highlightText: ''
+        })
       })
       .catch(error => console.log("error: ", error));
+    this.state
   };
 
   render() {
     return (
       <div>
         <h2> Highlight text to ask or annotate! </h2>
-        <div>{this.state.highlightText}</div>
+        <button onClick={this.onHighlightClick}>Create</button>
+        <h4>Highlighted text: {this.state.highlightText}</h4>
         <h5>User name, data </h5>
         <div id="message-form">
           <form onSubmit={this.onSubmit}>
@@ -85,4 +108,3 @@ export default class CreateHighlights extends Component {
     );
   }
 }
-
