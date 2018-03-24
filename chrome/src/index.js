@@ -73,7 +73,8 @@ function toggleSidebar() {
 
 document.addEventListener('mouseup', createHighlightedObj);
 
-export const addHighlightIds = () => {
+
+export const addEventListener = () => {
   const highlightedElements = document.getElementsByClassName('chromelights-highlights');
 
   for (let i = 0; i < highlightedElements.length; i++) {
@@ -86,6 +87,7 @@ export const addHighlightIds = () => {
       highlightedElements[i].classList.toggle('activeHighlight');
 
       toggleSidebar();
+      // renderHighlight();
 
       for (let j = 0; j < alreadyActive.length; j++) {
         if (alreadyActive[j] !== self) {

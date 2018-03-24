@@ -10,7 +10,7 @@ import CreateHighlights from './src/components/CreateHighlights';
 import Login from './src/components/Login';
 import shadowCSS from './src/shadow.css';
 import { urlEncode } from './src/highlighting';
-import { addHighlightIds } from './src/index.js'
+import { addEventListener } from './src/index.js'
 
 
 export default class Sidebar extends Component {
@@ -113,7 +113,7 @@ const fetchHighlights = () => {
       });
     })
     .then(() => {
-      addHighlightIds();
+      addEventListener();
     })
     .catch(error => console.log('error: ', error));
 };
