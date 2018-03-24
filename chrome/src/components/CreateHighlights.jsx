@@ -8,14 +8,14 @@ import { createHighlightedObj, urlEncode } from "../highlighting";
 // const Highlights = firestore.collection("Highlights");
 const Annotations = firestore.collection("Annotations");
 const UrlPages = firestore.collection("UrlPages");
-// const Websites = firestore.collection("Websites");
+const Entries = firestore.collection("Entries");
 
 export default class CreateHighlights extends Component {
   constructor(props) {
     super(props);
     this.state = {
       message: "",
-      highlightText: "",
+      highlightText: "highlight text to create a comment!",
       highlightObj: {},
       markInstance: ""
     };
@@ -34,9 +34,7 @@ export default class CreateHighlights extends Component {
     try {
       event.preventDefault();
       const highlightObj = createHighlightedObj();
-      console.log("onHighlightClick: ", highlightObj);
       if (this.state.markInstance) this.state.markInstance.unmark();
-      console.log("DOM path", highlightObj.domPath);
       const markInstance = await new Mark(highlightObj.domPath);
       this.setState(
         {
@@ -62,11 +60,9 @@ export default class CreateHighlights extends Component {
     const { newString, domPath, url } = this.state.highlightObj;
     const submitUrl = urlEncode(url);
     const messageSubmit = this.state.message;
-    const { value } = event.target;
     const newFireHL = {
       newString,
       submitUrl,
-      messageSubmit,
       domPath
     };
     console.log("newFireHL", newFireHL);
@@ -74,15 +70,27 @@ export default class CreateHighlights extends Component {
     UrlPages.doc(submitUrl)
       .collection("newCollection")
       .add(newFireHL)
-      .then(entry => console.log("added entry: ", entry))
+      .then(highlight => {
+        UrlPages.doc(submitUrl)
+          .collection("newCollection")
+          .doc(highlight.id)
+          .collection("entries")
+          .add({
+            isQuestion: false, //Set a value on state to pass in for questions vs. comments?
+            upvotes: 0,
+            downvotes: 0,
+            content: messageSubmit,
+            highlightID: highlight.id
+          });
+      })
       .then(() => {
         this.setState({
-          message: '',
-          highlightText: ''
-        })
+          message: "",
+          highlightText: ""
+        });
       })
       .catch(error => console.log("error: ", error));
-    this.state
+    this.state;
   };
 
   render() {
@@ -90,7 +98,10 @@ export default class CreateHighlights extends Component {
       <div>
         <h2> Highlight text to ask or annotate! </h2>
         <button onClick={this.onHighlightClick}>Create</button>
-        <h4>Highlighted text: {this.state.highlightText}</h4>
+        <h4>
+          Highlighted text:
+          {this.state.highlightText}
+        </h4>
         <h5>User name, data </h5>
         <div id="message-form">
           <form onSubmit={this.onSubmit}>

@@ -86,25 +86,25 @@ const UrlPages = firestore.collection('UrlPages');
 
 const fetchHighlights = () => {
   let encodedDocUrl = urlEncode(document.location.href);
-  console.log('encoded URL:', encodedDocUrl);
+  // console.log('encoded URL:', encodedDocUrl);
   UrlPages.doc(encodedDocUrl).collection('newCollection').get()
     .then(querySnapshot => {
-      console.log('querysnapshot: ', querySnapshot);
+      // console.log('querysnapshot: ', querySnapshot);
       querySnapshot.forEach(highlight => {
-        console.log('highlight: ', highlight);
-        hlArr.push(highlight.data());
+        // console.log('highlight: ', highlight);
+        hlArr.push([highlight.data(), highlight.id]);
       });
       return 'next';
     })
     .then(() => {
-      console.log('highlight arr: ', hlArr);
+      // console.log('highlight arr: ', hlArr);
       hlArr.map(hl => {
-        console.log('in hl map', hl.domPath, hl.newString);
-        const markInstance = new Mark(hl.domPath);
-        markInstance.mark(hl.newString, {
+        // console.log('in hl map', hl[1], hl[0]);
+        const markInstance = new Mark(hl[0].domPath);
+        markInstance.mark(hl[0].newString, {
           acrossElements: true,
           separateWordSearch: false,
-          className: 'chromelights-highlights'
+          className: `chromelights-highlights ${hl[1]}`
         });
       });
     })
