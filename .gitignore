@@ -13,5 +13,7 @@ chrome/build/background.bundle.js
 chrome/build/background.bundle.js.map
 chrome/build/contentScript.bundle.js
 chrome/build/contentScript.bundle.js.map
+chrome/build/options.bundle.js
+chrome/build/options.bundle.js.map
 
 secrets.js

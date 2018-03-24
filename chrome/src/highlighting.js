@@ -13,8 +13,6 @@ export const createHighlightedObj = () => {
     domPath
   };
 
-  console.log({selObj});
-
   return selObj;
 };
 
