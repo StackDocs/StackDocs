@@ -23,7 +23,7 @@ export default class HighlightAnnotations extends Component {
                     each
                     from={fs
                         .collection('Entries')
-                        .doc(this.state.selectedHighlight)}
+                        .doc(this.props.highlight)}
                     Loading={<h3>Loading...</h3>}
                     Empty={<h3>No Annotations</h3>}
                     Render={({

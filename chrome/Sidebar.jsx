@@ -15,7 +15,8 @@ export default class Sidebar extends Component {
     super(props);
     this.state = {
       view: 'askOrAnnotate',
-      currentEntryType: ''
+      currentEntryType: '',
+      highlightId: '',
     };
 
     this.setView = this.setView.bind(this);
@@ -49,7 +50,7 @@ export default class Sidebar extends Component {
       case 'submission':
         return <CreateHighlights />;
       default:
-        return <HighlightAnnotations />;
+        return <HighlightAnnotations highlight={this.state.highlightId}/>;
     }
   }
 
