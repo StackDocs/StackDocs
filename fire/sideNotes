@@ -1,0 +1,37 @@
+async function fetchHighlightsByUrl(urls){
+  let hlArr = [];
+  urls.map( async url => {
+    await urlPages.doc(url).collection('Highlights').get()
+      .then(querySnapshot => {
+        querySnapshot.map(highlight => {
+          hlArr.push(highlight.data());
+        });
+      })
+      .catch(error => console.log('error: ', error));
+  })
+  
+  return hlArr;
+
+  // let hlArr=[];
+  // Promise.map(urls, (url) => {
+  //   urlPages.doc(url).collection('Highlights').get()
+  //       .then(highlights => {
+  //         console.log(hightlights,"highlight in promise")
+  //         hlArr.push(highlights)
+  //         return highlights;
+  //       })
+  //       .catch(error => console.log('error: ', error))
+  // }).then(allHighlights => console.log(allHighlights))
+}
+
+
+seed = async () => {
+  const allUsers = generateUsers()
+  const allHighlights = await fetchHighlightsByUrl(manualUrlPages)
+  // const entries = generateEntries(allUsers, allHighlights)
+  // console.log("allEntries", entries)
+  console.log("allHighlights", allHighlights)
+  // console.log("allUsers", allUsers)
+}
+
+seed();

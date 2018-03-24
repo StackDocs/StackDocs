@@ -27,11 +27,7 @@ const config = env => (input, output) => ({
       use: 'url-loader',
     },
     {
-      test: /\.css$/,
-      use: ['style-loader', 'css-loader']
-    },
-    {
-      test: /\.(txt|md|markdown)$/,
+      test: /\.(txt|md|markdown|css)$/,
       use: 'raw-loader',
     }]
   },

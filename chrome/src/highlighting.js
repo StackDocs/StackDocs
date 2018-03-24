@@ -4,7 +4,7 @@ import unique from 'unique-selector';
 export const createHighlightedObj = () => {
   const newString = window.getSelection().toString();
   const url = document.location.href;
-  const currentNode = window.getSelection().anchorNode ?
+  const currentNode = newString.length ?
     window.getSelection().anchorNode.parentElement : null;
 
   const wholeDoc = document.documentElement.innerHTML;

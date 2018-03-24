@@ -3,6 +3,7 @@ seed = require('./frans-firestore-seed');
 const chance = require('chance')(123);
 const toonAvatar = require('cartoon-avatar');
 const Promise = require('bluebird');
+import { urlEncoded } from '../chrome/src/highlighting.js'
 
 // Initialize firebase-admin.
 admin.initializeApp({
@@ -53,6 +54,8 @@ const manualUrlPages = [
     "en.wikipedia.org/wiki/Dog",
     "en.wikipedia.org/wiki/Zebra"
 ]
+
+const encodedUrls = manualUrlPages.map(url => urlEncode(url))
 // const addUrlPage = manualUrlPages.map((url, i) => seed.doc(url,{ hightlights: []}))
 
 
@@ -124,8 +127,8 @@ function randContent () {
     return chance.n(chance.paragraph, numPars).join(' ')
 }
 
-//sed.doc('auto_id',obj)
-function randEntry (allUsers, urlHighlights) {
+//sed.doc('highlightId',obj)
+function randEntry (allUsers, highlightId) {
   const user = chance.pick(allUsers);
   const highlight = chance.pick(urlHighlights);
   const randomEntryNum = Math.floor(Math.random() * 2);
@@ -134,8 +137,9 @@ function randEntry (allUsers, urlHighlights) {
   let lastName =  chance.last();
   let userName = this.lastName+randomUserNum;
   return {
+    entryType,
     userName: user.userName,
-    highlightId: highlight.id,
+    highlightId,
     content: randContent(),
     date: randDate(),
     upVote: Math.floor(Math.random() * 100),
@@ -191,13 +195,12 @@ async function fetchHighlightsByUrl(urls){
   urls.forEach( async url => {
     await urlPages.doc(url).collection('Highlights').get()
       .then(querySnapshot => {
-        querySnapshot.forEach(highlight => {
-          hlArr.push(highlight.data());
+        querySnapshot.forEach(async highlight => {
+          await hlArr.push(highlight.data());
         });
       })
       .catch(error => console.log('error: ', error));
   })
-
   return hlArr;
 }
 
