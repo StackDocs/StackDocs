@@ -19,7 +19,6 @@ export default class Interactive extends Component {
         {downVote}
         <Comment />
         {comments.length}
-
       </div>
     );
   }

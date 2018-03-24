@@ -4,7 +4,7 @@ import QuestionIcon from 'svg-react-loader?name=QuestionIcon!~/chrome/src/icons/
 import AnnotationIcon from 'svg-react-loader?name=AnnotationIcon!~/chrome/src/icons/exclamation-circle.svg';
 
 
-export default function AksOrAnnotate(props) {
+export default function AskOrAnnotate(props) {
   const selectEntryType = props.selectEntryType;
   return (
     <div id="ask-or-annotate">
