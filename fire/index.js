@@ -1,3 +1,5 @@
+/* global chrome */
+
 import * as firebase from 'firebase'
 import 'firebase/firestore'
 import setup from './setup'

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { firestore } from '~/fire';
 import ReactDOM from 'react-dom';
 import { urlEncode } from '../highlighting';
+import Mark from 'mark.js';
 
 //Firestore
 const Highlights = firestore.collection('Highlights');
@@ -39,7 +40,12 @@ const fetchHighlights = () => {
       console.log('highlight arr: ', hlArr);
       hlArr.map(hl => {
         console.log('in hl map', hl.domPath, hl.newString);
-        findToHighlight(hl.domPath, hl.newString);
+        const markInstance = new Mark(hl.domPath);
+        markInstance.mark(hl.newString, {
+          acrossElements: true,
+          separateWordSearch: false,
+          className: 'chromelights-highlights'
+        });
       });
     })
     .catch(error => console.log('error: ', error));

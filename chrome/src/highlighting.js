@@ -21,6 +21,7 @@ export const createHighlightedObj = () => {
   return selObj;
 };
 
+
 export const urlEncode = url => {
   let newUrl = url.split('');
   for (let i = 0; i < 9; i++) {

@@ -7,10 +7,24 @@ import Interactive from '../components/Interactive'
 
 export default class HighlightAnnotations extends Component {
     constructor(props) {
-        super(props)
+        super(props);
+
+        //get the active highlight (most recently clicked)
+        // const selected = document.getElementsByClassName('activeHighlight')[0];
+        // get an array of classes on it
+        // const selectedClasses = selected.className.split(' ');
+        // const selectedId = selectedClasses.filter(el => {
+        //   return el !== 'activeHighlight' && el !== 'chromelights-highlights';
+        // });
+
+        /* the selectedId should be used to find and render all of the
+         annotations associated with the selected highlight */
+
+        // console.log('classes', selectedId);
+
         this.state = {
-            selectedHighlight: this.props.highlight || 'beforeDestroy Hooks',
-        }
+          selectedHighlight: this.props.highlight || 'beforeDestroy Hooks',
+        };
     }
 
     render() {
