@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Map } from 'fireview'
 import { firestore as fs } from '~/fire'
 // import HighlightedText from '../components/HighlightedText'
-import Annotations from '../components/Annotations'
+import Entries from '../components/Entries'
 import Interactive from '../components/Interactive'
 
 export default class HighlightAnnotations extends Component {
@@ -22,8 +22,8 @@ export default class HighlightAnnotations extends Component {
                 <Map
                     each
                     from={fs
-                        .collection('Annotations')
-                        .where('highlight', '==', this.state.selectedHighlight)}
+                        .collection('Entries')
+                        .doc(this.state.selectedHighlight)}
                     Loading={<h3>Loading...</h3>}
                     Empty={<h3>No Annotations</h3>}
                     Render={({
@@ -38,7 +38,7 @@ export default class HighlightAnnotations extends Component {
                         <div>
                             <h3>{title}</h3>
                             {console.log(typeof date)}
-                            <Annotations
+                            <Entries
                                 content={content}
                                 user={user}
                                 date="March 20, 2018"
