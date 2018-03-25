@@ -7,9 +7,6 @@ import { createHighlightedObj, urlEncode } from "../highlighting";
 import { createHighlight } from "~/chrome/src/store"
 
 
-//Firestore
-// const Highlights = firestore.collection("Highlights");
-
 export class CreateHighlightButton extends Component {
   constructor(props) {
     super(props);
@@ -30,9 +27,9 @@ export class CreateHighlightButton extends Component {
     try {
       event.preventDefault();
       const highlightObj = createHighlightedObj();
-      if (highlightObj) this.props.markInstance.unmark();
+      if (this.props.highlightObj ? this.props.highlightObj.markInstance : false) this.props.markInstance.unmark();
       const markInstance = await new Mark(highlightObj.domPath);
-      this.props.storeHighlight(
+      highlightObj ? this.props.storeHighlight(
         {
           highlightObj,
           markInstance,
@@ -45,7 +42,7 @@ export class CreateHighlightButton extends Component {
             className: "chromelights-highlights"
           });
         }
-      );
+      ) : console.log("nothing selected")
     } catch (err) {
       console.error(err);
     }
@@ -60,7 +57,11 @@ export class CreateHighlightButton extends Component {
     );
   }
 }
-const MapState = ({highlight}) => {highlight};
+const MapState = ({highlight}) => {
+  const highlightObj = highlight.highlightObj;
+  const markInstance = highlight.markInstance;
+  return { highlightObj, markInstance }
+}
 
 const MapDispatch = dispatch => ({
   storeHighlight: (highlight) => dispatch(createHighlight(highlight))
