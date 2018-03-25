@@ -1,19 +1,43 @@
 import React, { Component } from 'react'
 import { Map } from 'fireview'
 import { firestore as fs } from '~/fire'
-// import HighlightedText from '../components/HighlightedText'
 import Annotations from '../components/Annotations'
 import Interactive from '../components/Interactive'
+import { urlEncode } from "../highlighting";
 
 export default class HighlightAnnotations extends Component {
     constructor(props) {
-        super(props)
+        super(props);
+
+        //get the active highlight (most recently clicked)
+        // const selected = document.getElementsByClassName('activeHighlight')[0];
+        // get an array of classes on it
+        // const selectedClasses = selected.className.split(' ');
+        // const selectedId = selectedClasses.filter(el => {
+        //   return el !== 'activeHighlight' && el !== 'chromelights-highlights';
+        // });
+
+        /* the selectedId should be used to find and render all of the
+         annotations associated with the selected highlight */
+
+        // console.log('classes', selectedId);
+
         this.state = {
-            selectedHighlight: this.props.highlight || 'beforeDestroy Hooks',
+          selectedHighlight: this.props.activeId || 'beforeDestroy Hooks',
+        };
+    }
+
+    componentWillReceiveProps(newProps){
+        if(newProps.activeId){
+            this.setState({selectedHighlight: newProps.activeId,})
         }
     }
 
+    
+    
     render() {
+        const urlReadOnly = document.location.href;
+        const url = urlEncode(urlReadOnly);
         return (
             <div id="highlight-annotation">
                 <h1 className="highlight-title">
@@ -22,10 +46,13 @@ export default class HighlightAnnotations extends Component {
                 <Map
                     each
                     from={fs
-                        .collection('Annotations')
-                        .where('highlight', '==', this.state.selectedHighlight)}
+                        .collection('UrlPages')
+                        .doc(url)
+                        .collection('highlights')
+                        .doc(this.state.selectedHighlight)
+                        .collection('entries')}
                     Loading={<h3>Loading...</h3>}
-                    Empty={<h3>No Annotations</h3>}
+                    Empty={<h3 color="red">No Annotations</h3>}
                     Render={({
                         upVote,
                         downVote,

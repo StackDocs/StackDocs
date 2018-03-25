@@ -36,8 +36,8 @@ const config = env => (input, output) => ({
 
 const entries = (env, entry) =>
   isHot(env)
-    ? ['react-hot-loader/patch', entry]
-    : entry
+    ? ['react-hot-loader/patch', 'babel-polyfill', entry]
+    : ['babel-polyfill', entry]
 
 const plugins = env => isHot(env) ? [
   new webpack.HotModuleReplacementPlugin,  // Enable HMR globally
@@ -72,6 +72,10 @@ module.exports = [
 
   conf('./chrome/src/index.js', {
     filename: 'contentScript.bundle.js',
+    path: `${__dirname}/chrome/build`,
+  }),
+  conf('./chrome/src/options.js', {
+    filename: 'options.bundle.js',
     path: `${__dirname}/chrome/build`,
   }),
 ]
