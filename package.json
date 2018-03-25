@@ -44,9 +44,14 @@
     "raw-loader": "^0.5.1",
     "react": "^16.1.0",
     "react-dom": "^16.1.0",
+    "react-redux": "^5.0.7",
+    "redux": "^3.7.2",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
     "style-loader": "^0.20.3",
+    "svg-react-loader": "^0.4.5",
     "unique-selector": "^0.3.6",
-    "url-loader": "^1.0.1",
-    "svg-react-loader": "^0.4.5"
+    "url-loader": "^1.0.1"
   }
 }

@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Map } from 'fireview'
 import { firestore as fs } from '~/fire'
-// import HighlightedText from '../components/HighlightedText'
 import Annotations from '../components/Annotations'
 import Interactive from '../components/Interactive'
+import { urlEncode } from "../highlighting";
 
 export default class HighlightAnnotations extends Component {
     constructor(props) {
@@ -33,8 +33,11 @@ export default class HighlightAnnotations extends Component {
         }
     }
 
+    
+    
     render() {
-        console.log('props on HLano: ', this.props);
+        const urlReadOnly = document.location.href;
+        const url = urlEncode(urlReadOnly);
         return (
             <div id="highlight-annotation">
                 <h1 className="highlight-title">
@@ -44,12 +47,12 @@ export default class HighlightAnnotations extends Component {
                     each
                     from={fs
                         .collection('UrlPages')
-                        .doc('docs.sequelizejs.com%%%')
-                        .collection('newCollection')
+                        .doc(url)
+                        .collection('highlights')
                         .doc(this.state.selectedHighlight)
                         .collection('entries')}
                     Loading={<h3>Loading...</h3>}
-                    Empty={<h3>No Annotations</h3>}
+                    Empty={<h3 color="red">No Annotations</h3>}
                     Render={({
                         upVote,
                         downVote,

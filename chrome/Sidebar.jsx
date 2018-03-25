@@ -13,12 +13,16 @@ import { urlEncode } from './src/highlighting';
 import { addEventListener } from './src/index.js';
 
 
+// Redux
+import {Provider} from 'react-redux'
+import store from '~/chrome/src/store'
+
 export default class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       view: '',
-      currentEntryType: '',
+      isQuestion: true,
       user: '',
       activeId: ''
     };
@@ -61,7 +65,7 @@ export default class Sidebar extends Component {
       case 'askOrAnnotate':
         return <AskOrAnnotate selectEntryType={this.selectEntryType} />;
       case 'submission':
-        return <CreateHighlights />;
+        return <CreateHighlights setView={this.setView} isQuestion={this.state.isQuestion}/>;
       default:
         return <HighlightAnnotations activeId={this.state.activeId}/>;
     }
@@ -71,7 +75,7 @@ export default class Sidebar extends Component {
     evt.preventDefault();
     const type = evt.target.value;
     this.setState({
-      currentEntryType: type,
+      isQuestion: type,
       view: 'submission'
     });
     console.log('state: ', this.state);
@@ -85,9 +89,13 @@ export default class Sidebar extends Component {
     return (
       <ShadowDOM>
         <div>
-          <style type="text/css">{shadowCSS}</style>
-          <Header setView={this.setView} />
-          {this.selectComponents()}
+          <Provider store={store}>
+            <div>
+            <style type="text/css">{shadowCSS}</style>
+            <Header setView={this.setView} />
+            {this.selectComponents()}
+            </div>
+          </Provider>
         </div>
       </ShadowDOM>
     );
@@ -100,10 +108,10 @@ const UrlPages = firestore.collection('UrlPages');
 
 const fetchHighlights = () => {
   let encodedDocUrl = urlEncode(document.location.href);
-  // console.log('encoded URL:', encodedDocUrl);
-  UrlPages.doc(encodedDocUrl).collection('newCollection').get()
+  //console.log('encoded URL:', encodedDocUrl);
+  UrlPages.doc(encodedDocUrl).collection('highlights').get()
     .then(querySnapshot => {
-      // console.log('querysnapshot: ', querySnapshot);
+      //console.log('querysnapshot: ', querySnapshot);
       querySnapshot.forEach(highlight => {
         // console.log('highlight: ', highlight);
         hlArr.push([highlight.data(), highlight.id]);
