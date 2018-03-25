@@ -27,7 +27,7 @@ export class CreateHighlightButton extends Component {
     try {
       event.preventDefault();
       const highlightObj = createHighlightedObj();
-      if (this.props.highlight ? this.props.highlight.markInstance : false) this.props.markInstance.unmark();
+      if (this.props.highlightObj ? this.props.highlightObj.markInstance : false) this.props.markInstance.unmark();
       const markInstance = await new Mark(highlightObj.domPath);
       highlightObj ? this.props.storeHighlight(
         {
@@ -59,7 +59,8 @@ export class CreateHighlightButton extends Component {
 }
 const MapState = ({highlight}) => {
   const highlightObj = highlight.highlightObj;
-  return { highlightObj }
+  const markInstance = highlight.markInstance;
+  return { highlightObj, markInstance }
 }
 
 const MapDispatch = dispatch => ({

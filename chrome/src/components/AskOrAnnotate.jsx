@@ -10,10 +10,10 @@ export function AskOrAnnotate(props) {
   return (
     <div id="ask-or-annotate">
       <QuestionIcon />
-      <button onClick={selectEntryType} value="ask">Ask</button>
+      <button onClick={selectEntryType} value={true}>Ask</button>
       <p>or</p>
       <AnnotationIcon />
-      <button onClick={selectEntryType} value="annotate">Annotate</button>
+      <button onClick={selectEntryType} value={false}>Annotate</button>
     </div>
   );
 }
