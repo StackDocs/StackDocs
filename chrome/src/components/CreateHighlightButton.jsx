@@ -1,23 +1,21 @@
 import React, { Component } from "react";
 import { firestore } from "~/fire";
 import ReactDOM from "react-dom";
-import {
-  createHighlightedObj,
-  urlEncode
-} from "../highlighting";
+import { connect } from "react-redux";
+import Mark from "mark.js";
+import { createHighlightedObj, urlEncode } from "../highlighting";
+import { createHighlight } from "~/chrome/src/store"
+
 
 //Firestore
-const Highlights = firestore.collection("Highlights");
-const Annotations = firestore.collection("Annotations");
-const Websites = firestore.collection("Websites");
+// const Highlights = firestore.collection("Highlights");
 
-export default class CreateHighlights extends Component {
+export class CreateHighlightButton extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: "",
-      highlightText: ''
     };
+    this.onHighlightClick = this.onHighlightClick.bind(this);
   }
 
   handleChange = event => {
@@ -28,61 +26,44 @@ export default class CreateHighlights extends Component {
     });
   };
 
-  onSubmit = event => {
-    event.preventDefault();
-    let { newString, wholeDoc, domPath, url } = createHighlightedObj();
-    this.setState({
-      highlightText: newString
-    })
-    let submitUrl = urlEncode(url);
-    console.log("asdfjhao;sfj", submitUrl);
-    let { value } = event.target;
-    let newFireHL = {
-      newString,
-      submitUrl,
-      domPath
-    };
-
-    Websites.doc(submitUrl).set({
-      content: wholeDoc
-    });
-
-    Highlights.add(newFireHL)
-      .then(newDoc => {
-        console.log("added highlight:", newDoc.id, newDoc);
-        return newDoc.id;
-      })
-      .then(docId => {
-        Annotations.add({
-          content: this.state.message,
-          highLightId: docId
-        }).then(newAnn => {
-          console.log("Annotation added: ", newAnn);
-        });
-      })
-      .catch(error => console.log("error: ", error));
-  };
+  async onHighlightClick(event) {
+    try {
+      event.preventDefault();
+      const highlightObj = createHighlightedObj();
+      if (highlightObj) this.state.markInstance.unmark();
+      const markInstance = await new Mark(highlightObj.domPath);
+      this.props.storeHighlight(
+        {
+          highlightObj,
+          markInstance,
+          highlightText: highlightObj.newString
+        },
+        () => {
+          markInstance.mark(this.state.highlightObj.newString, {
+            acrossElements: true,
+            separateWordSearch: false,
+            className: "chromelights-highlights"
+          });
+        }
+      );
+    } catch (err) {
+      console.error(err);
+    }
+    this.props.setView('askOrAnnotate')
+  }
 
   render() {
     return (
       <div>
-        <h2> Highlight text to ask or annotate! </h2>
-        <div>{this.state.highlightText}</div>
-        <h5>User name, data </h5>
-        <div id="message-form">
-          <form onSubmit={this.onSubmit}>
-            <input
-              type="text"
-              name="message"
-              className="message-field-wide"
-              onChange={this.handleChange}
-              value={this.state.message}
-            />
-            <input type="submit" value="Submit" />
-          </form>
-        </div>
+        <button onClick={this.onHighlightClick}>Create</button>
       </div>
     );
   }
 }
+const MapState = null;
 
+const MapDispatch = dispatch => ({
+  storeHighlight: (highlight) => dispatch(createHighlight(highlight))
+});
+
+export default connect(MapState, MapDispatch)(CreateHighlightButton);

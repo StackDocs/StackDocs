@@ -1,11 +1,12 @@
 import React from 'react';
-
+import { connect } from "react-redux";
 import QuestionIcon from 'svg-react-loader?name=QuestionIcon!~/chrome/src/icons/question-circle.svg';
 import AnnotationIcon from 'svg-react-loader?name=AnnotationIcon!~/chrome/src/icons/exclamation-circle.svg';
 
 
-export default function AskOrAnnotate(props) {
+export function AskOrAnnotate(props) {
   const selectEntryType = props.selectEntryType;
+  console.log(this.props.highlight,"highlight object")
   return (
     <div id="ask-or-annotate">
       <QuestionIcon />
@@ -16,3 +17,10 @@ export default function AskOrAnnotate(props) {
     </div>
   );
 }
+
+const MapState = ({ highlight }) => { highlight };
+
+const MapDispatch = null;
+
+export default connect(MapState, MapDispatch)(AskOrAnnotate);
+

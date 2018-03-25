@@ -10,6 +10,10 @@ import CreateHighlights from './src/components/CreateHighlights';
 import shadowCSS from './src/shadow.css';
 import { urlEncode } from './src/highlighting';
 
+// Redux
+import {Provider} from 'react-redux'
+import store from '~/chrome/src/store'
+
 export default class Sidebar extends Component {
   constructor(props) {
     super(props);
@@ -71,9 +75,13 @@ export default class Sidebar extends Component {
     return (
       <ShadowDOM>
         <div>
-          <style type="text/css">{shadowCSS}</style>
-          <Header setView={this.setView} />
-          {this.selectComponents()}
+          <Provider store={store}>
+            <div>
+            <style type="text/css">{shadowCSS}</style>
+            <Header setView={this.setView} />
+            {this.selectComponents()}
+            </div>
+          </Provider>
         </div>
       </ShadowDOM>
     );

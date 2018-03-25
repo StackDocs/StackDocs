@@ -1,0 +1,55 @@
+[debug] [2018-03-24T23:56:34.895Z] ----------------------------------------------------------------------
+[debug] [2018-03-24T23:56:34.909Z] Command:       /usr/local/bin/node /Users/fran/Fullstack Senior/chromelights/node_modules/.bin/firebase serve --only functions,hosting
+[debug] [2018-03-24T23:56:34.910Z] CLI Version:   3.14.0
+[debug] [2018-03-24T23:56:34.910Z] Platform:      darwin
+[debug] [2018-03-24T23:56:34.910Z] Node Version:  v8.9.3
+[debug] [2018-03-24T23:56:34.924Z] Time:          Sat Mar 24 2018 19:56:34 GMT-0400 (EDT)
+[debug] [2018-03-24T23:56:34.924Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-03-24T23:56:34.996Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-24T23:56:34.997Z] > authorizing via signed-in user
+[debug] [2018-03-24T23:56:35.000Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-03-24T23:56:35.000Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/XACS3JD32jgj5OC2sDW2V3nhP2onqFi0xNFPfTs5OOU',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Sat Mar 24 2018 19:56:35 GMT-0400 (EDT)
+[debug] [2018-03-24T23:56:35.340Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-24T23:56:35.363Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/chromelights-bb54c  
+ Sat Mar 24 2018 19:56:35 GMT-0400 (EDT)
+[debug] [2018-03-24T23:56:35.840Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-24T23:56:35.842Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/chromelights-bb54c/tokens  
+ Sat Mar 24 2018 19:56:35 GMT-0400 (EDT)
+[debug] [2018-03-24T23:56:36.232Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/fran/Fullstack Senior/chromelights'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-03-24T23:56:38.049Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/chromelights-bb54c  
+ Sat Mar 24 2018 19:56:38 GMT-0400 (EDT)
+[debug] [2018-03-24T23:56:38.049Z] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/chromelights-bb54c/apiKeys  
+ Sat Mar 24 2018 19:56:38 GMT-0400 (EDT)
+[debug] [2018-03-24T23:56:38.050Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/chromelights-bb54c  
+ Sat Mar 24 2018 19:56:38 GMT-0400 (EDT)
+[debug] [2018-03-24T23:56:38.328Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-24T23:56:38.331Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-24T23:56:38.332Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/851772945859/clients/_:getWebAppConfig  
+ Sat Mar 24 2018 19:56:38 GMT-0400 (EDT)
+[debug] [2018-03-24T23:56:38.423Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-24T23:56:38.692Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[info] ✔  functions: helloWorld: http://localhost:5001/chromelights-bb54c/us-central1/helloWorld
+[info] Shutting down...
+[debug] [2018-03-25T00:00:36.396Z] Error: write EPIPE
+    at _errnoException (util.js:1024:11)
+    at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2018-03-25T00:00:36.403Z] Error: write EPIPE
+    at _errnoException (util.js:1024:11)
+    at WriteWrap.afterWrite [as oncomplete] (net.js:867:14)
+[error] 
+[error] Error: An unexpected error has occurred.
