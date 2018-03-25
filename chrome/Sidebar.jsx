@@ -7,8 +7,11 @@ import HighlightAnnotations from './src/containers/HighlightAnnotations';
 import AskOrAnnotate from './src/components/AskOrAnnotate';
 // import FindHighlights from './src/components/FindHighlights';
 import CreateHighlights from './src/components/CreateHighlights';
+import Login from './src/components/Login';
 import shadowCSS from './src/shadow.css';
 import { urlEncode } from './src/highlighting';
+import { addEventListener } from './src/index.js';
+
 
 // Redux
 import {Provider} from 'react-redux'
@@ -18,9 +21,20 @@ export default class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'home',
-      currentEntryType: ''
+      view: '',
+      currentEntryType: '',
+      user: '',
+      activeId: ''
     };
+
+    document.addEventListener('click', () => {
+      if (document.getElementsByClassName('activeHighlight').length){
+        const activeId = document.getElementsByClassName('activeHighlight')[0].classList[1];
+        this.setState({ activeId }, () => {
+          // console.log('state inside', this.state);
+        });
+      }
+    });
 
     this.setView = this.setView.bind(this);
     this.selectEntryType = this.selectEntryType.bind(this);
@@ -45,7 +59,7 @@ export default class Sidebar extends Component {
   selectComponents() {
     switch (this.state.view) {
       case 'login':
-        return <CreateHighlights />;
+        return <Login />;
       case 'home':
         return <CreateHighlights />;
       case 'askOrAnnotate':
@@ -53,7 +67,7 @@ export default class Sidebar extends Component {
       case 'submission':
         return <CreateHighlights />;
       default:
-        return <HighlightAnnotations />;
+        return <HighlightAnnotations activeId={this.state.activeId}/>;
     }
   }
 
@@ -115,6 +129,9 @@ const fetchHighlights = () => {
           className: `chromelights-highlights ${hl[1]}`
         });
       });
+    })
+    .then(() => {
+      addEventListener();
     })
     .catch(error => console.log('error: ', error));
 };

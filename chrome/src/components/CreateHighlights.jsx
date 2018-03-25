@@ -62,8 +62,8 @@ export default class CreateHighlights extends Component {
     const messageSubmit = this.state.message;
     const newFireHL = {
       newString,
-      submitUrl,
-      domPath
+      domPath,
+      userId
     };
     console.log("newFireHL", newFireHL);
 

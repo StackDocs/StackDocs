@@ -7,9 +7,6 @@ import { createHighlightedObj, urlEncode } from "../highlighting";
 import { createHighlight } from "~/chrome/src/store"
 
 
-//Firestore
-// const Highlights = firestore.collection("Highlights");
-
 export class CreateHighlightButton extends Component {
   constructor(props) {
     super(props);
@@ -60,7 +57,10 @@ export class CreateHighlightButton extends Component {
     );
   }
 }
-const MapState = null;
+const MapState = ({highlight}) => {
+  const highlightObj = highlight.highlightObj;
+  return { highlightObj }
+}
 
 const MapDispatch = dispatch => ({
   storeHighlight: (highlight) => dispatch(createHighlight(highlight))
