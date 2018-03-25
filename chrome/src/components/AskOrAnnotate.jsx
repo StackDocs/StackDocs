@@ -6,7 +6,7 @@ import AnnotationIcon from 'svg-react-loader?name=AnnotationIcon!~/chrome/src/ic
 
 export function AskOrAnnotate(props) {
   const selectEntryType = props.selectEntryType;
-  console.log(this.props.highlight,"highlight object")
+  console.log(props.highlightObj,"highlight object")
   return (
     <div id="ask-or-annotate">
       <QuestionIcon />
@@ -18,7 +18,10 @@ export function AskOrAnnotate(props) {
   );
 }
 
-const MapState = ({ highlight }) => { highlight };
+const MapState = ({ highlight }) => { 
+  const highlightObj = highlight.highlightObj;
+  return { highlightObj }
+};
 
 const MapDispatch = null;
 
