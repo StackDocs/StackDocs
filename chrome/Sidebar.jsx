@@ -10,6 +10,7 @@ import CreateHighlights from './src/components/CreateHighlights';
 import Login from './src/components/Login';
 import shadowCSS from './src/shadow.css';
 import { urlEncode } from './src/highlighting';
+import { addEventListener } from './src/index.js';
 
 
 export default class Sidebar extends Component {
@@ -18,8 +19,18 @@ export default class Sidebar extends Component {
     this.state = {
       view: 'login',
       currentEntryType: '',
-      user: ''
+      user: '',
+      activeId: ''
     };
+
+    document.addEventListener('click', () => {
+      if (document.getElementsByClassName('activeHighlight').length){
+        const activeId = document.getElementsByClassName('activeHighlight')[0].classList[1];
+        this.setState({ activeId }, () => {
+          // console.log('state inside', this.state);
+        });
+      }
+    });
 
     this.setView = this.setView.bind(this);
     this.selectEntryType = this.selectEntryType.bind(this);
@@ -52,7 +63,7 @@ export default class Sidebar extends Component {
       case 'submission':
         return <CreateHighlights />;
       default:
-        return <HighlightAnnotations />;
+        return <HighlightAnnotations activeId={this.state.activeId}/>;
     }
   }
 
@@ -110,6 +121,9 @@ const fetchHighlights = () => {
           className: `chromelights-highlights ${hl[1]}`
         });
       });
+    })
+    .then(() => {
+      addEventListener();
     })
     .catch(error => console.log('error: ', error));
 };
