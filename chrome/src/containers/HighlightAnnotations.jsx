@@ -23,8 +23,14 @@ export default class HighlightAnnotations extends Component {
         // console.log('classes', selectedId);
 
         this.state = {
-          selectedHighlight: this.props.highlight || 'beforeDestroy Hooks',
+          selectedHighlight: this.props.activeId || 'beforeDestroy Hooks',
         };
+    }
+
+    componentWillReceiveProps(newProps){
+        if(newProps.activeId){
+            this.setState({selectedHighlight: newProps.activeId,})
+        }
     }
 
     render() {
@@ -37,8 +43,11 @@ export default class HighlightAnnotations extends Component {
                 <Map
                     each
                     from={fs
-                        .collection('Annotations')
-                        .where('highlight', '==', this.state.selectedHighlight)}
+                        .collection('UrlPages')
+                        .doc('docs.sequelizejs.com%%%')
+                        .collection('newCollection')
+                        .doc(this.state.selectedHighlight)
+                        .collection('entries')}
                     Loading={<h3>Loading...</h3>}
                     Empty={<h3>No Annotations</h3>}
                     Render={({
