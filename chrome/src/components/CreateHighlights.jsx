@@ -72,7 +72,7 @@ export class CreateHighlights extends Component {
     const submitUrl = urlEncode(url);
     const messageSubmit = this.state.message;
     const newFireHL = {
-      HLString: newString,
+      newString,
       domPath,
       submitUrl,
     };
@@ -88,8 +88,8 @@ export class CreateHighlights extends Component {
           .collection("entries")
           .add({
             isQuestion: this.props.isQuestion,
-            upvotes: 0,
-            downvotes: 0,
+            upVote: 0,
+            downVote: 0,
             content: messageSubmit,
             highlightID: highlight.id,
             comments: [],

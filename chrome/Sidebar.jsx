@@ -108,10 +108,10 @@ const UrlPages = firestore.collection('UrlPages');
 
 const fetchHighlights = () => {
   let encodedDocUrl = urlEncode(document.location.href);
-  // console.log('encoded URL:', encodedDocUrl);
-  UrlPages.doc(encodedDocUrl).collection('newCollection').get()
+  //console.log('encoded URL:', encodedDocUrl);
+  UrlPages.doc(encodedDocUrl).collection('highlights').get()
     .then(querySnapshot => {
-      // console.log('querysnapshot: ', querySnapshot);
+      //console.log('querysnapshot: ', querySnapshot);
       querySnapshot.forEach(highlight => {
         // console.log('highlight: ', highlight);
         hlArr.push([highlight.data(), highlight.id]);

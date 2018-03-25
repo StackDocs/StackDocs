@@ -38,7 +38,6 @@ export default class HighlightAnnotations extends Component {
     render() {
         const urlReadOnly = document.location.href;
         const url = urlEncode(urlReadOnly);
-        console.log('props on HLano: ', this.props);
         return (
             <div id="highlight-annotation">
                 <h1 className="highlight-title">
