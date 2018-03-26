@@ -1,9 +1,8 @@
 const admin = require("firebase-admin");
-seed = require('./frans-firestore-seed');
+const seed = require('./frans-firestore-seed');
 const chance = require('chance')(123);
 const toonAvatar = require('cartoon-avatar');
 const Promise = require('bluebird');
-import { urlEncoded } from '../chrome/src/highlighting.js'
 
 // Initialize firebase-admin.
 admin.initializeApp({
@@ -19,31 +18,31 @@ const firestore = admin.firestore()
 const urlPages = firestore.collection("urlPages");
   
 // Import seeds.
-// let messagesCollection = seed.collection("messages", [
-//     seed.doc("threesCompany", {
-//         content: "Hello firestore-seed.",
-//         created: new Date(),
-//     }),
-//     seed.doc("happyDays", {
-//         content: "Good bye firestore-seed.",
-//         created: new Date(),
-//     })
-// ]);
+let messagesCollection = seed.collection("messages", [
+    seed.doc("threesCompany", {
+        content: "Hello firestore-seed.",
+        created: new Date(),
+    }),
+    seed.doc("happyDays", {
+        content: "Good bye firestore-seed.",
+        created: new Date(),
+    })
+]);
 
-// console.log(messagesCollection)
+console.log(messagesCollection)
 
-// messagesCollection.importDocuments(admin).then(() => {
-//     console.log("Successfully imported documents.");
-// }).catch(e => {
-//     console.log("Failed to import documents: " + e);
-// });
+messagesCollection.importDocuments(admin).then(() => {
+    console.log("Successfully imported documents.");
+}).catch(e => {
+    console.log("Failed to import documents: " + e);
+});
 
 
 // In order of association 
 // const numUrlPages = 5;  // urlPages has many highlights
 // const numHighlights = 5;  // highlight has many annotations and has many questions
-const numEntries = 50; // annotation has many comments and questions has many comments
-const numComments = 100; // coments has one user, and annotation or question id
+const numEntries = 30; // annotation has many comments and questions has many comments
+// const numComments = 10; // coments has one user, and annotation or question id
 
 const numUsers = 30; // users has many annotation and has many questions
 
@@ -51,9 +50,29 @@ const manualUrlPages = [
     "en.wikipedia.org/wiki/Apple",
     "en.wikipedia.org/wiki/Banana",
     "en.wikipedia.org/wiki/Cat",
-    "en.wikipedia.org/wiki/Dog",
-    "en.wikipedia.org/wiki/Zebra"
+    // "en.wikipedia.org/wiki/Dog",
+    // "en.wikipedia.org/wiki/Zebra"
 ]
+
+const highlightIds = {
+  Apple: ['3Y7xk7tGKzUaBX1AaWgc', 'keN6GRv8pHlaJFAVlNs6', 'VMVEuGSCxkp01U7rMDfk', 'ewuUFILT0epC9y9e4BRb', '8JXVjqd1TZk00j6fn9i6', 'SF9MeDTg6S9ANn59xDIV'],
+  Banana: ['i22pcYH6IuIYgeucxHqD', 'ktTVfdEIwHNPQYvsQlEf', 'bps2MviUznSYtHKGP0Pt', 'lfLhoHgl2h04EKa80xcS', 'Us3Ir8Pyt7ByshXgyOcl', 'PYOnQ7Bc7DxgRvgjFqRc'],
+  Cat: ['p9AiI6PqlQ0RxkVz0YdN', 'a6SY9yfFJc3tH8UZenHL', 'RMVeUa3ithBPNCjPdtrE', 'lND8UvM9519G25BBgEg4', 'oZdx96j0J8P1vxBwya9b', 'OxkaVyDgoLgj7svwMRkB'],
+}
+
+const urlEncode = url => {
+  let newUrl = url.split('');
+  for (let i = 0; i < 9; i++) {
+    if (url.slice(i, i + 8) === 'https://') {
+      newUrl.splice(i, 8);
+    } else if (url.slice(i, i + 7) === 'http://') {
+      newUrl.splice(i, 7);
+    }
+  }
+  const urlUpdate = newUrl.join('');
+  return urlUpdate.split('/').join('%%%');
+};
+
 
 const encodedUrls = manualUrlPages.map(url => urlEncode(url))
 // const addUrlPage = manualUrlPages.map((url, i) => seed.doc(url,{ hightlights: []}))
@@ -122,43 +141,41 @@ function randTitle () {
 function randContent () {
     const numPars = chance.natural({
       min: 1,
-      max: 3
+      max: 2
     });
     return chance.n(chance.paragraph, numPars).join(' ')
 }
 
-//sed.doc('highlightId',obj)
-function randEntry (allUsers, highlightId) {
+//UrlPages.doc(url).collection(highlights).doc('highlightId',obj).collection(entries).auto
+function randEntry (allUsers, highlightIds, url) {
   const user = chance.pick(allUsers);
-  const highlight = chance.pick(urlHighlights);
-  const randomEntryNum = Math.floor(Math.random() * 2);
-  const entryType = ["question", "annotation"][randomEntryNum];
-  let firstName = chance.first({gender: gender});
-  let lastName =  chance.last();
-  let userName = this.lastName+randomUserNum;
-  return {
-    entryType,
+  const highlight = chance.pick(highlightIds);
+  const randomEntryType = Math.floor(Math.random() * 2);
+  const isQuestion = [true, false][randomEntryType];
+  const randomNumComments = Math.floor(Math.random() * 4);
+  return seed.collection(`UrlPages/${url}/highlights/${highlight}/entries`, seed.doc("auto_id",{
+    isQuestion,
     userName: user.userName,
-    highlightId,
     content: randContent(),
     date: randDate(),
     upVote: Math.floor(Math.random() * 100),
     downVotes: Math.floor(Math.random() * 100)
-  };
+  }));
 }
 
 //sed.doc('auto_id',obj)
-function randComments (allEntries){
-  const entry = chance.pick(allEntries);
-  return {
-      userName: entry.userName,
-      entryId: entry.id,
-      content: randContent(),
-      date: randDate(),
-      upVote: Math.floor(Math.random() * 100),
-      downVotes: Math.floor(Math.random() * 100)
-  }
-}
+// function randComments (entry, allUsers){
+//   const user = chance.pick(allUsers);
+//   const comment = doTimes(numUsers, randUser)
+//   return {
+//     userName: user.userName,
+//     entryId: entry.id,
+//     content: randContent(),
+//     date: randDate(),
+//     upVote: Math.floor(Math.random() * 100),
+//     downVotes: Math.floor(Math.random() * 100)
+//   };
+// }
 
 //seed.doc(`${userName}`,obj)
 function randUser () {
@@ -166,13 +183,13 @@ function randUser () {
   const gender = chance.gender();
   let firstName = chance.first({gender: gender});
   let lastName =  chance.last();
-  let userName = this.lastName+randomUserNum;
+  let userName = lastName + "_" + randomUserNum;
   return {
     firstName,
     lastName,
     avatar: randPhoto(gender),
     email: emails.pop(),
-    displayName: this.firstName+" "+ this.lastName,
+    userName,
   };
 }
 
@@ -181,40 +198,65 @@ function generateUsers() {
   return users;
 }
 
-function generateEntries (users,urlHighlights) {
-  return doTimes(numEntries, () => randEntry(users,urlHighlights));
+function generateEntries (users,urlHighlights, url) {
+  return doTimes(numEntries, () => randEntry(users,urlHighlights, url));
 }
 
-function generateComments(allEntries){
-  const comments = doTimes(numComments, () => randComments(allEntries));
-  return users;
+function generateComments(allEntries, allUsers){
+  const comments = doTimes(numComments, () => randComments(allEntries, allUsers));
+  return comments;
 }
 
-async function fetchHighlightsByUrl(urls){
-  let hlArr = [];
-  urls.forEach( async url => {
-    await urlPages.doc(url).collection('Highlights').get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(async highlight => {
-          await hlArr.push(highlight.data());
-        });
-      })
-      .catch(error => console.log('error: ', error));
-  })
-  return hlArr;
-}
+// async function fetchHighlightsByUrl(urls){
+//   let hlArr = [];
+//   urls.forEach( async url => {
+//     await urlPages.doc(url).collection('Highlights').get()
+//       .then(querySnapshot => {
+//         querySnapshot.forEach(async highlight => {
+//           await hlArr.push(highlight.data());
+//         });
+//       })
+//       .catch(error => console.log('error: ', error));
+//   })
+//   return hlArr;
+// }
 
 
-seed = async () => {
+seedfile = () => {
   const allUsers = generateUsers()
-  const allHighlights = await fetchHighlightsByUrl(manualUrlPages)
-  // const entries = generateEntries(allUsers, allHighlights)
-  // console.log("allEntries", entries)
-  console.log("allHighlights", allHighlights)
+  const AppleHighlights = highlightIds.Apple;
+  const AppleEntries = generateEntries(allUsers, AppleHighlights, encodedUrls[0])
+  const BannaHighlights = highlightIds.Banana;
+  const BannaEntries = generateEntries(allUsers, BannaHighlights, encodedUrls[1])
+  const CatHighlights = highlightIds.Cat;
+  const CatEntries = generateEntries(allUsers, CatHighlights, encodedUrls[2])
+  const allEntries = [...AppleEntries,...BannaEntries,...CatEntries]
+  console.log("allEntries", allEntries)
   // console.log("allUsers", allUsers)
+  // const comments = generateComments(allEntries, allUsers)
+  // console.log("all comments", comments)
+
+  const addUsers = allUsers.map((user) => seed.doc(user.userName,user))
+  let userCollection = seed.collection("Users", addUsers);
+  console.log(userCollection)
+
+  userCollection.importDocuments(admin).then(() => {
+    console.log("Successfully imported documents.");
+}).catch(e => {
+    console.log("Failed to import documents: " + e);
+});
+
+  allEntries.forEach(entry => entry.importDocuments(admin).then(() => {
+    console.log("Successfully imported documents.");
+}).catch(e => {
+    console.log("Failed to import documents: " + e);
+}));
+
+
+
 }
 
-seed();
+seedfile();
 
 
 

@@ -4,6 +4,7 @@ import Header from './src/components/Header';
 import { firestore } from '~/fire';
 import Mark from 'mark.js';
 import HighlightAnnotations from './src/containers/HighlightAnnotations';
+import HighlightDev from './src/containers/HighlightDev';
 import AskOrAnnotate from './src/components/AskOrAnnotate';
 import CreateHighlights from './src/components/CreateHighlights';
 import Login from './src/components/Login';
