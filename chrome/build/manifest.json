@@ -17,7 +17,10 @@
     "default_icon": "placeholder-icon.png",
     "default_title": "ChromeLights2"
   },
-  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
   "background": {
     "scripts": ["background.bundle.js"],
     "persistent": false
