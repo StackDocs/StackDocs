@@ -90,8 +90,9 @@ export default class Sidebar extends Component {
           <Provider store={store}>
             <div>
             <style type="text/css">{shadowCSS}</style>
-            <Logout />
             <Header setView={this.setView} />
+            <p>Current User: {this.props.user.displayName} </p>
+            <Logout />
             {this.selectComponents()}
             </div>
           </Provider>

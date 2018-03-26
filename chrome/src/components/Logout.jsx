@@ -15,7 +15,7 @@ export default function Logout() {
   };
 
   return (
-    <div id="login-btn">
+    <div id="logout-btn">
       <button onClick={handleClick}>Logout</button>
     </div>
   );
