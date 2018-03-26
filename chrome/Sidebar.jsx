@@ -109,27 +109,29 @@ export default class Sidebar extends Component {
   }
 }
 
-const hlArr = [];
+// if there is a document.getElementByClassName('highlightid') --> don't mark it
+
+
 const UrlPages = firestore.collection('UrlPages');
 
 const fetchHighlights = () => {
+  const hlArr = [];
   let encodedDocUrl = urlEncode(document.location.href);
-  //console.log('encoded URL:', encodedDocUrl);
-  UrlPages.doc(encodedDocUrl)
-    .collection('highlights')
-    .get()
+
+  UrlPages.doc(encodedDocUrl).collection('highlights').get()
     .then(querySnapshot => {
-      //console.log('querysnapshot: ', querySnapshot);
+
       querySnapshot.forEach(highlight => {
-        // console.log('highlight: ', highlight);
-        hlArr.push([highlight.data(), highlight.id]);
+        const markedId = document.getElementsByClassName(highlight.id);
+
+        if (!markedId.length) {
+          hlArr.push([highlight.data(), highlight.id]);
+        }
       });
       return 'next';
     })
     .then(() => {
-      console.log('highlight arr: ', hlArr);
       hlArr.map(hl => {
-        console.log('in hl map', hl[1], hl[0]);
         const markInstance = new Mark(hl[0].domPath);
         markInstance.mark(hl[0].newString, {
           acrossElements: true,
