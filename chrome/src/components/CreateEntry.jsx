@@ -1,23 +1,33 @@
-import React, { Component } from "react";
-import { firestore } from "~/fire";
-import ReactDOM from "react-dom";
-import {
-  createHighlightedObj,
-  urlEncode
-} from "../highlighting";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
+import { firestore } from '~/fire';
+import Mark from 'mark.js';
+import { createHighlightedObj, urlEncode } from '../highlighting';
 
 //Firestore
-const Highlights = firestore.collection("Highlights");
-const Annotations = firestore.collection("Annotations");
-const Websites = firestore.collection("Websites");
+const Annotations = firestore.collection('Annotations');
+const UrlPages = firestore.collection('UrlPages');
+const Entries = firestore.collection('Entries');
 
-export default class CreateHighlights extends Component {
+export class CreateEntry extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: "",
-      highlightText: ''
+      message: '',
+      highlightText: 'highlight text to create a comment!',
+      highlightObj: {},
+      markInstance: ''
     };
+  }
+
+  componentWillUnmount = () => {
+    this.setState({
+      message: '',
+      highlightText: 'highlight text to create a comment!',
+      highlightObj: {},
+      markInstance: ''
+    });
   }
 
   handleChange = event => {
@@ -30,51 +40,56 @@ export default class CreateHighlights extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    let { newString, wholeDoc, domPath, url } = createHighlightedObj();
-    this.setState({
-      highlightText: newString
-    })
-    let submitUrl = urlEncode(url);
-    console.log("asdfjhao;sfj", submitUrl);
-    let { value } = event.target;
-    let newFireHL = {
+    const { setView } = this.props;
+    const { newString, domPath, url } = this.props.highlightObj;
+    const submitUrl = urlEncode(url);
+    const messageSubmit = this.state.message;
+    const newFireHL = {
       newString,
-      submitUrl,
-      domPath
+      domPath,
+      submitUrl
     };
+    console.log('newFireHL', newFireHL);
 
-    Websites.doc(submitUrl).set({
-      content: wholeDoc
-    });
-
-    Highlights.add(newFireHL)
-      .then(newDoc => {
-        console.log("added highlight:", newDoc.id, newDoc);
-        return newDoc.id;
+    UrlPages.doc(submitUrl)
+      .collection('highlights')
+      .add(newFireHL)
+      .then(highlight => {
+        UrlPages.doc(submitUrl)
+          .collection('highlights')
+          .doc(highlight.id)
+          .collection('entries')
+          .add({
+            isQuestion: this.props.isQuestion,
+            upVote: 0,
+            downVote: 0,
+            content: messageSubmit,
+            highlightID: highlight.id,
+            comments: [],
+            user: 'Tom',
+            date: new Date(),
+            title: 'TBD'
+          });
       })
-      .then(docId => {
-        Annotations.add({
-          content: this.state.message,
-          highLightId: docId
-        }).then(newAnn => {
-          console.log("Annotation added: ", newAnn);
-        });
+      .then(() => {
+        setView('');
       })
-      .catch(error => console.log("error: ", error));
+      .catch(error => console.log('error: ', error));
   };
 
   render() {
     return (
       <div>
-        <h2> Highlight text to ask or annotate! </h2>
-        <div>{this.state.highlightText}</div>
+        <div className="chromelights-highlight-container">
+          <h3 className="chromelights-highlight-title">...{this.props.highlightText}...</h3>
+        </div>
         <h5>User name, data </h5>
         <div id="message-form">
           <form onSubmit={this.onSubmit}>
-            <input
+            <textarea
               type="text"
               name="message"
-              className="message-field-wide"
+              className="chromelights-entry-input"
               onChange={this.handleChange}
               value={this.state.message}
             />
@@ -86,3 +101,12 @@ export default class CreateHighlights extends Component {
   }
 }
 
+const MapState = ({ highlight }) => {
+  const highlightObj = highlight.highlightObj;
+  const highlightText = highlight.highlightText;
+  return { highlightObj, highlightText };
+};
+
+const MapDispatch = null;
+
+export default connect(MapState, MapDispatch)(CreateEntry);

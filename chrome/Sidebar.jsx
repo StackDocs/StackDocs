@@ -4,13 +4,17 @@ import Header from './src/components/Header';
 import SecondaryHeader from './src/components/SecondaryHeader';
 import { firestore } from '~/fire';
 import Mark from 'mark.js';
-import HighlightAnnotations from './src/containers/HighlightAnnotations';
-import AskOrAnnotate from './src/components/AskOrAnnotate';
-// import AllHighlights from './src/containers/AllHighlights';
-import FindHighlights from './src/components/FindHighlights';
-import CreateHighlights from './src/components/CreateHighlights';
-import Logout from './src/components/Logout';
 import shadowCSS from './src/shadow.css';
+
+//Components
+import AllHighlights from './src/containers/AllHighlights';
+import SingleHighlight from './src/containers/SingleHighlight';
+import AskOrAnnotate from './src/components/AskOrAnnotate';
+import CreateEntry from './src/components/CreateEntry';
+import Logout from './src/components/Logout';
+
+
+//helper functions
 import { urlEncode } from './src/highlighting';
 import { addEventListener } from './src/index.js';
 
@@ -37,17 +41,13 @@ export default class Sidebar extends Component {
         });
       }
     });
-
-    this.setView = this.setView.bind(this);
-    this.selectEntryType = this.selectEntryType.bind(this);
   }
 
   componentDidMount() {
     fetchHighlights();
-    console.log('component mounting....');
   }
 
-  setView(view) {
+  setView = (view) => {
     this.setState({
       view
     });
@@ -59,28 +59,29 @@ export default class Sidebar extends Component {
 
   selectComponents() {
     switch (this.state.view) {
+      case 'singleHL':
+        return <SingleHighlight />;
       case 'askOrAnnotate':
         return <AskOrAnnotate selectEntryType={this.selectEntryType} />;
-      case 'allHighlights':
-        return <AllHighlights />;
-      case 'submission':
+      case 'createEntry':
         return (
-          <CreateHighlights
+          <CreateEntry
             setView={this.setView}
             isQuestion={this.state.isQuestion}
           />
         );
       default:
-        return <HighlightAnnotations setView={this.setView} />;
+      //new = AllEntries
+        return <AllHighlights setView={this.setView} />;
     }
   }
 
-  selectEntryType(evt) {
+  selectEntryType = (evt) => {
     evt.preventDefault();
     const type = evt.target.value;
     this.setState({
       isQuestion: type,
-      view: 'submission'
+      view: 'createEntry'
     });
     console.log('state: ', this.state);
   }
@@ -106,8 +107,6 @@ export default class Sidebar extends Component {
     );
   }
 }
-
-// if there is a document.getElementByClassName('highlightid') --> don't mark it
 
 
 const UrlPages = firestore.collection('UrlPages');

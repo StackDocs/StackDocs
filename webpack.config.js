@@ -55,11 +55,6 @@ function devServer(env) {
 const conf = config(process.env)
 
 module.exports = [
-  conf('./client/index.js', {
-    filename: 'bundle.js',
-    path: `${__dirname}/public`,
-  }),
-
   conf('./chrome/src/background.js', {
     filename: 'background.bundle.js',
     path: `${__dirname}/chrome/build`,
@@ -73,4 +68,4 @@ module.exports = [
     filename: 'options.bundle.js',
     path: `${__dirname}/chrome/build`,
   }),
-]
+];
