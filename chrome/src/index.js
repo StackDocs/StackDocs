@@ -28,9 +28,6 @@ export function toggleSidebar(user) {
     sidebarInTransition = false;
     }, 500);
 
-    // const clickedHighlights = document.getElementsByClassName('activeHighlight');
-    // clickedHighlights[0].classList.remove('activeHighlight');
-
   } else if (!sidebarInTransition) {
     sidebarInTransition = true;
     const sidebar = document.createElement('div');
@@ -44,29 +41,6 @@ export function toggleSidebar(user) {
     ReactDOM.render(<Sidebar user={user} />, document.getElementById('chromelights-sidebar'));
   }
 }
-
-//this is just hardcoded at the moment, for testing purposes
-// const pathOne = '.manual-user-index > :nth-child(5)';
-// const pathTwo = '#example-usage';
-
-// const str1 = 'Sequelize is a promise-based ORM for Node.js v4 and up. It supports the dialects PostgreSQL, MySQL, SQLite and MSSQL and features solid transaction support, relations, read replication and more.';
-// const str2 = 'Example Usage';
-
-// const markInstance = new Mark(pathOne);
-// console.log('hard coded pathOne: ', pathOne);
-// markInstance.mark(str1, {
-//   acrossElements: true,
-//   separateWordSearch: false,
-//   className: 'chromelights-highlights'
-// });
-
-// const markInstance2 = new Mark(pathTwo);
-
-// markInstance2.mark(str2, {
-//   acrossElements: true,
-//   separateWordSearch: false,
-//   className: 'chromelights-highlights'
-// });
 
 document.addEventListener('mouseup', createHighlightedObj);
 

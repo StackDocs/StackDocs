@@ -65,6 +65,7 @@ export default class Sidebar extends Component {
       case 'createEntry':
         return (
           <CreateEntry
+            user={this.props.user.displayName}
             setView={this.setView}
             isQuestion={this.state.isQuestion}
           />

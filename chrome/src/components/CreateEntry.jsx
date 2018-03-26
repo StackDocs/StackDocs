@@ -14,6 +14,7 @@ export class CreateEntry extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: '',
       message: '',
       highlightText: 'highlight text to create a comment!',
       highlightObj: {},
@@ -83,17 +84,36 @@ export class CreateEntry extends Component {
         <div className="chromelights-highlight-container">
           <h3 className="chromelights-highlight-title">...{this.props.highlightText}...</h3>
         </div>
-        <h5>User name, data </h5>
         <div id="message-form">
-          <form onSubmit={this.onSubmit}>
+          <form onSubmit={this.onSubmit} className="chromelights-entry-form">
+            <div>
+            <label>Title: </label>
+            <input
+              type="text"
+              name="title"
+              className="chromelights-entry-title"
+              onChange={this.handleChange}
+              value={this.state.title}
+              required
+            />
+            </div>
+            <br />
+            <label>Add Question/Annotation: </label>
             <textarea
               type="text"
               name="message"
               className="chromelights-entry-input"
               onChange={this.handleChange}
               value={this.state.message}
+              required
             />
-            <input type="submit" value="Submit" />
+            <br />
+            <input
+              type="submit"
+              value="Submit"
+              className="chromelights-btn"
+              required
+            />
           </form>
         </div>
       </div>
