@@ -13,7 +13,9 @@
   color: white;
   /* background-color: var(--primary-background-color); */
   background: #3498db;
-  background-image: linear-gradient(to top, #3498db, #2980b9);
+  /* background-image: linear-gradient(to top, #3498db, #2980b9); */
+
+  background-image: linear-gradient(90deg, #b2dbf6, #2980b9, #b2dbf6);
   margin: auto;
 }
 
@@ -58,7 +60,16 @@
 .chromelights-btn:hover {
   transform: scale(1.1);
   transition: all 300ms;
+  box-shadow: 0 3px 8px rgb(160, 158, 158);
 }
+
+.chromelights-btn:active {
+  outline: none;
+  box-shadow: none;
+  margin-top: 2px;
+  transform: scale (1);
+}
+
 
 .chromelights-big-icon {
   display: block;

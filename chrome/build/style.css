@@ -3,6 +3,8 @@
 /**********************************************************************/
 
 * {
+  --highlight-color: #fffd7d;
+  --non-active-highlight-color: #b2dbf6;
   padding: 0;
   margin: 0;
 }
@@ -116,18 +118,18 @@ overflow: scroll;
 
 .chromelights-highlights {
   cursor: pointer;
-  background-color: rgb(221, 221, 221);
+  background-color: var(--non-active-highlight-color);
   transition: background-color 0.3s;
 }
 
 .activeHighlight {
   cursor: pointer;
-  background-color: yellow;
+  background-color: var(--highlight-color);
   transition: background-color 0.3s;
 }
 
 .chromelights-highlights:hover {
-  background-color: yellow;
+  background-color: var(--highlight-color);
   transition: background-color 0.3s;
 }
 
