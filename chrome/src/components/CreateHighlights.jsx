@@ -19,6 +19,7 @@ export class CreateHighlights extends Component {
       highlightObj: {},
       markInstance: ""
     };
+    this.onHighlightClick = this.onHighlightClick.bind(this)
   }
 
   componentWillUnmount(){
