@@ -14,8 +14,8 @@
     ]
   },
   "page_action": {
-    "default_icon": "placeholder-icon.png",
-    "default_title": "ChromeLights2"
+    "default_icon": "stackdocs-browser-icon.png",
+    "default_title": "StackDocs"
   },
   "options_ui": {
     "page": "options.html",

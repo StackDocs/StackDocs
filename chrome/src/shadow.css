@@ -6,16 +6,17 @@
 
 .chromelights-header {
   width: 100%;
-  height: 60px;
+  height: 70px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
   /* background-color: var(--primary-background-color); */
-  background: #3498db;
+  background: #4996ca;
+  /* background: #3498db; */
   /* background-image: linear-gradient(to top, #3498db, #2980b9); */
 
-  background-image: linear-gradient(90deg, #b2dbf6, #2980b9, #b2dbf6);
+  /* background-image: linear-gradient(90deg, #7fc9fa, #4996ca, #7fc9fa); */
   margin: auto;
 }
 
@@ -23,13 +24,30 @@
   font-weight: bolder;
 }
 
-.chromelights-user-header {
-  height: 26px;
+.chromelights-logo {
+  width: 240px;
+
+}
+.chromelights-secondary-header {
+  font-size: 1rem;
+  color: rgb(155, 154, 154);
+  height: 36px;
   display: flex;
   justify-content: space-around;
   align-items: center;
   background-color: rgb(238, 238, 238);
   box-shadow: 0 2px 20px rgb(214, 212, 212);
+}
+
+.chromelights-view-btn {
+  fill: rgb(155, 154, 154);
+  cursor: pointer;
+  transition: fill 0.5s;
+}
+
+.chromelights-view-btn:active {
+  fill: grey;
+  transition: fill 0.5s;
 }
 
 .chromelights-logout-btn {
@@ -105,7 +123,6 @@
   margin-top: 2px;
   transform: scale (1);
 }
-
 
 .chromelights-big-icon {
   display: block;
