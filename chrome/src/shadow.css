@@ -1,3 +1,9 @@
+* {
+  --highlight-color: #fffd7d;
+  --primary-blue: #3498db;
+  --darker-blue: #084f7e;
+}
+
 .chromelights-header {
   width: 100%;
   height: 60px;
@@ -5,6 +11,118 @@
   justify-content: center;
   align-items: center;
   color: white;
-  background-color: rgb(52, 96, 207);
+  /* background-color: var(--primary-background-color); */
+  background: #3498db;
+  /* background-image: linear-gradient(to top, #3498db, #2980b9); */
+
+  background-image: linear-gradient(90deg, #b2dbf6, #2980b9, #b2dbf6);
   margin: auto;
+}
+
+.chromelights-header h1 {
+  font-weight: bolder;
+}
+
+.chromelights-user-header {
+  height: 26px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgb(238, 238, 238);
+  box-shadow: 0 2px 20px rgb(214, 212, 212);
+}
+
+.chromelights-logout-btn {
+  cursor: pointer;
+}
+
+.chromelights-logout-btn:hover {
+  text-decoration: underline;
+}
+
+/* .chromelights-logout-btn:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background: #9CF5A6;
+  visibility: hidden;
+  border-radius: 5px;
+  transform: scaleX(0);
+  transition: .25s linear;
+}
+
+.chromelights-logout-btn:hover:before {
+    visibility: visible;
+    transform: scaleX(1);
+  } */
+
+.chromelights-main {
+  padding: 10px 20px;
+}
+
+.chromelights-highlight-header {
+
+}
+.chromelights-highlight-container {
+  display: flex;
+  justify-content: center;
+}
+
+.chromelights-highlight-title {
+  display: block;
+  margin: 40px auto 40px auto;
+  font-weight: normal;
+  background-color: var(--highlight-color);
+  transition: background-color 0.3s;
+  font-family: Monaco, 'Andale Mono', monospace;
+}
+
+.chromelights-btn {
+  display: block;
+  margin: 0 auto 30px;
+  width: 200px;
+  height: 40px;
+  color: var(--primary-blue);
+  font-size: 1rem;
+  font-weight: bold;
+  border: 3px solid var(--primary-blue);
+  border-radius: 26px;
+  transition: all  300ms;
+}
+
+.chromelights-btn:hover {
+  transform: scale(1.1);
+  transition: all 300ms;
+  box-shadow: 0 3px 8px rgb(160, 158, 158);
+}
+
+.chromelights-btn:active {
+  outline: none;
+  box-shadow: none;
+  margin-top: 2px;
+  transform: scale (1);
+}
+
+
+.chromelights-big-icon {
+  display: block;
+  margin: 40px auto;
+
+}
+
+.chromelights-question-icon {
+  fill: rgb(95, 186, 124);
+}
+
+.chromelights-annotation-icon {
+  fill: rgb(243, 136, 43)
+}
+
+.chromelights-entry-input {
+  width: 400px;
+  height: 300px;
+  border: 1px solid grey;
 }

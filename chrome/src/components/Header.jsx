@@ -5,8 +5,7 @@ export default function Header(props) {
   const setView = props.setView;
   return (
     <div className="chromelights-header">
-      <h1 onClick={() => setView('home')}>ChromeLights</h1>
-      <CreateHighlightButton setView={setView}/>
+      <h1 onClick={() => setView('home')}>StackDocs</h1>
     </div>
   );
 }
