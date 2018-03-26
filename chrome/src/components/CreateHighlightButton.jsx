@@ -41,7 +41,7 @@ export class CreateHighlightButton extends Component {
         separateWordSearch: false,
         className: "chromelights-highlights"
       })
-      this.props.setView('askOrAnnotate')
+      props.setView('askOrAnnotate')
     } catch (err) {
       console.error(err);
     }
@@ -50,7 +50,7 @@ export class CreateHighlightButton extends Component {
   render() {
     return (
       <div>
-        <button className="chromelights-btn" onClick={this.onHighlightClick}>Create a Highlight</button>
+        <button onClick={this.onHighlightClick}>Create</button>
       </div>
     );
   }
