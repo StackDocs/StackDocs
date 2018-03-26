@@ -1,0 +1,35 @@
+[debug] [2018-03-26T00:01:05.123Z] ----------------------------------------------------------------------
+[debug] [2018-03-26T00:01:05.125Z] Command:       /usr/local/bin/node /Users/domnik/Desktop/fsa-senior/chromelights/node_modules/.bin/firebase serve --only functions,hosting
+[debug] [2018-03-26T00:01:05.125Z] CLI Version:   3.14.0
+[debug] [2018-03-26T00:01:05.125Z] Platform:      darwin
+[debug] [2018-03-26T00:01:05.125Z] Node Version:  v9.4.0
+[debug] [2018-03-26T00:01:05.126Z] Time:          Sun Mar 25 2018 20:01:05 GMT-0400 (EDT)
+[debug] [2018-03-26T00:01:05.126Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-03-26T00:01:05.134Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-26T00:01:05.134Z] > authorizing via signed-in user
+[debug] [2018-03-26T00:01:05.135Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/chromelights-bb54c  
+ Sun Mar 25 2018 20:01:05 GMT-0400 (EDT)
+[debug] [2018-03-26T00:01:05.767Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-26T00:01:05.768Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/chromelights-bb54c/tokens  
+ Sun Mar 25 2018 20:01:05 GMT-0400 (EDT)
+[debug] [2018-03-26T00:01:06.402Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/domnik/Desktop/fsa-senior/chromelights'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-03-26T00:01:06.772Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/chromelights-bb54c  
+ Sun Mar 25 2018 20:01:06 GMT-0400 (EDT)
+[debug] [2018-03-26T00:01:06.773Z] >>> HTTP REQUEST GET https://apikeys.googleapis.com/v1/projects/chromelights-bb54c/apiKeys  
+ Sun Mar 25 2018 20:01:06 GMT-0400 (EDT)
+[debug] [2018-03-26T00:01:06.773Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/chromelights-bb54c  
+ Sun Mar 25 2018 20:01:06 GMT-0400 (EDT)
+[debug] [2018-03-26T00:01:07.107Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-26T00:01:07.108Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/851772945859/clients/_:getWebAppConfig  
+ Sun Mar 25 2018 20:01:07 GMT-0400 (EDT)
+[debug] [2018-03-26T00:01:07.160Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-26T00:01:07.234Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-26T00:01:07.507Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
