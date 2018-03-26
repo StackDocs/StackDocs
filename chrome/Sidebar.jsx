@@ -7,7 +7,7 @@ import HighlightAnnotations from './src/containers/HighlightAnnotations';
 import AskOrAnnotate from './src/components/AskOrAnnotate';
 // import FindHighlights from './src/components/FindHighlights';
 import CreateHighlights from './src/components/CreateHighlights';
-import Login from './src/components/Login';
+import Logout from './src/components/Logout';
 import shadowCSS from './src/shadow.css';
 import { urlEncode } from './src/highlighting';
 import { addEventListener } from './src/index.js';
@@ -21,7 +21,7 @@ export default class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: '',
+      view: 'home',
       isQuestion: true,
       user: '',
       activeId: ''
@@ -58,8 +58,6 @@ export default class Sidebar extends Component {
 
   selectComponents() {
     switch (this.state.view) {
-      case 'login':
-        return <Login />;
       case 'home':
         return <CreateHighlights />;
       case 'askOrAnnotate':
@@ -92,6 +90,7 @@ export default class Sidebar extends Component {
           <Provider store={store}>
             <div>
             <style type="text/css">{shadowCSS}</style>
+            <Logout />
             <Header setView={this.setView} />
             {this.selectComponents()}
             </div>

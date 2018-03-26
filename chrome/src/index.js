@@ -17,7 +17,7 @@ chrome.runtime.onMessage.addListener(function (request) {
   }
 });
 
-function toggleSidebar() {
+export function toggleSidebar() {
   if (!sidebarInTransition && sidebarExpanded) {
     sidebarInTransition = true;
     const sidebar = document.getElementById('chromelights-sidebar');
