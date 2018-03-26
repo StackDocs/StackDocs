@@ -16,7 +16,7 @@ chrome.pageAction.onClicked.addListener(async function(tab) {
   chrome.tabs.getSelected(null, function(tab) {
     chrome.tabs.sendMessage(
       tab.id,
-      {callFunction: 'toggleSidebar'},
+      {callFunction: 'toggleSidebar', currentUser: auth.currentUser},
       function(response) {
       }
     );

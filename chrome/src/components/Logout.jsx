@@ -15,8 +15,8 @@ export default function Logout() {
   };
 
   return (
-    <div id="login-btn">
-      <button onClick={handleClick}>Logout</button>
+    <div>
+      <div className="chromelights-logout-btn" onClick={handleClick}>logout</div>
     </div>
   );
 }

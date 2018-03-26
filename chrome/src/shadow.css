@@ -23,6 +23,42 @@
   font-weight: bolder;
 }
 
+.chromelights-user-header {
+  height: 26px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgb(238, 238, 238);
+  box-shadow: 0 2px 20px rgb(214, 212, 212);
+}
+
+.chromelights-logout-btn {
+  cursor: pointer;
+}
+
+.chromelights-logout-btn:hover {
+  text-decoration: underline;
+}
+
+/* .chromelights-logout-btn:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  bottom: 0;
+  left: 0;
+  background: #9CF5A6;
+  visibility: hidden;
+  border-radius: 5px;
+  transform: scaleX(0);
+  transition: .25s linear;
+}
+
+.chromelights-logout-btn:hover:before {
+    visibility: visible;
+    transform: scaleX(1);
+  } */
+
 .chromelights-main {
   padding: 10px 20px;
 }

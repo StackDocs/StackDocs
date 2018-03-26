@@ -5,31 +5,32 @@ import { firestore } from '~/fire';
 import Mark from 'mark.js';
 import HighlightAnnotations from './src/containers/HighlightAnnotations';
 import AskOrAnnotate from './src/components/AskOrAnnotate';
-// import FindHighlights from './src/components/FindHighlights';
+// import AllHighlights from './src/containers/AllHighlights';
+import FindHighlights from './src/components/FindHighlights';
 import CreateHighlights from './src/components/CreateHighlights';
 import Logout from './src/components/Logout';
 import shadowCSS from './src/shadow.css';
 import { urlEncode } from './src/highlighting';
 import { addEventListener } from './src/index.js';
 
-
 // Redux
-import {Provider} from 'react-redux'
-import store from '~/chrome/src/store'
+import { Provider } from 'react-redux';
+import store from '~/chrome/src/store';
 
 export default class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'home',
+      view: '',
       isQuestion: true,
       user: '',
       activeId: ''
     };
 
     document.addEventListener('click', () => {
-      if (document.getElementsByClassName('activeHighlight').length){
-        const activeId = document.getElementsByClassName('activeHighlight')[0].classList[1];
+      if (document.getElementsByClassName('activeHighlight').length) {
+        const activeId = document.getElementsByClassName('activeHighlight')[0]
+          .classList[1];
         this.setState({ activeId }, () => {
           // console.log('state inside', this.state);
         });
@@ -45,7 +46,6 @@ export default class Sidebar extends Component {
     console.log('component mounting....');
   }
 
-
   setView(view) {
     this.setState({
       view
@@ -58,14 +58,19 @@ export default class Sidebar extends Component {
 
   selectComponents() {
     switch (this.state.view) {
-      case '':
-        return <CreateHighlights />;
       case 'askOrAnnotate':
         return <AskOrAnnotate selectEntryType={this.selectEntryType} />;
+      case 'allHighlights':
+        return <AllHighlights />;
       case 'submission':
-        return <CreateHighlights setView={this.setView} isQuestion={this.state.isQuestion}/>;
+        return (
+          <CreateHighlights
+            setView={this.setView}
+            isQuestion={this.state.isQuestion}
+          />
+        );
       default:
-        return <HighlightAnnotations setView={this.setView} activeId={this.state.activeId} />;
+        return <HighlightAnnotations setView={this.setView} />;
     }
   }
 
@@ -89,11 +94,13 @@ export default class Sidebar extends Component {
         <div>
           <Provider store={store}>
             <div>
-            <style type="text/css">{shadowCSS}</style>
-            <Header setView={this.setView} />
-            <div className="chromelights-main">
-            {this.selectComponents()}
-            </div>
+              <style type="text/css">{shadowCSS}</style>
+              <Header setView={this.setView} />
+              <div className="chromelights-user-header">
+                <p>Hi, {this.props.user.displayName}!</p>
+                <Logout />
+              </div>
+              <div className="chromelights-main">{this.selectComponents()}</div>
             </div>
           </Provider>
         </div>
@@ -102,14 +109,15 @@ export default class Sidebar extends Component {
   }
 }
 
-
 const hlArr = [];
 const UrlPages = firestore.collection('UrlPages');
 
 const fetchHighlights = () => {
   let encodedDocUrl = urlEncode(document.location.href);
   //console.log('encoded URL:', encodedDocUrl);
-  UrlPages.doc(encodedDocUrl).collection('highlights').get()
+  UrlPages.doc(encodedDocUrl)
+    .collection('highlights')
+    .get()
     .then(querySnapshot => {
       //console.log('querysnapshot: ', querySnapshot);
       querySnapshot.forEach(highlight => {
