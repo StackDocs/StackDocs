@@ -39,12 +39,7 @@ const entries = (env, entry) =>
     ? ['react-hot-loader/patch', 'babel-polyfill', entry]
     : ['babel-polyfill', entry]
 
-const plugins = env => isHot(env) ? [
-  new webpack.HotModuleReplacementPlugin,  // Enable HMR globally
-  new webpack.NamedModulesPlugin,          // Better module names in the browser
-                                           // console on HMR updates
-  new webpack.NoEmitOnErrorsPlugin,        // Don't emit on errors.
-] : []
+const plugins = env => []
 
 function devServer(env) {
   if (isProd(env)) return

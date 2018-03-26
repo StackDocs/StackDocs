@@ -122,7 +122,7 @@ overflow: scroll;
   transition: background-color 0.3s;
 }
 
-.activeHighlight {
+.chromelights-highlights.activeHighlight {
   cursor: pointer;
   background-color: var(--highlight-color);
   transition: background-color 0.3s;

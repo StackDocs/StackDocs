@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Mark from 'mark.js';
+// import Mark from 'mark.js';
 
 import Sidebar from '~/chrome/Sidebar';
 
@@ -17,10 +17,7 @@ chrome.runtime.onMessage.addListener(function (request) {
   }
 });
 
-function toggleSidebar() {
-  const activeHighlights = document.getElementsByClassName('activeHighlight');
-  if (activeHighlights.length > 1) return;
-
+export function toggleSidebar() {
   if (!sidebarInTransition && sidebarExpanded) {
     sidebarInTransition = true;
     const sidebar = document.getElementById('chromelights-sidebar');
@@ -31,8 +28,8 @@ function toggleSidebar() {
     sidebarInTransition = false;
     }, 500);
 
-    const clickedHighlights = document.getElementsByClassName('activeHighlight');
-    clickedHighlights[0].classList.remove('activeHighlight');
+    // const clickedHighlights = document.getElementsByClassName('activeHighlight');
+    // clickedHighlights[0].classList.remove('activeHighlight');
 
   } else if (!sidebarInTransition) {
     sidebarInTransition = true;
@@ -78,7 +75,7 @@ export const addEventListener = () => {
   const highlightedElements = document.getElementsByClassName('chromelights-highlights');
 
   for (let i = 0; i < highlightedElements.length; i++) {
-    highlightedElements[i].addEventListener('click', (event) => {
+    highlightedElements[i].addEventListener('click', () => {
       // console.log(event.target.innerText);
       const self = highlightedElements[i];
 
@@ -86,14 +83,12 @@ export const addEventListener = () => {
 
       highlightedElements[i].classList.toggle('activeHighlight');
 
-      toggleSidebar();
-      // renderHighlight();
-
       for (let j = 0; j < alreadyActive.length; j++) {
         if (alreadyActive[j] !== self) {
+          console.log('alreadyActive !== self');
           alreadyActive[j].classList.remove('activeHighlight');
         }
       }
     });
   }
-}
+};

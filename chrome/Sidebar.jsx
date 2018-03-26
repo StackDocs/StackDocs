@@ -7,7 +7,7 @@ import HighlightAnnotations from './src/containers/HighlightAnnotations';
 import AskOrAnnotate from './src/components/AskOrAnnotate';
 // import FindHighlights from './src/components/FindHighlights';
 import CreateHighlights from './src/components/CreateHighlights';
-import Login from './src/components/Login';
+import Logout from './src/components/Logout';
 import shadowCSS from './src/shadow.css';
 import { urlEncode } from './src/highlighting';
 import { addEventListener } from './src/index.js';
@@ -21,7 +21,7 @@ export default class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: '',
+      view: 'home',
       isQuestion: true,
       user: '',
       activeId: ''
@@ -58,9 +58,7 @@ export default class Sidebar extends Component {
 
   selectComponents() {
     switch (this.state.view) {
-      case 'login':
-        return <Login />;
-      case 'home':
+      case '':
         return <CreateHighlights />;
       case 'askOrAnnotate':
         return <AskOrAnnotate selectEntryType={this.selectEntryType} />;
@@ -121,9 +119,9 @@ const fetchHighlights = () => {
       return 'next';
     })
     .then(() => {
-      // console.log('highlight arr: ', hlArr);
+      console.log('highlight arr: ', hlArr);
       hlArr.map(hl => {
-        // console.log('in hl map', hl[1], hl[0]);
+        console.log('in hl map', hl[1], hl[0]);
         const markInstance = new Mark(hl[0].domPath);
         markInstance.mark(hl[0].newString, {
           acrossElements: true,
