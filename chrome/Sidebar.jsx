@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import ShadowDOM from 'react-shadow';
+import Header from './src/components/Header';
+import SecondaryHeader from './src/components/SecondaryHeader';
 import { firestore } from '~/fire';
 import Mark from 'mark.js';
 import shadowCSS from './src/shadow.css';
 
 //Components
-import Header from './src/components/Header';
 import AllHighlights from './src/containers/AllHighlights';
 import SingleHighlight from './src/containers/SingleHighlight';
 import AskOrAnnotate from './src/components/AskOrAnnotate';
@@ -97,10 +98,7 @@ export default class Sidebar extends Component {
             <div>
               <style type="text/css">{shadowCSS}</style>
               <Header setView={this.setView} />
-              <div className="chromelights-user-header">
-                <p>Hi, {this.props.user.displayName}!</p>
-                <Logout />
-              </div>
+              <SecondaryHeader userDisplayName={this.props.user.displayName} />
               <div className="chromelights-main">{this.selectComponents()}</div>
             </div>
           </Provider>
