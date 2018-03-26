@@ -1,3 +1,9 @@
+* {
+  --highlight-color: #fffd7d;
+  --primary-blue: #3498db;
+  --darker-blue: #084f7e;
+}
+
 .chromelights-header {
   width: 100%;
   height: 60px;
@@ -5,6 +11,71 @@
   justify-content: center;
   align-items: center;
   color: white;
-  background-color: rgb(52, 96, 207);
+  /* background-color: var(--primary-background-color); */
+  background: #3498db;
+  background-image: linear-gradient(to top, #3498db, #2980b9);
   margin: auto;
+}
+
+.chromelights-header h1 {
+  font-weight: bolder;
+}
+
+.chromelights-main {
+  padding: 10px 20px;
+}
+
+.chromelights-highlight-header {
+
+}
+.chromelights-highlight-container {
+  display: flex;
+  justify-content: center;
+}
+
+.chromelights-highlight-title {
+  display: block;
+  margin: 40px auto 40px auto;
+  font-weight: normal;
+  background-color: var(--highlight-color);
+  transition: background-color 0.3s;
+  font-family: Monaco, 'Andale Mono', monospace;
+}
+
+.chromelights-btn {
+  display: block;
+  margin: 0 auto 30px;
+  width: 200px;
+  height: 40px;
+  color: var(--primary-blue);
+  font-size: 1rem;
+  font-weight: bold;
+  border: 3px solid var(--primary-blue);
+  border-radius: 26px;
+  transition: all  300ms;
+}
+
+.chromelights-btn:hover {
+  transform: scale(1.1);
+  transition: all 300ms;
+}
+
+.chromelights-big-icon {
+  display: block;
+  margin: 40px auto;
+
+}
+
+.chromelights-question-icon {
+  fill: rgb(95, 186, 124);
+}
+
+.chromelights-annotation-icon {
+  fill: rgb(243, 136, 43)
+}
+
+.chromelights-entry-input {
+  width: 400px;
+  height: 300px;
+  border: 1px solid grey;
 }

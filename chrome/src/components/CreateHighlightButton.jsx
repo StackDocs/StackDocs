@@ -52,7 +52,7 @@ export class CreateHighlightButton extends Component {
   render() {
     return (
       <div>
-        <button onClick={this.onHighlightClick}>Create</button>
+        <button className="chromelights-btn" onClick={this.onHighlightClick}>Create a Highlight</button>
       </div>
     );
   }

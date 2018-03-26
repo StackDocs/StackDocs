@@ -67,7 +67,7 @@ export default class Sidebar extends Component {
       case 'submission':
         return <CreateHighlights setView={this.setView} isQuestion={this.state.isQuestion}/>;
       default:
-        return <HighlightAnnotations activeId={this.state.activeId}/>;
+        return <HighlightAnnotations setView={this.setView} activeId={this.state.activeId} />;
     }
   }
 
@@ -93,7 +93,9 @@ export default class Sidebar extends Component {
             <div>
             <style type="text/css">{shadowCSS}</style>
             <Header setView={this.setView} />
+            <div className="chromelights-main">
             {this.selectComponents()}
+            </div>
             </div>
           </Provider>
         </div>

@@ -6,7 +6,6 @@ export default function Header(props) {
   return (
     <div className="chromelights-header">
       <h1 onClick={() => setView('home')}>ChromeLights</h1>
-      <CreateHighlightButton setView={setView}/>
     </div>
   );
 }

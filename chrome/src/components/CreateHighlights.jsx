@@ -1,33 +1,33 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import ReactDOM from "react-dom";
-import { firestore } from "~/fire";
-import Mark from "mark.js";
-import { createHighlightedObj, urlEncode } from "../highlighting";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
+import { firestore } from '~/fire';
+import Mark from 'mark.js';
+import { createHighlightedObj, urlEncode } from '../highlighting';
 
 //Firestore
-const Annotations = firestore.collection("Annotations");
-const UrlPages = firestore.collection("UrlPages");
-const Entries = firestore.collection("Entries");
+const Annotations = firestore.collection('Annotations');
+const UrlPages = firestore.collection('UrlPages');
+const Entries = firestore.collection('Entries');
 
 export class CreateHighlights extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: "",
-      highlightText: "highlight text to create a comment!",
+      message: '',
+      highlightText: 'highlight text to create a comment!',
       highlightObj: {},
-      markInstance: ""
+      markInstance: ''
     };
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.setState({
-      message: "",
-      highlightText: "highlight text to create a comment!",
+      message: '',
+      highlightText: 'highlight text to create a comment!',
       highlightObj: {},
-      markInstance: ""
-    })
+      markInstance: ''
+    });
   }
 
   handleChange = event => {
@@ -37,7 +37,6 @@ export class CreateHighlights extends Component {
       [name]: value
     });
   };
-
 
   // PLEASE DO NOT ERASE THIS - Thanks (Fran)
   // async onHighlightClick(event) {
@@ -74,18 +73,18 @@ export class CreateHighlights extends Component {
     const newFireHL = {
       newString,
       domPath,
-      submitUrl,
+      submitUrl
     };
-    console.log("newFireHL", newFireHL);
+    console.log('newFireHL', newFireHL);
 
     UrlPages.doc(submitUrl)
-      .collection("highlights")
+      .collection('highlights')
       .add(newFireHL)
       .then(highlight => {
         UrlPages.doc(submitUrl)
-          .collection("highlights")
+          .collection('highlights')
           .doc(highlight.id)
-          .collection("entries")
+          .collection('entries')
           .add({
             isQuestion: this.props.isQuestion,
             upVote: 0,
@@ -93,32 +92,31 @@ export class CreateHighlights extends Component {
             content: messageSubmit,
             highlightID: highlight.id,
             comments: [],
-            user: "Tom",
+            user: 'Tom',
             date: new Date(),
-            title: "TBD",
+            title: 'TBD'
           });
       })
       .then(() => {
-       setView("")
+        setView('');
       })
-      .catch(error => console.log("error: ", error));
+      .catch(error => console.log('error: ', error));
     this.state;
   };
 
   render() {
     return (
       <div>
-        <h4>
-          Highlighted text:
-          {this.props.highlightText}
-        </h4>
+        <div className="chromelights-highlight-container">
+          <h3 className="chromelights-highlight-title">...{this.props.highlightText}...</h3>
+        </div>
         <h5>User name, data </h5>
         <div id="message-form">
           <form onSubmit={this.onSubmit}>
-            <input
+            <textarea
               type="text"
               name="message"
-              className="message-field-wide"
+              className="chromelights-entry-input"
               onChange={this.handleChange}
               value={this.state.message}
             />
@@ -130,10 +128,10 @@ export class CreateHighlights extends Component {
   }
 }
 
-const MapState = ({ highlight }) => { 
+const MapState = ({ highlight }) => {
   const highlightObj = highlight.highlightObj;
   const highlightText = highlight.highlightText;
-  return { highlightObj, highlightText }
+  return { highlightObj, highlightText };
 };
 
 const MapDispatch = null;

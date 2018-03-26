@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f93405f0bed00968e20a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ec0a5e3fdc0bc909bc3d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -763,9 +763,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(google, 'google', '/Users/fran/Fullstack/chromelights/chrome/src/options.js');
+  __REACT_HOT_LOADER__.register(google, 'google', '/Users/domnik/Desktop/fsa-senior/chromelights/chrome/src/options.js');
 
-  __REACT_HOT_LOADER__.register(oAuthGoogle, 'oAuthGoogle', '/Users/fran/Fullstack/chromelights/chrome/src/options.js');
+  __REACT_HOT_LOADER__.register(oAuthGoogle, 'oAuthGoogle', '/Users/domnik/Desktop/fsa-senior/chromelights/chrome/src/options.js');
 }();
 
 ;
@@ -813,17 +813,17 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(firestore, 'firestore', '/Users/fran/Fullstack/chromelights/fire/index.js');
+  __REACT_HOT_LOADER__.register(firestore, 'firestore', '/Users/domnik/Desktop/fsa-senior/chromelights/fire/index.js');
 
-  __REACT_HOT_LOADER__.register(database, 'database', '/Users/fran/Fullstack/chromelights/fire/index.js');
+  __REACT_HOT_LOADER__.register(database, 'database', '/Users/domnik/Desktop/fsa-senior/chromelights/fire/index.js');
 
-  __REACT_HOT_LOADER__.register(auth, 'auth', '/Users/fran/Fullstack/chromelights/fire/index.js');
+  __REACT_HOT_LOADER__.register(auth, 'auth', '/Users/domnik/Desktop/fsa-senior/chromelights/fire/index.js');
 
-  __REACT_HOT_LOADER__.register(storage, 'storage', '/Users/fran/Fullstack/chromelights/fire/index.js');
+  __REACT_HOT_LOADER__.register(storage, 'storage', '/Users/domnik/Desktop/fsa-senior/chromelights/fire/index.js');
 
-  __REACT_HOT_LOADER__.register(userById, 'userById', '/Users/fran/Fullstack/chromelights/fire/index.js');
+  __REACT_HOT_LOADER__.register(userById, 'userById', '/Users/domnik/Desktop/fsa-senior/chromelights/fire/index.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/fran/Fullstack/chromelights/fire/index.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/domnik/Desktop/fsa-senior/chromelights/fire/index.js');
 }();
 
 ;

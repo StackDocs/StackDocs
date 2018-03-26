@@ -14,10 +14,10 @@ top: 0;
 right: 0;
 height: 100%;
 width: 30%;
+font-family: Helvetica, Arial, sans-serif;
 background-color: white;
 z-Index: 16777271;
 box-shadow:-15px 0 50px rgba(0,0,0,0.15);
-font-family: 'Courier New', Courier, monospace;
 overflow: scroll;
 }
 
