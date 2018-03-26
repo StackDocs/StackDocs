@@ -13,11 +13,11 @@ let sidebarInTransition = false;
 
 chrome.runtime.onMessage.addListener(function (request) {
   if (request.callFunction === 'toggleSidebar') {
-    toggleSidebar();
+    toggleSidebar(request.currentUser);
   }
 });
 
-export function toggleSidebar() {
+export function toggleSidebar(user) {
   if (!sidebarInTransition && sidebarExpanded) {
     sidebarInTransition = true;
     const sidebar = document.getElementById('chromelights-sidebar');
@@ -41,7 +41,7 @@ export function toggleSidebar() {
     setTimeout(() => {
       sidebarInTransition = false;
     }, 500);
-    ReactDOM.render(<Sidebar />, document.getElementById('chromelights-sidebar'));
+    ReactDOM.render(<Sidebar user={user} />, document.getElementById('chromelights-sidebar'));
   }
 }
 
