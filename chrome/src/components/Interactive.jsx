@@ -10,7 +10,8 @@ export default class Interactive extends Component {
     super(props);
   }
   render() {
-    const { downVote, upVote, comments } = this.props;
+    const { downVote, upVote, comments, entryId } = this.props;
+    console.log(entryId,"Entry id")
     return (
       <div>
         <ThumbsUp onClick={() => console.log('thumbs up!')}/>

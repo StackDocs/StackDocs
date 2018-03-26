@@ -1,18 +1,31 @@
 import React, { Component } from 'react';
 import { Map } from 'fireview';
 import { firestore as fs } from '~/fire';
-import Entries from '../components/Entries';
+import Annotations from '../components/Annotations';
 import Interactive from '../components/Interactive';
 import CreateHighlightButton from '../components/CreateHighlightButton';
 import { urlEncode } from '../highlighting';
 
-export default class SingleHighlight extends Component {
+export default class HighlightAnnotations extends Component {
   constructor(props) {
-    super(props)
+    super(props);
+
+    //get the active highlight (most recently clicked)
+    // const selected = document.getElementsByClassName('activeHighlight')[0];
+    // get an array of classes on it
+    // const selectedClasses = selected.className.split(' ');
+    // const selectedId = selectedClasses.filter(el => {
+    //   return el !== 'activeHighlight' && el !== 'chromelights-highlights';
+    // });
+
+    /* the selectedId should be used to find and render all of the
+         annotations associated with the selected highlight */
+
+    // console.log('classes', selectedId);
 
     this.state = {
-      selectedHighlight: this.props.activeId
-    }
+      selectedHighlight: this.props.activeId || 'Select Some Text'
+    };
   }
 
   componentWillReceiveProps(newProps) {
@@ -45,7 +58,7 @@ export default class SingleHighlight extends Component {
             .doc(this.state.selectedHighlight)
             .collection('entries')}
           Loading={() => <h3>Loading...</h3>}
-          Empty={() => <h3 color="red">No Highlights on the page</h3>}
+          Empty={() => <h3 color="red">{this.state.selectedHighlight}</h3>}
           Render={({
             upVote,
             downVote,
@@ -53,19 +66,17 @@ export default class SingleHighlight extends Component {
             comments,
             user,
             date,
-            title,
-            entryId,
+            title
           }) => (
             <div>
               <h3>{title}</h3>
               {console.log(typeof date)}
-              <Entries
+              <Annotations
                 content={content}
                 user={user}
-                date="March 2nd, 2003"
+                date="March 20, 2018"
               />
               <Interactive
-                entryId={entryId}
                 downVote={downVote}
                 upVote={upVote}
                 comments={comments}
