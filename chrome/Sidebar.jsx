@@ -119,9 +119,9 @@ const fetchHighlights = () => {
       return 'next';
     })
     .then(() => {
-      // console.log('highlight arr: ', hlArr);
+      console.log('highlight arr: ', hlArr);
       hlArr.map(hl => {
-        // console.log('in hl map', hl[1], hl[0]);
+        console.log('in hl map', hl[1], hl[0]);
         const markInstance = new Mark(hl[0].domPath);
         markInstance.mark(hl[0].newString, {
           acrossElements: true,
