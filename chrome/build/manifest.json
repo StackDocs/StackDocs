@@ -41,6 +41,7 @@
       "storage",
       "identity"
     ],
+    "web_accessible_resources": [ "Raleway/*.ttf", "style.css" ],
     "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://apis.google.com/ https://*.firebaseio.com https://www.googleapis.com; object-src 'self'"
 }
 
