@@ -8,17 +8,18 @@ import Comment from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/comment.s
 export default class Interactive extends Component {
   constructor(props) {
     super(props);
+    this.state ={
+    }
   }
   render() {
-    const { downVote, upVote, comments } = this.props;
+    const { downVote, upVote, comments, isComment } = this.props;
     return (
       <div>
         <ThumbsUp onClick={() => console.log('thumbs up!')}/>
         {upVote}
         <ThumbsDown onClick={() => console.log('thumbs down !')}/>
         {downVote}
-        <Comment />
-        {comments.length}
+        { !isComment && <Comment /> }
       </div>
     );
   }
