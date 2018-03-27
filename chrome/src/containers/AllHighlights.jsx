@@ -41,32 +41,33 @@ export default class AllHighlights extends Component {
             .collection('highlights')
             .doc(this.state.selectedHighlight)
             .collection('entries')}
-          Loading={<h3>Loading...</h3>}
-          Empty={<h3 color="red">No Annotations</h3>}
-          Render={({
-            upVote,
-            downVote,
-            content,
-            comments,
-            user,
-            date,
-            title
-          }) => (
-            <div>
-              <h3>{title}</h3>
-              {console.log(typeof date)}
-              <Annotations
-                content={content}
-                user={user}
-                date="March 20, 2018"
-              />
-              <Interactive
-                downVote={downVote}
-                upVote={upVote}
-                comments={comments}
-              />
-            </div>
-          )}
+          Loading={() => <h3>Loading...</h3>}
+          Empty={() => <h3 color="red">No Annotations</h3>}
+          // Render={({
+          //   upVote,
+          //   downVote,
+          //   content,
+          //   comments,
+          //   user,
+          //   date,
+          //   title
+          // }) => (
+          //   <div>
+          //     <h3>{title}</h3>
+          //     {console.log(typeof date)}
+          //     <Annotations
+          //       content={content}
+          //       user={user}
+          //       date="March 20, 2018"
+          //     />
+          //     <Interactive
+          //       downVote={downVote}
+          //       upVote={upVote}
+          //       comments={comments}
+          //     />
+          //   </div>
+          // )}
+          Render={() => <h1>Nothing to show for now</h1>}
         />
       </div>
     );

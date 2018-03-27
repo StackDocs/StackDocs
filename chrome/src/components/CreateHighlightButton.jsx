@@ -27,26 +27,24 @@ export class CreateHighlightButton extends Component {
     try {
       event.preventDefault();
       const highlightObj = createHighlightedObj();
-      if (this.props.highlightObj ? this.props.highlightObj.markInstance : false) this.props.markInstance.unmark();
+      if (this.props.markInstance) this.props.markInstance.unmark();
       const markInstance = await new Mark(highlightObj.domPath);
-      highlightObj ? this.props.storeHighlight(
+      this.props.storeHighlight(
         {
           highlightObj,
           markInstance,
           highlightText: highlightObj.newString
-        },
-        () => {
-          markInstance.mark(highlightObj.newString, {
-            acrossElements: true,
-            separateWordSearch: false,
-            className: "chromelights-highlights"
-          });
         }
-      ) : console.log("nothing selected")
+      )
+      markInstance.mark(highlightObj.newString, {
+        acrossElements: true,
+        separateWordSearch: false,
+        className: "chromelights-highlights"
+      })
+      this.props.setView('askOrAnnotate')
     } catch (err) {
       console.error(err);
     }
-    this.props.setView('askOrAnnotate')
   }
 
   render() {
