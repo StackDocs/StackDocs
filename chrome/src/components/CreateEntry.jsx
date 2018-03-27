@@ -64,17 +64,29 @@ export class CreateEntry extends Component {
             isQuestion: this.props.isQuestion,
             upVote: 0,
             downVote: 0,
+            score: 0,
             content: messageSubmit,
             highlightID: highlight.id,
             comments: [],
-            user: 'Tom',
+            user: this.props.user.displayName,
+            userId: this.props.user.uid,
             date: new Date(),
             title: 'TBD'
-          });
+          })
+          .then(entry =>{
+            UrlPages.doc(submitUrl)
+            .collection('highlights')
+            .doc(highlight.id)
+            .collection('entries')
+            .doc(entry.id)
+            .update({
+              entryId: entry.id,
+            })
+            .catch(error => console.log('error: ', error));
+          })
+          .catch(error => console.log('error: ', error));;;
       })
-      .then(() => {
-        setView('');
-      })
+      .then(_ => setView(''))
       .catch(error => console.log('error: ', error));
   };
 

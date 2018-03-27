@@ -44,8 +44,8 @@ export default class SingleHighlight extends Component {
             .collection('highlights')
             .doc(this.state.selectedHighlight)
             .collection('entries')}
-          Loading={<h3>Loading...</h3>}
-          Empty={<h3 color="red">No Annotations</h3>}
+          Loading={() => <h3>Loading...</h3>}
+          Empty={() => <h3 color="red">No Annotations</h3>}
           Render={({
             upVote,
             downVote,

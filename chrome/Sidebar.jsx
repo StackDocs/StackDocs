@@ -35,9 +35,8 @@ export default class Sidebar extends Component {
       if (document.getElementsByClassName('activeHighlight').length) {
         const activeId = document.getElementsByClassName('activeHighlight')[0]
           .classList[1];
-        this.setState({ activeId }, () => {
-          // console.log('state inside', this.state);
-        });
+        this.setState({ activeId })
+        this.setView('singleHL');
       }
     });
   }
@@ -72,7 +71,7 @@ export default class Sidebar extends Component {
       case 'home':
         return <AllHighlights setView={this.setView} />;
       case 'singleHL':
-        return <SingleHighlight />;
+        return <SingleHighlight setView={this.setView} activeId={this.state.activeId}/>;
       case 'askOrAnnotate':
         return <AskOrAnnotate selectEntryType={this.selectEntryType} />;
       case 'createEntry':
@@ -81,6 +80,7 @@ export default class Sidebar extends Component {
             user={this.props.user.displayName}
             setView={this.setView}
             isQuestion={this.state.isQuestion}
+            user={this.props.user}
           />
         );
       default:
