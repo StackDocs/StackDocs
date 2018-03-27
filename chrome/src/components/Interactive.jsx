@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import Comment from './Comment';
 
 //icons
 import ThumbsUp from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/thumbs-up.svg';
 import ThumbsDown from 'svg-react-loader?name=ThumbsDown!~/chrome/src/icons/thumbs-down.svg';
-import Comment from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/comment.svg';
+import CommentIcon from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/comment.svg';
 
 export default class Interactive extends Component {
   constructor(props) {
@@ -17,8 +18,9 @@ export default class Interactive extends Component {
         {upVote}
         <ThumbsDown onClick={() => console.log('thumbs down !')}/>
         {downVote}
-        <Comment />
+        <CommentIcon />
         {comments.length}
+        <Comment comments={comments} />
       </div>
     );
   }

@@ -30,23 +30,17 @@ export default class Sidebar extends Component {
       isQuestion: true,
       activeId: ''
     };
-
-    document.addEventListener('click', () => {
-      if (document.getElementsByClassName('activeHighlight').length) {
-        const activeId = document.getElementsByClassName('activeHighlight')[0]
-          .classList[1];
-        this.setState({ activeId })
-        this.setView('singleHL');
-      }
-    });
   }
+
+
 
   componentDidMount() {
-    fetchHighlights();
+    this.fetchHighlights();
   }
 
+
   setView = view => {
-    console.log('VIEW IN SET VIEW: ', view)
+    console.log('VIEW IN SET VIEW: ', view);
     const lastView = this.state.view;
     const newPreviousViews = [...this.state.previousViews, lastView];
     this.setState({
@@ -61,7 +55,7 @@ export default class Sidebar extends Component {
       view: this.state.previousViews[this.state.previousViews.length - 1],
       previousViews: this.state.previousViews.slice(0, -1)
     });
-  }
+  };
   //add components that are rendered depending on views here:
   //to redirect switch views from your component pass the setView as props
   //and change the view in your component's button, form etc.
@@ -71,7 +65,12 @@ export default class Sidebar extends Component {
       case 'home':
         return <AllHighlights setView={this.setView} />;
       case 'singleHL':
-        return <SingleHighlight setView={this.setView} activeId={this.state.activeId}/>;
+        return (
+          <SingleHighlight
+            setView={this.setView}
+            activeId={this.state.activeId}
+          />
+        );
       case 'askOrAnnotate':
         return <AskOrAnnotate selectEntryType={this.selectEntryType} />;
       case 'createEntry':
@@ -98,9 +97,62 @@ export default class Sidebar extends Component {
     this.setView('createEntry');
   };
 
+  fetchHighlights = async () => {
+    const hlArr = [];
+    let encodedDocUrl = urlEncode(document.location.href);
+
+    await UrlPages.doc(encodedDocUrl)
+      .collection('highlights')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(highlight => {
+          const markedId = document.getElementsByClassName(highlight.id);
+
+          if (!markedId.length) {
+            hlArr.push([highlight.data(), highlight.id]);
+          }
+        });
+        return 'next';
+      })
+      .then(() => {
+        hlArr.map(hl => {
+          const markInstance = new Mark(hl[0].domPath);
+          markInstance.mark(hl[0].newString, {
+            acrossElements: true,
+            separateWordSearch: false,
+            className: `chromelights-highlights ${hl[1]}`
+          });
+        });
+      })
+      .then(() => {
+        addEventListener();
+      })
+      .catch(error => console.log('error: ', error));
+
+        const markedEls = document.getElementsByClassName(
+          'chromelights-highlights'
+        );
+        console.log('GET EL BY CLASS:', markedEls, 'Length is', markedEls[0])
+        for (let i = 0; i < markedEls.length; i++) {
+          console.log('this loop has run', i, 'times. Class is: ', markedEls[i].className);
+          markedEls[i].addEventListener('click', () => {
+            console.log('You clicked me!');
+            if (document.getElementsByClassName('activeHighlight').length) {
+              const activeId = document.getElementsByClassName('activeHighlight')[0]
+                .classList[1];
+                console.log('activeId :', activeId)
+              this.setState({ activeId });
+              this.setView('singleHL');
+            }
+            console.log('STATE IN SIDEBAR COMP DID MOUNT', this.state);
+          });
+        }
+  }
   //components that will always show got here in the render
   //components that will be only rendered in certain views
   //go above in the selectComponents functions' switch statement
+
+
 
   render() {
     return (
@@ -125,35 +177,4 @@ export default class Sidebar extends Component {
 
 const UrlPages = firestore.collection('UrlPages');
 
-const fetchHighlights = () => {
-  const hlArr = [];
-  let encodedDocUrl = urlEncode(document.location.href);
 
-  UrlPages.doc(encodedDocUrl)
-    .collection('highlights')
-    .get()
-    .then(querySnapshot => {
-      querySnapshot.forEach(highlight => {
-        const markedId = document.getElementsByClassName(highlight.id);
-
-        if (!markedId.length) {
-          hlArr.push([highlight.data(), highlight.id]);
-        }
-      });
-      return 'next';
-    })
-    .then(() => {
-      hlArr.map(hl => {
-        const markInstance = new Mark(hl[0].domPath);
-        markInstance.mark(hl[0].newString, {
-          acrossElements: true,
-          separateWordSearch: false,
-          className: `chromelights-highlights ${hl[1]}`
-        });
-      });
-    })
-    .then(() => {
-      addEventListener();
-    })
-    .catch(error => console.log('error: ', error));
-};
