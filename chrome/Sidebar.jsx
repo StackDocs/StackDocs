@@ -13,7 +13,6 @@ import AskOrAnnotate from './src/components/AskOrAnnotate';
 import CreateEntry from './src/components/CreateEntry';
 import Logout from './src/components/Logout';
 
-
 //helper functions
 import { urlEncode } from './src/highlighting';
 import { addEventListener } from './src/index.js';
@@ -26,9 +25,9 @@ export default class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: '',
+      view: 'home',
+      previousViews: [],
       isQuestion: true,
-      user: '',
       activeId: ''
     };
 
@@ -47,18 +46,31 @@ export default class Sidebar extends Component {
     fetchHighlights();
   }
 
-  setView = (view) => {
+  setView = view => {
+    console.log('VIEW IN SET VIEW: ', view)
+    const lastView = this.state.view;
+    const newPreviousViews = [...this.state.previousViews, lastView];
     this.setState({
-      view
+      view,
+      previousViews: newPreviousViews
+    });
+    console.log('STATE: ', this.state);
+  };
+
+  goToPreviousView = () => {
+    this.setState({
+      view: this.state.previousViews[this.state.previousViews.length - 1],
+      previousViews: this.state.previousViews.slice(0, -1)
     });
   }
-
   //add components that are rendered depending on views here:
   //to redirect switch views from your component pass the setView as props
   //and change the view in your component's button, form etc.
 
   selectComponents() {
     switch (this.state.view) {
+      case 'home':
+        return <AllHighlights setView={this.setView} />;
       case 'singleHL':
         return <SingleHighlight />;
       case 'askOrAnnotate':
@@ -71,20 +83,19 @@ export default class Sidebar extends Component {
           />
         );
       default:
-      //new = AllEntries
+        //new = AllEntries
         return <AllHighlights setView={this.setView} />;
     }
   }
 
-  selectEntryType = (evt) => {
+  selectEntryType = evt => {
     evt.preventDefault();
     const type = evt.target.value;
     this.setState({
-      isQuestion: type,
-      view: 'createEntry'
+      isQuestion: type
     });
-    console.log('state: ', this.state);
-  }
+    this.setView('createEntry');
+  };
 
   //components that will always show got here in the render
   //components that will be only rendered in certain views
@@ -98,7 +109,10 @@ export default class Sidebar extends Component {
             <div>
               <style type="text/css">{shadowCSS}</style>
               <Header setView={this.setView} />
-              <SecondaryHeader userDisplayName={this.props.user.displayName} />
+              <SecondaryHeader
+                goToPreviousView={this.goToPreviousView}
+                userDisplayName={this.props.user.displayName}
+              />
               <div className="chromelights-main">{this.selectComponents()}</div>
             </div>
           </Provider>
@@ -108,16 +122,16 @@ export default class Sidebar extends Component {
   }
 }
 
-
 const UrlPages = firestore.collection('UrlPages');
 
 const fetchHighlights = () => {
   const hlArr = [];
   let encodedDocUrl = urlEncode(document.location.href);
 
-  UrlPages.doc(encodedDocUrl).collection('highlights').get()
+  UrlPages.doc(encodedDocUrl)
+    .collection('highlights')
+    .get()
     .then(querySnapshot => {
-
       querySnapshot.forEach(highlight => {
         const markedId = document.getElementsByClassName(highlight.id);
 
