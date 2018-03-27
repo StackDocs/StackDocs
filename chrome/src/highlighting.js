@@ -7,6 +7,7 @@ export const createHighlightedObj = () => {
   const url = document.location.href;
 
   let newString, currentNode, domPath, activeId;
+  let isAddingEntry = false;
 
   if (selection.length) {
     newString = window.getSelection().toString();
@@ -20,13 +21,15 @@ export const createHighlightedObj = () => {
     currentNode = clicked[0];
     activeId = clicked[0].classList[1];
     domPath = '';
+    isAddingEntry = true;
   }
 
   const selObj = {
       newString,
       domPath,
       url,
-      activeId
+      activeId,
+      isAddingEntry
     };
 
   return selObj;
