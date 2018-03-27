@@ -10,8 +10,8 @@ import { createHighlight } from "~/chrome/src/store"
 export class CreateHighlightButton extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+    this.state = {};
+
     this.onHighlightClick = this.onHighlightClick.bind(this);
   }
 
@@ -24,33 +24,52 @@ export class CreateHighlightButton extends Component {
   };
 
   async onHighlightClick(event) {
+    event.preventDefault();
     try {
-      event.preventDefault();
       const highlightObj = createHighlightedObj();
-      if (this.props.markInstance) this.props.markInstance.unmark();
-      const markInstance = await new Mark(highlightObj.domPath);
-      this.props.storeHighlight(
-        {
-          highlightObj,
-          markInstance,
-          highlightText: highlightObj.newString
-        }
-      )
-      await markInstance.mark(highlightObj.newString, {
-        acrossElements: true,
-        separateWordSearch: false,
-        className: "chromelights-highlights"
-      })
-      this.props.setView('askOrAnnotate')
+      console.log(highlightObj);
+
+      if (document.getSelection().toString().length) {
+        if (this.props.markInstance) this.props.markInstance.unmark();
+        const markInstance = await new Mark(highlightObj.domPath);
+        this.props.storeHighlight(
+          {
+            highlightObj,
+            markInstance,
+            highlightText: highlightObj.newString
+          }
+        );
+        await markInstance.mark(highlightObj.newString, {
+          acrossElements: true,
+          separateWordSearch: false,
+          className: 'chromelights-highlights'
+        });
+      } else if (document.getElementsByClassName('activeHighlight').length){
+        this.props.storeHighlight(
+          {
+            highlightObj,
+            markInstance: '',
+            highlightText: highlightObj.newString
+          }
+        );
+      }
+      this.props.setView('askOrAnnotate');
     } catch (err) {
       console.error(err);
     }
   }
 
   render() {
+    const isClicked = document.getElementsByClassName('activeHighlight').length;
     return (
       <div>
-        <button className="chromelights-btn" onClick={this.onHighlightClick}>Create a Highlight</button>
+        <button className="chromelights-btn" onClick={this.onHighlightClick}>
+          {
+            isClicked ?
+            'Add an Entry' :
+            'Create a Highlight'
+          }
+        </button>
       </div>
     );
   }
@@ -58,8 +77,8 @@ export class CreateHighlightButton extends Component {
 const MapState = ({highlight}) => {
   const highlightObj = highlight.highlightObj;
   const markInstance = highlight.markInstance;
-  return { highlightObj, markInstance }
-}
+  return { highlightObj, markInstance };
+};
 
 const MapDispatch = dispatch => ({
   storeHighlight: (highlight) => dispatch(createHighlight(highlight))

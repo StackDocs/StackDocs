@@ -5,7 +5,7 @@ import AnnotationIcon from 'svg-react-loader?name=AnnotationIcon!~/chrome/src/ic
 
 export function AskOrAnnotate(props) {
   const selectEntryType = props.selectEntryType;
-  console.log(props.highlightObj, 'highlight object');
+  // console.log(props.highlightObj, 'highlight object');
   return (
     <div className="chromelights-ask-or-annotate">
       <QuestionIcon className="chromelights-big-icon chromelights-question-icon" />

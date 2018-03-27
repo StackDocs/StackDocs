@@ -11,13 +11,17 @@ export default class SingleHighlight extends Component {
     super(props);
 
     this.state = {
-      selectedHighlight: this.props.activeId || 'Select Some Text'
+      selectedHighlight: this.props.activeHL || 'Select Some Text',
+      selectedId: this.props.activeId
     };
   }
 
   componentWillReceiveProps(newProps) {
     if (newProps.activeId) {
-      this.setState({ selectedHighlight: newProps.activeId });
+      this.setState({
+        selectedHighlight: newProps.activeHL,
+        selectedId: newProps.activeId
+      });
     }
   }
 
@@ -25,7 +29,7 @@ export default class SingleHighlight extends Component {
     const urlReadOnly = document.location.href;
     const url = urlEncode(urlReadOnly);
     const setView = this.props.setView;
-    console.log('PROPS IN HIGHLIGHTANNOTATIONS: ', this.props);
+
     return (
       <div id="highlight-annotation">
         <div className="chromelights-highlight-header">
@@ -34,7 +38,11 @@ export default class SingleHighlight extends Component {
               {`...${this.state.selectedHighlight}...`}
             </h3>
           </div>
-          <CreateHighlightButton setView={setView} />
+          <CreateHighlightButton
+            setView={setView}
+            activeId={this.state.activeId}
+            activeHL={this.state.activeHL}
+          />
         </div>
         <Map
           each
@@ -42,7 +50,7 @@ export default class SingleHighlight extends Component {
             .collection('UrlPages')
             .doc(url)
             .collection('highlights')
-            .doc(this.state.selectedHighlight)
+            .doc(this.state.selectedId)
             .collection('entries')}
           Loading={() => <h3>Loading...</h3>}
           Empty={() => <h3 color="red">No Annotations</h3>}
@@ -57,11 +65,10 @@ export default class SingleHighlight extends Component {
           }) => (
             <div>
               <h3>{title}</h3>
-              {console.log(typeof date)}
               <Annotations
                 content={content}
                 user={user}
-                date="March 20, 2018"
+                date={date.toString().slice(0, 15)}
               />
               <Interactive
                 downVote={downVote}

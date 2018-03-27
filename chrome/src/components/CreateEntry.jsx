@@ -42,7 +42,7 @@ export class CreateEntry extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { setView } = this.props;
-    const { newString, domPath, url } = this.props.highlightObj;
+    const { newString, domPath, url, isAddingEntry, activeId } = this.props.highlightObj;
     const submitUrl = urlEncode(url);
     const messageSubmit = this.state.message;
     const newFireHL = {
@@ -51,6 +51,38 @@ export class CreateEntry extends Component {
       submitUrl
     };
     console.log('newFireHL', newFireHL);
+    isAddingEntry ?
+
+    UrlPages.doc(submitUrl)
+    .collection('highlights')
+    .doc(activeId)
+    .collection('entries')
+    .add({
+      isQuestion: this.props.isQuestion,
+      upVote: 0,
+      downVote: 0,
+      score: 0,
+      content: messageSubmit,
+      highlightID: activeId,
+      comments: [],
+      user: this.props.user.displayName,
+      userId: this.props.user.uid,
+      date: new Date(),
+      title: this.state.title
+    })
+    .then(entry => {
+            UrlPages.doc(submitUrl)
+            .collection('highlights')
+            .doc(activeId)
+            .collection('entries')
+            .doc(entry.id)
+            .update({
+              entryId: entry.id,
+            })
+          .catch(error => console.log('error: ', error));
+      })
+      .then(_ => setView('singleHL'))
+      .catch(error => console.log('error: ', error)) :
 
     UrlPages.doc(submitUrl)
       .collection('highlights')
@@ -71,9 +103,9 @@ export class CreateEntry extends Component {
             user: this.props.user.displayName,
             userId: this.props.user.uid,
             date: new Date(),
-            title: 'TBD'
+            title: this.state.title
           })
-          .then(entry =>{
+          .then(entry => {
             UrlPages.doc(submitUrl)
             .collection('highlights')
             .doc(highlight.id)
@@ -84,7 +116,7 @@ export class CreateEntry extends Component {
             })
             .catch(error => console.log('error: ', error));
           })
-          .catch(error => console.log('error: ', error));;;
+          .catch(error => console.log('error: ', error));
       })
       .then(_ => setView(''))
       .catch(error => console.log('error: ', error));
