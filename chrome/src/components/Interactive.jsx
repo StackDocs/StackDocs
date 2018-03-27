@@ -1,10 +1,19 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 //icons
 import ThumbsUp from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/thumbs-up.svg';
 import ThumbsDown from 'svg-react-loader?name=ThumbsDown!~/chrome/src/icons/thumbs-down.svg';
 import Comment from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/comment.svg';
 import { urlEncode } from '../highlighting';
 import { firestore } from '~/fire';
+=======
+import Comment from './Comment';
+
+//icons
+import ThumbsUp from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/thumbs-up.svg';
+import ThumbsDown from 'svg-react-loader?name=ThumbsDown!~/chrome/src/icons/thumbs-down.svg';
+import CommentIcon from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/comment.svg';
+>>>>>>> master
 
 let encodedDocUrl = urlEncode(document.location.href);
 const UrlPages = firestore.collection('UrlPages');
@@ -83,8 +92,9 @@ export default class Interactive extends Component {
         {upVote}
         <ThumbsDown onClick={this.downVote} />
         {downVote}
-        <Comment />
+        <CommentIcon />
         {comments.length}
+        <Comment comments={comments} />
       </div>
     );
   }

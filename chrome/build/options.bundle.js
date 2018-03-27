@@ -4880,22 +4880,22 @@ var OperationSource = /** @class */ (function () {
      * @type {!OperationSource}
      */
     OperationSource.User = new OperationSource(
-    /*fromUser=*/ true, false, null, 
+    /*fromUser=*/ true, false, null,
     /*tagged=*/ false);
     /**
      * @const
      * @type {!OperationSource}
      */
-    OperationSource.Server = new OperationSource(false, 
-    /*fromServer=*/ true, null, 
+    OperationSource.Server = new OperationSource(false,
+    /*fromServer=*/ true, null,
     /*tagged=*/ false);
     /**
      * @param {string} queryId
      * @return {!OperationSource}
      */
     OperationSource.forServerTaggedQuery = function (queryId) {
-        return new OperationSource(false, 
-        /*fromServer=*/ true, queryId, 
+        return new OperationSource(false,
+        /*fromServer=*/ true, queryId,
         /*tagged=*/ true);
     };
     return OperationSource;
@@ -6747,14 +6747,14 @@ var DbMutationQueue = /** @class */ (function () {
         /**
          * The normalized user ID to which this queue belongs.
          */
-        userId, 
+        userId,
         /**
          * An identifier for the highest numbered batch that has been acknowledged
          * by the server. All MutationBatches in this queue with batchIds less
          * than or equal to this value are considered to have been acknowledged by
          * the server.
          */
-        lastAcknowledgedBatchId, 
+        lastAcknowledgedBatchId,
         /**
          * A stream token that was previously sent by the server.
          *
@@ -6788,17 +6788,17 @@ var DbMutationBatch = /** @class */ (function () {
         /**
          * The normalized user ID to which this batch belongs.
          */
-        userId, 
+        userId,
         /**
          * An identifier for this batch, allocated by the mutation queue in a
          * monotonically increasing manner.
          */
-        batchId, 
+        batchId,
         /**
          * The local write time of the batch, stored as milliseconds since the
          * epoch.
          */
-        localWriteTimeMs, 
+        localWriteTimeMs,
         /**
          * A list of mutations to apply. All mutations will be applied atomically.
          *
@@ -6885,7 +6885,7 @@ var DbRemoteDocument = /** @class */ (function () {
          * Set to an instance of a DbNoDocument if it is known that no document
          * exists.
          */
-        noDocument, 
+        noDocument,
         /**
          * Set to an instance of a Document if there's a cached version of the
          * document.
@@ -6917,17 +6917,17 @@ var DbTarget = /** @class */ (function () {
          * queryId which can be used by referenced data structures (e.g.
          * indexes) to minimize the on-disk cost.
          */
-        targetId, 
+        targetId,
         /**
          * The canonical string representing this query. This is not unique.
          */
-        canonicalId, 
+        canonicalId,
         /**
          * The last readTime received from the Watch Service for this query.
          *
          * This is the same value as TargetChange.read_time in the protos.
          */
-        readTime, 
+        readTime,
         /**
          * An opaque, server-assigned token that allows watching a query to be
          * resumed after disconnecting without retransmitting all the data
@@ -6945,7 +6945,7 @@ var DbTarget = /** @class */ (function () {
          *
          * This is the same value as TargetChange.resume_token in the protos.
          */
-        resumeToken, 
+        resumeToken,
         /**
          * A sequence number representing the last time this query was
          * listened to, used for garbage collection purposes.
@@ -6960,7 +6960,7 @@ var DbTarget = /** @class */ (function () {
          * lastListenSequenceNumber is updated every time the query is
          * listened to.
          */
-        lastListenSequenceNumber, 
+        lastListenSequenceNumber,
         /**
          * The query for this target.
          *
@@ -7000,7 +7000,7 @@ var DbTargetDocument = /** @class */ (function () {
         /**
          * The targetId identifying a target.
          */
-        targetId, 
+        targetId,
         /**
          * The path to the document, as encoded in the key.
          */
@@ -7032,13 +7032,13 @@ var DbTargetGlobal = /** @class */ (function () {
          *
          * See DbTarget.targetId.
          */
-        highestTargetId, 
+        highestTargetId,
         /**
          * The highest numbered lastListenSequenceNumber across all targets.
          *
          * See DbTarget.lastListenSequenceNumber.
          */
-        highestListenSequenceNumber, 
+        highestListenSequenceNumber,
         /**
          * A global snapshot version representing the last consistent snapshot we
          * received from the backend. This is monotonically increasing and any
@@ -8033,16 +8033,16 @@ var QueryPurpose;
 var QueryData = /** @class */ (function () {
     function QueryData(
         /** The query being listened to. */
-        query, 
+        query,
         /**
          * The target ID to which the query corresponds; Assigned by the
          * LocalStore for user listens and by the SyncEngine for limbo watches.
          */
-        targetId, 
+        targetId,
         /** The purpose of the query. */
-        purpose, 
+        purpose,
         /** The latest snapshot version seen for this target. */
-        snapshotVersion, 
+        snapshotVersion,
         /**
          * An opaque, server-assigned token that allows watching a query to be
          * resumed after disconnecting without retransmitting all the data that
@@ -8119,11 +8119,11 @@ var RemoteEvent = /** @class */ (function () {
         /**
          * The snapshot version this event brings us up to, or MIN if not set.
          */
-        snapshotVersion, 
+        snapshotVersion,
         /**
          * A map from target to changes to the target. See TargetChange.
          */
-        targetChanges, 
+        targetChanges,
         /**
          * A set of which documents have changed or been deleted, along with the
          * doc's new values (if not deleted).
@@ -8342,7 +8342,7 @@ var MutationBatch = /** @class */ (function () {
 
 /** The result of applying a mutation batch to the backend. */
 var MutationBatchResult = /** @class */ (function () {
-    function MutationBatchResult(batch, commitVersion, mutationResults, streamToken, 
+    function MutationBatchResult(batch, commitVersion, mutationResults, streamToken,
         /**
          * A pre-computed mapping from each mutated document to the resulting
          * version.
@@ -10880,7 +10880,7 @@ var MutationResult = /** @class */ (function () {
         /**
          * The version at which the mutation was committed or null for a delete.
          */
-        version, 
+        version,
         /**
          * The resulting fields returned from the backend after a
          * TransformMutation has been committed. Contains one FieldValue for each
@@ -13202,7 +13202,7 @@ var Reference = /** @class */ (function (_super) {
         validation_1.validateFirebaseDataArg('Reference.set', 1, newVal, this.path, false);
         util_2.validateCallback('Reference.set', 2, onComplete, true);
         var deferred = new util_3.Deferred();
-        this.repo.setWithPriority(this.path, newVal, 
+        this.repo.setWithPriority(this.path, newVal,
         /*priority=*/ null, deferred.wrapCallback(onComplete));
         return deferred.promise;
     };
@@ -18745,7 +18745,7 @@ var Query = /** @class */ (function () {
                 deferred.resolve(snapshot);
             }
         };
-        this.on(eventType, onceCallback, 
+        this.on(eventType, onceCallback,
         /*cancel=*/ function (err) {
             _this.off(eventType, onceCallback);
             if (ret.cancel)
@@ -20437,10 +20437,10 @@ var ViewCache = /** @class */ (function () {
      * @const
      * @type {ViewCache}
      */
-    ViewCache.Empty = new ViewCache(new CacheNode_1.CacheNode(ChildrenNode_1.ChildrenNode.EMPTY_NODE, 
-    /*fullyInitialized=*/ false, 
-    /*filtered=*/ false), new CacheNode_1.CacheNode(ChildrenNode_1.ChildrenNode.EMPTY_NODE, 
-    /*fullyInitialized=*/ false, 
+    ViewCache.Empty = new ViewCache(new CacheNode_1.CacheNode(ChildrenNode_1.ChildrenNode.EMPTY_NODE,
+    /*fullyInitialized=*/ false,
+    /*filtered=*/ false), new CacheNode_1.CacheNode(ChildrenNode_1.ChildrenNode.EMPTY_NODE,
+    /*fullyInitialized=*/ false,
     /*filtered=*/ false));
     return ViewCache;
 }());
@@ -20963,10 +20963,10 @@ var PersistentConnection = /** @class */ (function (_super) {
     PersistentConnection.prototype.onDataPush_ = function (action, body) {
         this.log_('handleServerMessage', action, body);
         if (action === 'd')
-            this.onDataUpdate_(body['p'], body['d'], 
+            this.onDataUpdate_(body['p'], body['d'],
             /*isMerge*/ false, body['t']);
         else if (action === 'm')
-            this.onDataUpdate_(body['p'], body['d'], 
+            this.onDataUpdate_(body['p'], body['d'],
             /*isMerge=*/ true, body['t']);
         else if (action === 'c')
             this.onListenRevoked_(body['p'], body['q']);
@@ -21107,7 +21107,7 @@ var PersistentConnection = /** @class */ (function (_super) {
                 if (!canceled_1) {
                     util_4.log('getToken() completed. Creating connection.');
                     self_1.authToken_ = result && result.accessToken;
-                    connection_1 = new Connection_1.Connection(connId_1, self_1.repoInfo_, onDataMessage_1, onReady_1, onDisconnect_1, 
+                    connection_1 = new Connection_1.Connection(connId_1, self_1.repoInfo_, onDataMessage_1, onReady_1, onDisconnect_1,
                     /* onKill= */ function (reason) {
                         util_4.warn(reason + ' (' + self_1.repoInfo_.toString() + ')');
                         self_1.interrupt(SERVER_KILL_INTERRUPT_REASON);
@@ -25606,11 +25606,11 @@ var DatabaseId = /** @class */ (function () {
 var DocumentWatchChange = /** @class */ (function () {
     function DocumentWatchChange(
         /** The new document applies to all of these targets. */
-        updatedTargetIds, 
+        updatedTargetIds,
         /** The new document is removed from all of these targets. */
-        removedTargetIds, 
+        removedTargetIds,
         /** The key of the document for this change. */
-        key, 
+        key,
         /**
          * The new document or NoDocument if it was deleted. Is null if the
          * document went out of view without the server sending a new document.
@@ -25643,16 +25643,16 @@ var WatchTargetChangeState;
 var WatchTargetChange = /** @class */ (function () {
     function WatchTargetChange(
         /** What kind of change occurred to the watch target. */
-        state, 
+        state,
         /** The target IDs that were added/removed/set. */
-        targetIds, 
+        targetIds,
         /**
          * An opaque, server-assigned token that allows watching a query to be
          * resumed after disconnecting without retransmitting all the data that
          * matches the query. The resume token essentially identifies a point in
          * time from which the server should resume sending results.
          */
-        resumeToken, 
+        resumeToken,
         /** An RPC error indicating why the watch failed. */
         cause) {
         if (resumeToken === void 0) { resumeToken = Object(__WEBPACK_IMPORTED_MODULE_1__platform_platform__["b" /* emptyByteString */])(); }
@@ -31715,9 +31715,9 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(google, 'google', '/Users/alex/Desktop/senior-phase-projects/chromelights/chrome/src/options.js');
+  __REACT_HOT_LOADER__.register(google, 'google', '/Users/domnik/Desktop/fsa-senior/chromelights/chrome/src/options.js');
 
-  __REACT_HOT_LOADER__.register(oAuthGoogle, 'oAuthGoogle', '/Users/alex/Desktop/senior-phase-projects/chromelights/chrome/src/options.js');
+  __REACT_HOT_LOADER__.register(oAuthGoogle, 'oAuthGoogle', '/Users/domnik/Desktop/fsa-senior/chromelights/chrome/src/options.js');
 }();
 
 ;
@@ -31764,17 +31764,17 @@ var _temp = function () {
     return;
   }
 
-  __REACT_HOT_LOADER__.register(firestore, 'firestore', '/Users/alex/Desktop/senior-phase-projects/chromelights/fire/index.js');
+  __REACT_HOT_LOADER__.register(firestore, 'firestore', '/Users/domnik/Desktop/fsa-senior/chromelights/fire/index.js');
 
-  __REACT_HOT_LOADER__.register(database, 'database', '/Users/alex/Desktop/senior-phase-projects/chromelights/fire/index.js');
+  __REACT_HOT_LOADER__.register(database, 'database', '/Users/domnik/Desktop/fsa-senior/chromelights/fire/index.js');
 
-  __REACT_HOT_LOADER__.register(auth, 'auth', '/Users/alex/Desktop/senior-phase-projects/chromelights/fire/index.js');
+  __REACT_HOT_LOADER__.register(auth, 'auth', '/Users/domnik/Desktop/fsa-senior/chromelights/fire/index.js');
 
-  __REACT_HOT_LOADER__.register(storage, 'storage', '/Users/alex/Desktop/senior-phase-projects/chromelights/fire/index.js');
+  __REACT_HOT_LOADER__.register(storage, 'storage', '/Users/domnik/Desktop/fsa-senior/chromelights/fire/index.js');
 
-  __REACT_HOT_LOADER__.register(userById, 'userById', '/Users/alex/Desktop/senior-phase-projects/chromelights/fire/index.js');
+  __REACT_HOT_LOADER__.register(userById, 'userById', '/Users/domnik/Desktop/fsa-senior/chromelights/fire/index.js');
 
-  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/alex/Desktop/senior-phase-projects/chromelights/fire/index.js');
+  __REACT_HOT_LOADER__.register(_default, 'default', '/Users/domnik/Desktop/fsa-senior/chromelights/fire/index.js');
 }();
 
 ;
@@ -31918,7 +31918,7 @@ if (typeof Promise === 'undefined') {
   var setTimeoutFunc = setTimeout;
 
   function noop() {}
-  
+
   // Polyfill for Function.prototype.bind
   function bind(fn, thisArg) {
     return function () {
@@ -32136,7 +32136,7 @@ if (typeof Promise === 'undefined') {
   Promise._setUnhandledRejectionFn = function _setUnhandledRejectionFn(fn) {
     Promise._unhandledRejectionFn = fn;
   };
-  
+
   if (typeof module !== 'undefined' && module.exports) {
     module.exports = Promise;
   } else if (!root.Promise) {
@@ -34578,7 +34578,7 @@ var ServerValue = Database_1.Database.ServerValue;
 exports.ServerValue = ServerValue;
 function registerDatabase(instance) {
     // Register the Database Service with the 'firebase' namespace.
-    var namespace = instance.INTERNAL.registerService('database', function (app, unused, url) { return RepoManager_1.RepoManager.getInstance().databaseFromApp(app, url); }, 
+    var namespace = instance.INTERNAL.registerService('database', function (app, unused, url) { return RepoManager_1.RepoManager.getInstance().databaseFromApp(app, url); },
     // firebase.database namespace properties
     {
         Reference: Reference_1.Reference,
@@ -35768,7 +35768,7 @@ var SyncTree = /** @class */ (function () {
                     // If a listen failed, kill all of the listeners here, not just the one that triggered the error.
                     // Note that this may need to be scoped to just this listener if we change permissions on filtered children
                     var error = util_2.errorForServerCode(status, query);
-                    return _this.removeEventRegistration(query, 
+                    return _this.removeEventRegistration(query,
                     /*eventRegistration*/ null, error);
                 }
             }
@@ -35836,7 +35836,7 @@ var SyncTree = /** @class */ (function () {
         var syncPoint = this.syncPointTree_.get(queryPath);
         util_1.assert(syncPoint, "Missing sync point for query tag that we're tracking");
         var writesCache = this.pendingWriteTree_.childWrites(queryPath);
-        return syncPoint.applyOperation(operation, writesCache, 
+        return syncPoint.applyOperation(operation, writesCache,
         /*serverCache=*/ null);
     };
     /**
@@ -35844,12 +35844,12 @@ var SyncTree = /** @class */ (function () {
      *
      * NOTES:
      * - Descendant SyncPoints will be visited first (since we raise events depth-first).
-  
+
      * - We call applyOperation() on each SyncPoint passing three things:
      *   1. A version of the Operation that has been made relative to the SyncPoint location.
      *   2. A WriteTreeRef of any writes we have cached at the SyncPoint location.
      *   3. A snapshot Node with cached server data, if we have it.
-  
+
      * - We concatenate all of the events returned by each SyncPoint and return the result.
      *
      * @param {!Operation} operation
@@ -35857,7 +35857,7 @@ var SyncTree = /** @class */ (function () {
      * @private
      */
     SyncTree.prototype.applyOperationToSyncPoints_ = function (operation) {
-        return this.applyOperationHelper_(operation, this.syncPointTree_, 
+        return this.applyOperationHelper_(operation, this.syncPointTree_,
         /*serverCache=*/ null, this.pendingWriteTree_.childWrites(Path_1.Path.Empty));
     };
     /**
@@ -35976,8 +35976,8 @@ var AckUserWrite = /** @class */ (function () {
      * @param {!boolean} revert
      */
     function AckUserWrite(
-        /**@inheritDoc */ path, 
-        /**@inheritDoc */ affectedTree, 
+        /**@inheritDoc */ path,
+        /**@inheritDoc */ affectedTree,
         /**@inheritDoc */ revert) {
         this.path = path;
         this.affectedTree = affectedTree;
@@ -36099,8 +36099,8 @@ var util_1 = __webpack_require__(1);
  */
 var Merge = /** @class */ (function () {
     function Merge(
-        /**@inheritDoc */ source, 
-        /**@inheritDoc */ path, 
+        /**@inheritDoc */ source,
+        /**@inheritDoc */ path,
         /**@inheritDoc */ children) {
         this.source = source;
         this.path = path;
@@ -38250,7 +38250,7 @@ var AuthTokenProvider = /** @class */ (function () {
      * @return {!Promise<FirebaseAuthTokenData>}
      */
     AuthTokenProvider.prototype.getToken = function (forceRefresh) {
-        return this.app_['INTERNAL']['getToken'](forceRefresh).then(null, 
+        return this.app_['INTERNAL']['getToken'](forceRefresh).then(null,
         // .catch
         function (error) {
             // TODO: Need to figure out all the cases this is raised and whether
@@ -42094,7 +42094,7 @@ function registerStorage(instance) {
         Storage: __WEBPACK_IMPORTED_MODULE_5__src_service__["a" /* Service */],
         Reference: __WEBPACK_IMPORTED_MODULE_4__src_reference__["a" /* Reference */]
     };
-    instance.INTERNAL.registerService(STORAGE_TYPE, factory, namespaceExports, undefined, 
+    instance.INTERNAL.registerService(STORAGE_TYPE, factory, namespaceExports, undefined,
     // Allow multiple storage instances per app.
     true);
 }
@@ -42415,7 +42415,7 @@ function sliceBlob(blob, start, end) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RequestInfo; });
 var RequestInfo = /** @class */ (function () {
-    function RequestInfo(url, method, 
+    function RequestInfo(url, method,
         /**
          * Returns the value with which to resolve the request's promise. Only called
          * if the request is successful. Throw from this function to reject the
@@ -45494,7 +45494,7 @@ var Query = /** @class */ (function () {
             fields[_i - 1] = arguments[_i];
         }
         Object(__WEBPACK_IMPORTED_MODULE_16__util_input_validation__["d" /* validateAtLeastNumberOfArgs */])('Query.startAt', arguments, 1);
-        var bound = this.boundFromDocOrFields('Query.startAt', docOrField, fields, 
+        var bound = this.boundFromDocOrFields('Query.startAt', docOrField, fields,
         /*before=*/ true);
         return new Query(this._query.withStartAt(bound), this.firestore);
     };
@@ -45504,7 +45504,7 @@ var Query = /** @class */ (function () {
             fields[_i - 1] = arguments[_i];
         }
         Object(__WEBPACK_IMPORTED_MODULE_16__util_input_validation__["d" /* validateAtLeastNumberOfArgs */])('Query.startAfter', arguments, 1);
-        var bound = this.boundFromDocOrFields('Query.startAfter', docOrField, fields, 
+        var bound = this.boundFromDocOrFields('Query.startAfter', docOrField, fields,
         /*before=*/ false);
         return new Query(this._query.withStartAt(bound), this.firestore);
     };
@@ -45514,7 +45514,7 @@ var Query = /** @class */ (function () {
             fields[_i - 1] = arguments[_i];
         }
         Object(__WEBPACK_IMPORTED_MODULE_16__util_input_validation__["d" /* validateAtLeastNumberOfArgs */])('Query.endBefore', arguments, 1);
-        var bound = this.boundFromDocOrFields('Query.endBefore', docOrField, fields, 
+        var bound = this.boundFromDocOrFields('Query.endBefore', docOrField, fields,
         /*before=*/ true);
         return new Query(this._query.withEndAt(bound), this.firestore);
     };
@@ -45524,7 +45524,7 @@ var Query = /** @class */ (function () {
             fields[_i - 1] = arguments[_i];
         }
         Object(__WEBPACK_IMPORTED_MODULE_16__util_input_validation__["d" /* validateAtLeastNumberOfArgs */])('Query.endAt', arguments, 1);
-        var bound = this.boundFromDocOrFields('Query.endAt', docOrField, fields, 
+        var bound = this.boundFromDocOrFields('Query.endAt', docOrField, fields,
         /*before=*/ false);
         return new Query(this._query.withEndAt(bound), this.firestore);
     };
@@ -46016,7 +46016,7 @@ var LOG_TAG = 'FirestoreClient';
  * async queue that is shared by all of the other components in the system.
  */
 var FirestoreClient = /** @class */ (function () {
-    function FirestoreClient(platform, databaseInfo, credentials, 
+    function FirestoreClient(platform, databaseInfo, credentials,
         /**
          * Asynchronous queue responsible for all of our internal processing. When
          * we get incoming work from the user (via public API) or the network
@@ -46610,18 +46610,18 @@ var QueryView = /** @class */ (function () {
         /**
          * The query itself.
          */
-        query, 
+        query,
         /**
          * The target number created by the client that is used in the watch
          * stream to identify this query.
          */
-        targetId, 
+        targetId,
         /**
          * An identifier from the datastore backend that indicates the last state
          * of the results that was received. This can be used to indicate where
          * to continue receiving new doc changes for the query.
          */
-        resumeToken, 
+        resumeToken,
         /**
          * The view is responsible for computing the final merged truth of what
          * docs are in the query. It gets notified of local and remote changes,
@@ -46881,7 +46881,7 @@ var SyncEngine = /** @class */ (function () {
         // raise events immediately (depending on whether the watcher is caught
         // up), so we raise user callbacks first so that they consistently happen
         // before listen events.
-        this.processUserCallback(mutationBatchResult.batch.batchId, 
+        this.processUserCallback(mutationBatchResult.batch.batchId,
         /*error=*/ null);
         return this.localStore
             .acknowledgeBatch(mutationBatchResult)
@@ -47167,7 +47167,7 @@ var RemovedLimboDocument = /** @class */ (function () {
  * the query filters and limits to determine the most correct possible results.
  */
 var View = /** @class */ (function () {
-    function View(query, 
+    function View(query,
         /** Documents included in the remote target */
         syncedDocuments) {
         this.query = query;
@@ -47875,7 +47875,7 @@ var IndexedDbMutationQueue = /** @class */ (function () {
         })
             .next(function (metadata) {
             if (!metadata) {
-                metadata = new __WEBPACK_IMPORTED_MODULE_5__indexeddb_schema__["d" /* DbMutationQueue */](_this.userId, __WEBPACK_IMPORTED_MODULE_0__model_mutation_batch__["a" /* BATCHID_UNKNOWN */], 
+                metadata = new __WEBPACK_IMPORTED_MODULE_5__indexeddb_schema__["d" /* DbMutationQueue */](_this.userId, __WEBPACK_IMPORTED_MODULE_0__model_mutation_batch__["a" /* BATCHID_UNKNOWN */],
                 /*lastStreamToken=*/ '');
             }
             _this.metadata = metadata;
@@ -48293,7 +48293,7 @@ var IndexedDbQueryCache = /** @class */ (function () {
          * A cached copy of the metadata for the query cache.
          */
         this.metadata = new __WEBPACK_IMPORTED_MODULE_7__indexeddb_schema__["j" /* DbTargetGlobal */](
-        /*highestTargetId=*/ 0, 
+        /*highestTargetId=*/ 0,
         /*lastListenSequenceNumber=*/ 0, __WEBPACK_IMPORTED_MODULE_0__core_snapshot_version__["a" /* SnapshotVersion */].MIN.toTimestamp());
         /** The garbage collector to notify about potential garbage keys. */
         this.garbageCollector = null;
@@ -48389,8 +48389,8 @@ var IndexedDbQueryCache = /** @class */ (function () {
     };
     IndexedDbQueryCache.prototype.removeMatchingKeysForTargetId = function (txn, targetId) {
         var store = documentTargetStore(txn);
-        var range = IDBKeyRange.bound([targetId], [targetId + 1], 
-        /*lowerOpen=*/ false, 
+        var range = IDBKeyRange.bound([targetId], [targetId + 1],
+        /*lowerOpen=*/ false,
         /*upperOpen=*/ true);
         return this.notifyGCForRemovedKeys(txn, range).next(function () {
             return store.delete(range);
@@ -48417,8 +48417,8 @@ var IndexedDbQueryCache = /** @class */ (function () {
     };
     IndexedDbQueryCache.prototype.getMatchingKeysForTargetId = function (txn, targetId) {
         var promises = [];
-        var range = IDBKeyRange.bound([targetId], [targetId + 1], 
-        /*lowerOpen=*/ false, 
+        var range = IDBKeyRange.bound([targetId], [targetId + 1],
+        /*lowerOpen=*/ false,
         /*upperOpen=*/ true);
         var store = documentTargetStore(txn);
         var result = Object(__WEBPACK_IMPORTED_MODULE_2__model_collections__["a" /* documentKeySet */])();
@@ -48436,8 +48436,8 @@ var IndexedDbQueryCache = /** @class */ (function () {
     IndexedDbQueryCache.prototype.containsKey = function (txn, key) {
         Object(__WEBPACK_IMPORTED_MODULE_4__util_assert__["a" /* assert */])(txn !== null, 'Persistence Transaction cannot be null for query cache containsKey');
         var path = __WEBPACK_IMPORTED_MODULE_6__encoded_resource_path__["b" /* encode */](key.path);
-        var range = IDBKeyRange.bound([path], [Object(__WEBPACK_IMPORTED_MODULE_5__util_misc__["e" /* immediateSuccessor */])(path)], 
-        /*lowerOpen=*/ false, 
+        var range = IDBKeyRange.bound([path], [Object(__WEBPACK_IMPORTED_MODULE_5__util_misc__["e" /* immediateSuccessor */])(path)],
+        /*lowerOpen=*/ false,
         /*upperOpen=*/ true);
         var count = 0;
         return documentTargetStore(txn)
@@ -48815,7 +48815,7 @@ var LOG_TAG = 'LocalStore';
 var LocalStore = /** @class */ (function () {
     function LocalStore(
         /** Manages our in-memory or durable persistence. */
-        persistence, initialUser, 
+        persistence, initialUser,
         /**
          * The garbage collector collects documents that should no longer be
          * cached (e.g. if they are no longer retained by the above reference sets
@@ -50621,7 +50621,7 @@ var IDLE_TIMEOUT_MS = 60 * 1000;
  *  ListenerType: The type of the listener that will be used for callbacks
  */
 var PersistentStream = /** @class */ (function () {
-    function PersistentStream(queue, connection, credentialsProvider, 
+    function PersistentStream(queue, connection, credentialsProvider,
         // Used for faster retries in testing
         initialBackoffDelay) {
         this.queue = queue;
@@ -51079,12 +51079,12 @@ var ExponentialBackoff = /** @class */ (function () {
          * Note that jitter will still be applied, so the actual delay could be as
          * little as 0.5*initialDelayMs.
          */
-        initialDelayMs, 
+        initialDelayMs,
         /**
          * The multiplier to use to determine the extended base delay after each
          * attempt.
          */
-        backoffFactor, 
+        backoffFactor,
         /**
          * The maximum base delay after which no further backoff is performed.
          * Note that jitter will still be applied, so the actual delay could be as
@@ -51231,12 +51231,12 @@ var ONLINE_ATTEMPTS_BEFORE_FAILURE = 2;
  * - acking mutations to the SyncEngine once they are accepted or rejected.
  */
 var RemoteStore = /** @class */ (function () {
-    function RemoteStore(databaseInfo, asyncQueue, 
+    function RemoteStore(databaseInfo, asyncQueue,
         /**
          * The local store, used to fill the write pipeline with outbound
          * mutations and resolve existence filter mismatches.
          */
-        localStore, 
+        localStore,
         /** The client-side proxy for interacting with the backend. */
         datastore, onlineStateHandler) {
         this.databaseInfo = databaseInfo;
@@ -52669,14 +52669,14 @@ var ParseContext = /** @class */ (function () {
     }
     ParseContext.prototype.childContextForField = function (field) {
         var childPath = this.path == null ? null : this.path.child(field);
-        var context = new ParseContext(this.dataSource, this.methodName, childPath, 
+        var context = new ParseContext(this.dataSource, this.methodName, childPath,
         /*arrayElement=*/ false, this.fieldTransforms, this.fieldMask);
         context.validatePathSegment(field);
         return context;
     };
     ParseContext.prototype.childContextForFieldPath = function (field) {
         var childPath = this.path == null ? null : this.path.child(field);
-        var context = new ParseContext(this.dataSource, this.methodName, childPath, 
+        var context = new ParseContext(this.dataSource, this.methodName, childPath,
         /*arrayElement=*/ false, this.fieldTransforms, this.fieldMask);
         context.validatePath();
         return context;
@@ -52684,8 +52684,8 @@ var ParseContext = /** @class */ (function () {
     ParseContext.prototype.childContextForArray = function (index) {
         // TODO(b/34871131): We don't support array paths right now; so make path
         // null.
-        return new ParseContext(this.dataSource, this.methodName, 
-        /*path=*/ null, 
+        return new ParseContext(this.dataSource, this.methodName,
+        /*path=*/ null,
         /*arrayElement=*/ true, this.fieldTransforms, this.fieldMask);
     };
     ParseContext.prototype.createError = function (reason) {
@@ -52743,7 +52743,7 @@ var UserDataConverter = /** @class */ (function () {
         var context = new ParseContext(UserDataSource.Set, methodName, __WEBPACK_IMPORTED_MODULE_3__model_path__["a" /* FieldPath */].EMPTY_PATH);
         validatePlainObject('Data must be an object, but it was:', context, input);
         var updateData = this.parseData(input, context);
-        return new ParsedSetData(updateData, 
+        return new ParsedSetData(updateData,
         /* fieldMask= */ null, context.fieldTransforms);
     };
     /** Parse document data from a set() call with '{merge:true}'. */
