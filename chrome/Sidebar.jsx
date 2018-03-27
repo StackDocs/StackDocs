@@ -69,7 +69,7 @@ export default class Sidebar extends Component {
   selectComponents() {
     switch (this.state.view) {
       case 'home':
-        return <AllHighlights setView={this.setView} />;
+        return <AllHighlights setView={this.setView} activeId={this.state.activeId}/>;
       case 'singleHL':
         return <SingleHighlight setView={this.setView} activeId={this.state.activeId}/>;
       case 'askOrAnnotate':

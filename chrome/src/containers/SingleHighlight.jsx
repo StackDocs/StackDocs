@@ -52,7 +52,7 @@ export default class SingleHighlight extends Component {
       return shareArr;
     })
     .then(shared => {
-      console.log('sharrArr with newID added!!!!!!', shared)
+      console.log('sharrArr with newID added!!!!!!', shared);
       return sortByVote(shared);
     })
     .then(sorted => {
@@ -65,8 +65,8 @@ export default class SingleHighlight extends Component {
     UrlPages.doc(encodedDocUrl).collection('highlights').doc(this.state.selectedHighlight)
     .get()
     .then(highlight => {
-      this.setState({ highlightObj: highlight.data() })
-    })
+      this.setState({ highlightObj: highlight.data() });
+    });
   }
 
   componentWillReceiveProps(newProps) {
