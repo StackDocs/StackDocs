@@ -32,8 +32,6 @@ export default class Sidebar extends Component {
     };
   }
 
-
-
   componentDidMount() {
     this.fetchHighlights();
   }
@@ -76,7 +74,6 @@ export default class Sidebar extends Component {
       case 'createEntry':
         return (
           <CreateEntry
-            user={this.props.user.displayName}
             setView={this.setView}
             isQuestion={this.state.isQuestion}
             user={this.props.user}
@@ -100,6 +97,7 @@ export default class Sidebar extends Component {
   fetchHighlights = async () => {
     const hlArr = [];
     let encodedDocUrl = urlEncode(document.location.href);
+    const UrlPages = firestore.collection('UrlPages');
 
     await UrlPages.doc(encodedDocUrl)
       .collection('highlights')
@@ -132,7 +130,7 @@ export default class Sidebar extends Component {
         const markedEls = document.getElementsByClassName(
           'chromelights-highlights'
         );
-        console.log('GET EL BY CLASS:', markedEls, 'Length is', markedEls[0])
+        console.log('GET EL BY CLASS:', markedEls, 'Length is', markedEls[0]);
         for (let i = 0; i < markedEls.length; i++) {
           console.log('this loop has run', i, 'times. Class is: ', markedEls[i].className);
           markedEls[i].addEventListener('click', () => {
@@ -140,7 +138,7 @@ export default class Sidebar extends Component {
             if (document.getElementsByClassName('activeHighlight').length) {
               const activeId = document.getElementsByClassName('activeHighlight')[0]
                 .classList[1];
-                console.log('activeId :', activeId)
+                console.log('activeId :', activeId);
               this.setState({ activeId });
               this.setView('singleHL');
             }
@@ -151,8 +149,6 @@ export default class Sidebar extends Component {
   //components that will always show got here in the render
   //components that will be only rendered in certain views
   //go above in the selectComponents functions' switch statement
-
-
 
   render() {
     return (
@@ -174,7 +170,3 @@ export default class Sidebar extends Component {
     );
   }
 }
-
-const UrlPages = firestore.collection('UrlPages');
-
-
