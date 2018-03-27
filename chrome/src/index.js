@@ -66,3 +66,8 @@ export const addEventListener = () => {
     });
   }
 };
+
+document.addEventListener('click', ({target}) => {
+
+})
+

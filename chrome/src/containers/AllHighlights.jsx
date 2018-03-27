@@ -9,14 +9,16 @@ import EntryContainer from './EntryContainer';
 
 //Helper func
 let encodedDocUrl = urlEncode(document.location.href);
-const Highlights = fs.collection('UrlPages').doc(encodedDocUrl).collection('highlights');
-
+const Highlights = fs
+  .collection('UrlPages')
+  .doc(encodedDocUrl)
+  .collection('highlights');
 
 const sortByVote = array => {
   const updatedOrder = [];
   array.forEach(entry => {
-    for (var i = 0; i < array.length; i++){
-      if (!updatedOrder[i] || entry[1].score >= updatedOrder[i][1].score){
+    for (var i = 0; i < array.length; i++) {
+      if (!updatedOrder[i] || entry[1].score >= updatedOrder[i][1].score) {
         updatedOrder.splice(i, 0, entry);
         break;
       }
@@ -38,47 +40,39 @@ export default class AllHighlights extends Component {
 
   componentWillMount = () => {
     this.fetchEntries();
-    // this.fetchHighlight();
-  }
+  };
 
   fetchEntries() {
-    let shareArr = [];
     Highlights.get()
-    .then(querySnapshot => {
-      querySnapshot.forEach(highlight => {
-        Highlights.doc(highlight.id).collection('entries').get()
-        .then(entrySnapShot => {
-          entrySnapShot.forEach(entry => {
-            // console.log('infoside multiple entry:', entry.data(), entry.id);
-            shareArr.push([entry.id, entry.data()]);
-          });
-        });
-      });
-      return shareArr;
-    })
-    .then(shared => {
-      console.log('sharrArr with newID added!!!!!!', shared, shared[1]);
-      return sortByVote(shared);
-    })
-    .then(sorted => {
-      console.log('sorted: ', sorted);
-      this.setState({ sorted });
-    })
-    .catch(error => console.log('error: ', error));
+      .then(querySnapshot =>
+        Promise.all(
+          querySnapshot.docs.map(highlight =>
+            highlight.ref.collection('entries').get()
+          )
+        )
+      )
+      .then(snapshots =>
+        snapshots.reduce(
+          (all, one) => [
+            ...all,
+            ...one.docs.map(entry => [entry.id, entry.data()])
+          ],
+          []
+        )
+      )
+      .then(shared => {
+        return sortByVote(shared);
+      })
+      .then(sorted => {
+        this.setState({ sorted });
+      })
+      .catch(error => console.log('error: ', error));
   }
 
-  // fetchHighlight = () => {
-  //   Highlights.doc(this.state.selectedHighlight)
-  //   .get()
-  //   .then(highlight => {
-  //     this.setState({ highlightObj: highlight.data() });
-  //   });
-  // }
 
   componentWillReceiveProps(newProps) {
     if (newProps.activeId) {
       this.setState({ selectedHighlight: newProps.activeId }, () => {
-        // this.fetchHighlight();
         this.fetchEntries();
       });
     }
@@ -86,8 +80,6 @@ export default class AllHighlights extends Component {
 
   render() {
     const setView = this.props.setView;
-    // const highlightTitle = this.state.highlightObj.newString;
-    //Set State
 
     console.log('state in all highlights ', this.state);
     return (
@@ -100,20 +92,35 @@ export default class AllHighlights extends Component {
           </div>
           <CreateHighlightButton setView={setView} />
         </div>
-        {
-          this.state.sorted && this.state.sorted.map(entry => {
-            const { title, content, user, date, downVote, upVote, comments } = entry[1];
+        {this.state.sorted &&
+          this.state.sorted.map(entry => {
+            const {
+              title,
+              content,
+              user,
+              date,
+              downVote,
+              upVote,
+              comments
+            } = entry[1];
             const entryId = entry[0];
             return (
               <div key={entry.content}>
-                <EntryContainer entryId={entryId} highlightId={this.state.selectedHighlight} title={title} content={content} user={user} downVote={downVote} upVote={upVote} comments={comments} date="March 20, 2018" />
+                <EntryContainer
+                  entryId={entryId}
+                  highlightId={this.state.selectedHighlight}
+                  title={title}
+                  content={content}
+                  user={user}
+                  downVote={downVote}
+                  upVote={upVote}
+                  comments={comments}
+                  date="March 20, 2018"
+                />
               </div>
             );
-          })
-
-        }
+          })}
       </div>
     );
   }
 }
-
