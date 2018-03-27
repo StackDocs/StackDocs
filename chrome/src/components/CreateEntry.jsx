@@ -72,7 +72,7 @@ export class CreateEntry extends Component {
     .then(entry => {
             UrlPages.doc(submitUrl)
             .collection('highlights')
-            .doc(highlight.id)
+            .doc(activeId)
             .collection('entries')
             .doc(entry.id)
             .update({
