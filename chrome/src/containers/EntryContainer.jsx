@@ -7,7 +7,7 @@ export default class EntryContainer extends Component {
         super(props);
     }
     render() {
-        const { title, content, user, date, downVote, upVote, comments } = this.props;
+        const { entryId, highlightId, title, content, user, date, downVote, upVote, comments } = this.props;
         return (
             <div>
                 <h3>{title}</h3>
@@ -16,6 +16,9 @@ export default class EntryContainer extends Component {
                     user={user}
                     date="March 20, 2018" />
                 <Interactive
+                    highlightId={highlightId}
+                    encodedUrl
+                    entryId={entryId}
                     downVote={downVote}
                     upVote={upVote}
                     comments={comments} />

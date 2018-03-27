@@ -12,9 +12,9 @@ const UrlPages = fs.collection('UrlPages');
 let encodedDocUrl = urlEncode(document.location.href);
 const sortByVote = array => {
   const updatedOrder = [];
-  array.map(entry => {
+  array.map(entry => { //should be forEach
     for (var i = 0; i < array.length; i++){
-      if (!updatedOrder[i] || entry.upVote >= updatedOrder[i].upVote){
+      if (!updatedOrder[i] || entry[1].upVote >= updatedOrder[i][1].upVote){
         updatedOrder.splice(i, 0, entry);
         break;
       }
@@ -36,6 +36,7 @@ export default class SingleHighlight extends Component {
 
   componentWillMount = () => {
     this.fetchEntries();
+    this.fetchHighlight();
   }
 
   fetchEntries = () => {
@@ -45,11 +46,12 @@ export default class SingleHighlight extends Component {
     .then(querySnapshot => {
       let shareArr = [];
       querySnapshot.forEach(entry => {
-        shareArr.push(entry.data());
+        shareArr.push([entry.id, entry.data()]); //added array
       });
       return shareArr;
     })
     .then(shared => {
+      console.log('sharrArr with newID added!!!!!!', shared)
       return sortByVote(shared);
     })
     .then(sorted => {
@@ -95,10 +97,11 @@ export default class SingleHighlight extends Component {
         </div>
         {
           this.state.sorted && this.state.sorted.map(entry => {
-            const { title, content, user, date, downVote, upVote, comments } = entry;
+            const { title, content, user, date, downVote, upVote, comments } = entry[1];
+            const entryId = entry[0];
             return (
               <div key={entry.content}>
-                <EntryContainer title={title} content={content} user={user} downVote={downVote} upVote={upVote} comments={comments} date="March 20, 2018" />
+                <EntryContainer entryId={entryId} highlightId={this.state.selectedHighlight} title={title} content={content} user={user} downVote={downVote} upVote={upVote} comments={comments} date="March 20, 2018" />
               </div>
             );
           })
