@@ -15,14 +15,17 @@ export default class AllHighlights extends Component {
   }
   componentWillReceiveProps(newProps) {
     if (newProps.activeId) {
-      this.setState({ selectedHighlight: newProps.activeId });
+      this.setState({
+        selectedHighlight: newProps.activeHL,
+        selectedId: newProps.activeId
+      });
     }
   }
   render() {
     const urlReadOnly = document.location.href;
     const url = urlEncode(urlReadOnly);
     const setView = this.props.setView;
-    console.log('PROPS IN HIGHLIGHTANNOTATIONS: ', this.props);
+    // console.log('PROPS IN HIGHLIGHTANNOTATIONS: ', this.props);
     return (
       <div id="highlight-annotation">
         <div className="chromelights-highlight-header">
@@ -31,7 +34,11 @@ export default class AllHighlights extends Component {
               {`...${this.state.selectedHighlight}...`}
             </h3>
           </div>
-          <CreateHighlightButton setView={setView} />
+          <CreateHighlightButton
+            setView={setView}
+            activeId={this.props.activeId}
+            activeHL={this.props.activeHL}
+          />
         </div>
         <Map
           each

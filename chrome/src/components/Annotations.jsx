@@ -12,9 +12,9 @@ export default class Annotations extends Component {
   }
 
   toggleTruncate(e) {
-    console.log(e);
+    // console.log(e);
     e.preventDefault();
-    console.log('toggked');
+    // console.log('toggked');
     this.setState({
       isTruncated: !this.state.isTruncated
     });
@@ -29,8 +29,8 @@ export default class Annotations extends Component {
   }
 
   render() {
-    console.log('STATE.ISTRUNCATED in render', this.state.isTruncated);
-    console.log('CONTENT in render', this.props.content);
+    // console.log('STATE.ISTRUNCATED in render', this.state.isTruncated);
+    // console.log('CONTENT in render', this.props.content);
     const content = this.props.content;
     const { user, date } = this.props;
     return (

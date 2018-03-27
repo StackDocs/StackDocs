@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Comment(props) {
   const { user, date, content } = props;
-  console.log('PROPS ON COMMENT', props);
+  // console.log('PROPS ON COMMENT', props);
 
   return (
     <div className="comment">

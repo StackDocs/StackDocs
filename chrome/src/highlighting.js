@@ -2,21 +2,32 @@
 import unique from 'unique-selector';
 
 export const createHighlightedObj = () => {
-  const newString = window.getSelection().toString();
+  const selection = window.getSelection().toString();
+  const clicked = document.getElementsByClassName('activeHighlight');
   const url = document.location.href;
-  const currentNode = newString.length
-    ? window.getSelection().anchorNode.parentElement
-    : null;
 
-  const domPath = currentNode ? unique(currentNode) : null;
+  let newString, currentNode, domPath, activeId;
+
+  if (selection.length) {
+    newString = window.getSelection().toString();
+    currentNode = newString.length
+      ? window.getSelection().anchorNode.parentElement
+      : null;
+    activeId = '';
+    domPath = currentNode ? unique(currentNode) : '';
+  } else if (clicked.length) {
+    newString = clicked[0].innerText;
+    currentNode = clicked[0];
+    activeId = clicked[0].classList[1];
+    domPath = '';
+  }
 
   const selObj = {
-    newString,
-    domPath,
-    url
-  };
-
-  // console.log({selObj});
+      newString,
+      domPath,
+      url,
+      activeId
+    };
 
   return selObj;
 };

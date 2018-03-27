@@ -28,7 +28,8 @@ export default class Sidebar extends Component {
       view: 'home',
       previousViews: [],
       isQuestion: true,
-      activeId: ''
+      activeId: '',
+      activeHL: ''
     };
   }
 
@@ -38,14 +39,13 @@ export default class Sidebar extends Component {
 
 
   setView = view => {
-    console.log('VIEW IN SET VIEW: ', view);
+    // console.log('VIEW IN SET VIEW: ', view);
     const lastView = this.state.view;
     const newPreviousViews = [...this.state.previousViews, lastView];
     this.setState({
       view,
       previousViews: newPreviousViews
     });
-    console.log('STATE: ', this.state);
   };
 
   goToPreviousView = () => {
@@ -61,12 +61,19 @@ export default class Sidebar extends Component {
   selectComponents() {
     switch (this.state.view) {
       case 'home':
-        return <AllHighlights setView={this.setView} />;
+        return (
+          <AllHighlights
+            setView={this.setView}
+            activeId={this.state.activeId}
+            activeHL={this.state.activeHL}
+          />
+        );
       case 'singleHL':
         return (
           <SingleHighlight
             setView={this.setView}
             activeId={this.state.activeId}
+            activeHL={this.state.activeHL}
           />
         );
       case 'askOrAnnotate':
@@ -77,6 +84,8 @@ export default class Sidebar extends Component {
             setView={this.setView}
             isQuestion={this.state.isQuestion}
             user={this.props.user}
+            activeId={this.state.activeId}
+            activeHL={this.state.activeHL}
           />
         );
       default:
@@ -130,19 +139,24 @@ export default class Sidebar extends Component {
         const markedEls = document.getElementsByClassName(
           'chromelights-highlights'
         );
-        console.log('GET EL BY CLASS:', markedEls, 'Length is', markedEls[0]);
+
         for (let i = 0; i < markedEls.length; i++) {
-          console.log('this loop has run', i, 'times. Class is: ', markedEls[i].className);
-          markedEls[i].addEventListener('click', () => {
-            console.log('You clicked me!');
-            if (document.getElementsByClassName('activeHighlight').length) {
-              const activeId = document.getElementsByClassName('activeHighlight')[0]
+          markedEls[i].addEventListener('click', (event) => {
+            const activeEl = document.getElementsByClassName('activeHighlight');
+            if (event.target.classList[1] === this.state.activeId) {
+              this.setState({
+                activeHl: '',
+                activeId: ''
+              });
+              this.setView('home');
+            }
+            if (activeEl.length) {
+              const activeId = activeEl[0]
                 .classList[1];
-                console.log('activeId :', activeId);
-              this.setState({ activeId });
+              const activeHL = activeEl[0].innerText;
+              this.setState({ activeId, activeHL });
               this.setView('singleHL');
             }
-            console.log('STATE IN SIDEBAR COMP DID MOUNT', this.state);
           });
         }
   }
