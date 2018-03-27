@@ -84,9 +84,7 @@ export class CreateEntry extends Component {
           })
           .catch(error => console.log('error: ', error));;;
       })
-      .then(() => {
-        setView('');
-      })
+      .then(_ => setView(''))
       .catch(error => console.log('error: ', error));
   };
 

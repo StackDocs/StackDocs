@@ -36,7 +36,7 @@ export class CreateHighlightButton extends Component {
           highlightText: highlightObj.newString
         }
       )
-      markInstance.mark(highlightObj.newString, {
+      await markInstance.mark(highlightObj.newString, {
         acrossElements: true,
         separateWordSearch: false,
         className: "chromelights-highlights"
