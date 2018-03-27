@@ -63,6 +63,7 @@ export class CreateEntry extends Component {
             isQuestion: this.props.isQuestion,
             upVote: 0,
             downVote: 0,
+            score: 0,
             content: messageSubmit,
             highlightID: highlight.id,
             comments: [],
