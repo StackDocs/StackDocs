@@ -17,7 +17,6 @@ export default class EntryContainer extends Component {
                     date="March 20, 2018" />
                 <Interactive
                     highlightId={highlightId}
-                    encodedUrl
                     entryId={entryId}
                     downVote={downVote}
                     upVote={upVote}

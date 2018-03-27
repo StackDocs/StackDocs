@@ -10,11 +10,12 @@ import EntryContainer from './EntryContainer';
 //Helper func
 const UrlPages = fs.collection('UrlPages');
 let encodedDocUrl = urlEncode(document.location.href);
+
 const sortByVote = array => {
   const updatedOrder = [];
-  array.map(entry => { //should be forEach
+  array.forEach(entry => {
     for (var i = 0; i < array.length; i++){
-      if (!updatedOrder[i] || entry[1].upVote >= updatedOrder[i][1].upVote){
+      if (!updatedOrder[i] || entry[1].score >= updatedOrder[i][1].score){
         updatedOrder.splice(i, 0, entry);
         break;
       }
@@ -81,7 +82,7 @@ export default class SingleHighlight extends Component {
     const urlReadOnly = document.location.href;
     const url = urlEncode(urlReadOnly);
     const setView = this.props.setView;
-
+    const highlightTitle = this.state.highlightObj.newString;
     //Set State
 
     console.log('PROPS IN HIGHLIGHTANNOTATIONS: ', this.props);
@@ -90,7 +91,7 @@ export default class SingleHighlight extends Component {
         <div className="chromelights-highlight-header">
           <div className="chromelights-highlight-container">
             <h3 className="chromelights-highlight-title">
-              {`...${this.state.highlightObj.newString}...`}
+              {highlightTitle === undefined ? 'Loading...' : `...${highlightTitle}...`}
             </h3>
           </div>
           <CreateHighlightButton setView={setView} />
