@@ -61,7 +61,7 @@ export default class Sidebar extends Component {
   selectComponents() {
     switch (this.state.view) {
       case 'singleHL':
-        return <SingleHighlight activeId={this.state.activeId}/>;
+        return <SingleHighlight activeId={this.state.activeId} setView={this.setView}/>;
       case 'askOrAnnotate':
         return <AskOrAnnotate selectEntryType={this.selectEntryType} />;
       case 'createEntry':

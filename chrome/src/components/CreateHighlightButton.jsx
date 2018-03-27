@@ -41,7 +41,7 @@ export class CreateHighlightButton extends Component {
         separateWordSearch: false,
         className: "chromelights-highlights"
       })
-      props.setView('askOrAnnotate')
+      this.props.setView('askOrAnnotate')
     } catch (err) {
       console.error(err);
     }
