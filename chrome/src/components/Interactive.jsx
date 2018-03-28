@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { urlEncode } from '../highlighting';
 import { firestore } from '~/fire';
-import Comment from './Comment';
+import { Comment } from './index';
 
 //icons
 import CommentIcon from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/comment.svg';
@@ -10,6 +10,7 @@ import ThumbsDown from 'svg-react-loader?name=ThumbsDown!~/chrome/src/icons/thum
 
 let encodedDocUrl = urlEncode(document.location.href);
 const Highlights = firestore.collection('UrlPages').doc(encodedDocUrl).collection('highlights');
+
 export default class Interactive extends Component {
   constructor(props) {
     super(props);
@@ -37,10 +38,10 @@ export default class Interactive extends Component {
           merge: true
         });
       })
-      .then(_ => {
-        console.log('fetch new entries', this.props.fetch);
-        this.props.fetch();
-      })
+      // .then(_ => {
+      //   console.log('fetch new entries', this.props.fetch);
+      //   this.props.fetch();
+      // })
     } catch (err) {
       console.error(err);
     }
@@ -67,10 +68,10 @@ export default class Interactive extends Component {
           merge: true
         });
       })
-      .then(_ => {
-        console.log('fetch new entries', this.props.fetch);
-        this.props.fetch();
-      })
+      // .then(_ => {
+      //   console.log('fetch new entries', this.props.fetch);
+      //   this.props.fetch();
+      // })
     } catch (err) {
       console.error(err);
     }
