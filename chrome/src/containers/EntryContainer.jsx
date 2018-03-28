@@ -16,7 +16,7 @@ export default class EntryContainer extends Component {
                     user={user}
                     date={date} />
                 <Interactive
-                    hlPropsId={hlPropsId}
+                    highlightId={hlPropsId}
                     entryId={entryId}
                     downVote={downVote}
                     upVote={upVote}

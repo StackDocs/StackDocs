@@ -22,12 +22,12 @@ export default class Interactive extends Component {
   }
 
   upVote = () => {
-    const highlightPathId = this.props.hlPropsId;
+    const { highlightId, entryId } = this.props;
     console.log('hit downvote');
     try {
-      Highlights.doc(highlightPathId)
+      Highlights.doc(highlightId)
         .collection('entries')
-        .doc(this.props.entryId)
+        .doc(entryId)
         .get() //Change to onSnapshot
         .then(entry => {
           console.log('oldvote', entry.data().upVote);
@@ -37,9 +37,9 @@ export default class Interactive extends Component {
         })
         .then(scores => {
           const { newScore, newUpvote } = scores;
-          Highlights.doc(highlightPathId)
+          Highlights.doc(highlightId)
             .collection('entries')
-            .doc(this.props.entryId)
+            .doc(entryId)
             .set(
               {
                 upVote: newUpvote,
@@ -55,7 +55,7 @@ export default class Interactive extends Component {
     }
   };
   downVote = () => {
-    const highlightPathId = this.props.hlPropsId;
+    const highlightPathId = this.props.highlightId;
     console.log('hit downvote');
     try {
       Highlights.doc(highlightPathId)
@@ -91,12 +91,12 @@ export default class Interactive extends Component {
     const {
       downVote,
       upVote,
-      // user,
-      hlPropsId,
+      highlightId,
       entryId,
       currentUser
     } = this.props;
-
+    let encodedUrl = urlEncode(document.location.href);
+    console.log(encodedUrl, highlightId, entryId, "this is everything that is killing me")
     return (
       <div>
         <ThumbsUp onClick={this.upVote} />
@@ -104,31 +104,37 @@ export default class Interactive extends Component {
         <ThumbsDown onClick={this.downVote} />
         {downVote}
         <CommentIcon />
-       {/*{Comments.length}*/}
+        {/*{Comments.length}*/}
         <Map each
-          from={Highlights.doc(hlPropsId)
+          from={firestore.collection('UrlPages')
+            .doc(encodedUrl)
+            .collection('highlights')
+            .doc(highlightId)
             .collection('entries')
             .doc(entryId)
             .collection('comments')}
           Loading={() => <p>Comments are loading!</p>}
           Empty={() => <p>There are no comments!</p>}
-          Render={({ content, userDisplayName, cmtUpVote, cmtDownVote, date }) => (
-            <Comment
-              content={content}
-              userDisplayName={userDisplayName}
-              cmtUpVote={cmtUpVote}
-              cmtDownVote={cmtDownVote}
-              date={date}
-            />
-          )}
+          Render={({ content }) => (
+            <div><h1>{content}</h1></div>)}
         />
         <CreateComment
           currentUser={currentUser}
           // comments={comments}
-          highlightId={hlPropsId}
+          highlightId={highlightId}
           entryId={entryId}
         />
       </div>
     );
   }
 }
+
+
+      // {/* <Comment
+      //         content={content}
+      //         userDisplayName={userDisplayName}
+      //         cmtUpVote={cmtUpVote}
+      //         cmtDownVote={cmtDownVote}
+      //         date={date}
+      //      />*/}
+      // , userDisplayName, cmtUpVote, cmtDownVote, date
