@@ -16,12 +16,10 @@ export default class Interactive extends Component {
   }
 
   upVote = () => {
-    const highlightPathId = this.props.hlPropsId;
-    console.log('hit downvote')
+    const Entries = Highlights.doc(this.props.hlPropsId).collection('entries');
+    console.log('hit upvote', this.props);
     try {
-      Highlights.doc(highlightPathId)
-      .collection('entries')
-      .doc(this.props.entryId)
+      Entries.doc(this.props.entryId)
       .get() //Change to onSnapshot
       .then(entry => {
         console.log('oldvote', entry.data().upVote);
@@ -31,27 +29,28 @@ export default class Interactive extends Component {
       })
       .then(scores => {
         const { newScore, newUpvote } = scores;
-        Highlights.doc(highlightPathId)
-        .collection('entries')
-        .doc(this.props.entryId)
+        Entries.doc(this.props.entryId)
         .set({
           upVote: newUpvote,
           score: newScore
         }, {
           merge: true
         });
-      });
+      })
+      .then(_ => {
+        console.log('fetch new entries', this.props.fetch);
+        this.props.fetch();
+      })
     } catch (err) {
       console.error(err);
     }
   }
+
   downVote = () => {
-    const highlightPathId = this.props.hlPropsId;
-    console.log('hit downvote')
+    const Entries = Highlights.doc(this.props.hlPropsId).collection('entries');
+    console.log('hit downvote');
     try {
-      Highlights.doc(highlightPathId)
-      .collection('entries')
-      .doc(this.props.entryId)
+     Entries.doc(this.props.entryId)
       .get()
       .then(entry => {
         let newScore = entry.data().score - 1;
@@ -60,16 +59,18 @@ export default class Interactive extends Component {
       })
       .then(scores => {
         const { newScore, newDownvote } = scores;
-        Highlights.doc(highlightPathId)
-        .collection('entries')
-        .doc(this.props.entryId)
+        Entries.doc(this.props.entryId)
         .set({
           downVote: newDownvote,
           score: newScore
         }, {
           merge: true
         });
-      });
+      })
+      .then(_ => {
+        console.log('fetch new entries', this.props.fetch);
+        this.props.fetch();
+      })
     } catch (err) {
       console.error(err);
     }

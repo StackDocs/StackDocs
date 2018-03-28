@@ -35,13 +35,18 @@ export default class AllHighlights extends Component {
       highlightObj: {},
       sorted: []
     };
+
+    // Highlights.onSnapshot(newData => {
+    //   console.log('updating data: ', newData)
+    //   this.fetchEntries();
+    // });
   }
 
   componentDidMount = () => {
     this.fetchEntries();
   };
 
-  fetchEntries() {
+  fetchEntries = () => {
     Highlights.get()
       .then(querySnapshot =>
         Promise.all(
@@ -71,6 +76,8 @@ export default class AllHighlights extends Component {
 
   render() {
     const setView = this.props.setView;
+
+
     return (
       <div id="highlight-annotation">
         <div className="chromelights-highlight-header">
@@ -102,6 +109,7 @@ export default class AllHighlights extends Component {
               <div key={entry.content}>
                 <EntryContainer
                   entryId={entryId}
+                  fetch={this.fetchEntries}
                   hlPropsId={highlightID}
                   title={title}
                   content={content}
