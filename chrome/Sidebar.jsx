@@ -85,6 +85,7 @@ export default class Sidebar extends Component {
             setView={this.setView}
             activeId={this.state.activeId}
             activeHL={this.state.activeHL}
+            currentUser={this.props.user}
           />
         );
       case 'singleHL':
@@ -93,6 +94,7 @@ export default class Sidebar extends Component {
             setView={this.setView}
             activeId={this.state.activeId}
             activeHL={this.state.activeHL}
+            currentUser={this.props.user}
           />
         );
       case 'askOrAnnotate':

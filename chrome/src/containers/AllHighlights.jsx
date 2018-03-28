@@ -71,6 +71,8 @@ export default class AllHighlights extends Component {
 
   render() {
     const setView = this.props.setView;
+    const currentUser = this.props.currentUser;
+
     return (
       <div id="highlight-annotation">
         <div className="chromelights-highlight-header">
@@ -110,6 +112,7 @@ export default class AllHighlights extends Component {
                   upVote={upVote}
                   comments={comments}
                   date={date}
+                  currentUser={currentUser}
                 />
               </div>
             );

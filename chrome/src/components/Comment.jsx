@@ -1,15 +1,15 @@
 import React from 'react';
 
 export default function Comment(props) {
-  const { user, date, content, score } = props.comment;
-  // console.log('PROPS ON COMMENT', props);
+  const { userDisplayName, date, content, cmtUpvote, cmtDonwVote } = props;
+  console.log('PROPS ON COMMENT', props);
 
   return (
     <div className="comment">
       <small>
-        {user}, {date}
+        {userDisplayName}, {date}
       </small>
-      <p>This is a hard coded comment. {content}</p>
+      <p>{content}</p>
     </div>
   );
 }

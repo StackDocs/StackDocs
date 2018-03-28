@@ -74,6 +74,7 @@ export default class SingleHighlight extends Component {
   render() {
     const setView = this.props.setView;
     const highlightTitle = this.state.selectedHighlight;
+    const currentUser = this.props.currentUser;
 
     return (
       <div id="highlight-annotation">
@@ -95,7 +96,7 @@ export default class SingleHighlight extends Component {
             const entryId = entry[0];
             return (
               <div key={entry.content}>
-                <EntryContainer entryId={entryId} hlPropsId={highlightID} title={title} content={content} user={user} downVote={downVote} upVote={upVote} comments={comments} date={date} />
+                <EntryContainer entryId={entryId} hlPropsId={highlightID} title={title} content={content} user={user} downVote={downVote} upVote={upVote} comments={comments} date={date} currentUser={currentUser} />
               </div>
             );
           })
