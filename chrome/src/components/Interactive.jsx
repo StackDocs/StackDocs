@@ -10,35 +10,29 @@ import ThumbsUp from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/thumbs-u
 import ThumbsDown from 'svg-react-loader?name=ThumbsDown!~/chrome/src/icons/thumbs-down.svg';
 
 let encodedDocUrl = urlEncode(document.location.href);
-const UrlPages = firestore.collection('UrlPages');
-
+const Highlights = firestore.collection('UrlPages').doc(encodedDocUrl).collection('highlights');
 export default class Interactive extends Component {
   constructor(props) {
     super(props);
-    // const entry = UrlPages.doc(encodedDocUrl).collection('highlights').doc(this.props.highlightId)
-    // .collection('entries')
-    // .doc(this.props.entryId)
   }
+
   upVote = () => {
-    //Can this be made DRY-er by making 'entry'
-    console.log('hit upVote', this.props);
+    const highlightPathId = this.props.hlPropsId;
+    console.log('hit downvote')
     try {
-      UrlPages.doc(encodedDocUrl).collection('highlights').doc(this.props.highlightId)
+      Highlights.doc(highlightPathId)
       .collection('entries')
       .doc(this.props.entryId)
-      .get()
+      .get() //Change to onSnapshot
       .then(entry => {
-        // console.log('entry inside interactive', entry)
         console.log('oldvote', entry.data().upVote);
         let newScore = +entry.data().score + 1;
         let newUpvote = +entry.data().upVote + 1;
         return {newScore, newUpvote};
       })
       .then(scores => {
-        console.log('scores in upVote ', scores)
         const { newScore, newUpvote } = scores;
-        console.log('HIGHLIGHT ID', this.props.highlightId, 'ENTRY ID', this.props.entryId)
-        UrlPages.doc(encodedDocUrl).collection('highlights').doc(this.props.highlightId)
+        Highlights.doc(highlightPathId)
         .collection('entries')
         .doc(this.props.entryId)
         .set({
@@ -53,9 +47,10 @@ export default class Interactive extends Component {
     }
   }
   downVote = () => {
-    console.log('hit downVote');
+    const highlightPathId = this.props.hlPropsId;
+    console.log('hit downvote')
     try {
-      UrlPages.doc(encodedDocUrl).collection('highlights').doc(this.props.highlightId)
+      Highlights.doc(highlightPathId)
       .collection('entries')
       .doc(this.props.entryId)
       .get()
@@ -66,7 +61,7 @@ export default class Interactive extends Component {
       })
       .then(scores => {
         const { newScore, newDownvote } = scores;
-        UrlPages.doc(encodedDocUrl).collection('highlights').doc(this.props.highlightId)
+        Highlights.doc(highlightPathId)
         .collection('entries')
         .doc(this.props.entryId)
         .set({

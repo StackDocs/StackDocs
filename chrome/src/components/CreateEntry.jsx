@@ -45,6 +45,7 @@ export class CreateEntry extends Component {
     const { newString, domPath, url, isAddingEntry, activeId } = this.props.highlightObj;
     const submitUrl = urlEncode(url);
     const messageSubmit = this.state.message;
+    const newDate = new Date();
     const newFireHL = {
       newString,
       domPath,
@@ -52,7 +53,6 @@ export class CreateEntry extends Component {
     };
     console.log('newFireHL', newFireHL);
     isAddingEntry ?
-
     UrlPages.doc(submitUrl)
     .collection('highlights')
     .doc(activeId)
@@ -67,7 +67,7 @@ export class CreateEntry extends Component {
       comments: [],
       user: this.props.user.displayName,
       userId: this.props.user.uid,
-      date: new Date(),
+      date: newDate.toString().slice(0, 15),
       title: this.state.title
     })
     .then(entry => {
@@ -102,7 +102,7 @@ export class CreateEntry extends Component {
             comments: [],
             user: this.props.user.displayName,
             userId: this.props.user.uid,
-            date: new Date(),
+            date: newDate.toString().slice(0, 15),
             title: this.state.title
           })
           .then(entry => {
@@ -131,7 +131,10 @@ export class CreateEntry extends Component {
         <div id="message-form">
           <form onSubmit={this.onSubmit} className="chromelights-entry-form">
             <div>
-            <label>Title: </label>
+            <label className="chromelights-form-header">
+              Title:
+            </label>
+            <br />
             <input
               type="text"
               name="title"
@@ -142,7 +145,9 @@ export class CreateEntry extends Component {
             />
             </div>
             <br />
-            <label>Add Question/Annotation: </label>
+            <label  className="chromelights-form-header">
+              Add Question/Annotation:
+            </label>
             <textarea
               type="text"
               name="message"

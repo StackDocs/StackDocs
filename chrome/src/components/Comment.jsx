@@ -1,7 +1,7 @@
 import React from 'react';
 
 export default function Comment(props) {
-  const { user, date, content } = props;
+  const { user, date, content, score } = props.comment;
   // console.log('PROPS ON COMMENT', props);
 
   return (
