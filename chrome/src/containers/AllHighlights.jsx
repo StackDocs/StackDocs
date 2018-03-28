@@ -8,6 +8,10 @@ import { Annotations, Interactive, CreateHighlightButton } from '../components';
 import { urlEncode } from '../highlighting';
 import EntryContainer from './EntryContainer';
 
+import Rx from 'rxjs';
+import { combineLatest } from 'rxjs/observable/combineLatest';
+const watch = ref => Rx.Observable.create(obs => ref.onSnapshot(obs));
+
 //Helper func
 let encodedDocUrl = urlEncode(document.location.href);
 const Highlights = fs
@@ -28,10 +32,6 @@ const sortByVote = array => {
   return updatedOrder;
 };
 
-import Rx from 'rxjs';
-import { combineLatest } from 'rxjs/observable/combineLatest';
-
-const watch = ref => Rx.Observable.create(obs => ref.onSnapshot(obs));
 
 export default class AllHighlights extends Component {
   constructor(props) {
@@ -41,11 +41,6 @@ export default class AllHighlights extends Component {
       highlightObj: {},
       sorted: []
     };
-
-    // Highlights.onSnapshot(newData => {
-    //   console.log('updating data: ', newData)
-    //   this.fetchEntries();
-    // });
   }
 
   componentDidMount = () => {
@@ -53,7 +48,7 @@ export default class AllHighlights extends Component {
   };
 
   fetchEntries = () => {
-    watch(Highlights)
+    this.subscription = watch(Highlights)
       .map(highlights =>
         highlights.docs.map(
           highlight =>
@@ -64,15 +59,18 @@ export default class AllHighlights extends Component {
       .switchMap(entryObs => combineLatest(...entryObs))
       .map(entries => entries.reduce((x, y) => x.concat(y), []))
       .map(entries => entries.map(_ => _.data()))
-      .map(values => {
-        console.log('values: ', values);
-        return values;
-      })
+      // .map(values => {
+      //   console.log('values: ', values);
+      //   return values;
+      // })
       .map(dataArr => dataArr.map(data => [data.entryId, data]))
       .map(sortArr => sortByVote(sortArr))
       .subscribe(sorted => this.setState({sorted}));
   }
 
+  componentWillUnmount = () => {
+    this.subscription.unsubscribe()
+  }
 
   render() {
     const setView = this.props.setView;
