@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { urlEncode } from '../highlighting';
 import { firestore } from '~/fire';
 import Comment from './Comment';
+import CreateComment from './CreateComment';
 
 //icons
 import CommentIcon from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/comment.svg';
@@ -10,6 +11,7 @@ import ThumbsDown from 'svg-react-loader?name=ThumbsDown!~/chrome/src/icons/thum
 
 let encodedDocUrl = urlEncode(document.location.href);
 const UrlPages = firestore.collection('UrlPages');
+
 export default class Interactive extends Component {
   constructor(props) {
     super(props);
@@ -78,6 +80,7 @@ export default class Interactive extends Component {
       console.error(err);
     }
   }
+
   render() {
     const { downVote, upVote, comments } = this.props;
     return (
@@ -89,6 +92,7 @@ export default class Interactive extends Component {
         <CommentIcon />
         {comments.length}
         <Comment comments={comments} />
+        <CreateComment />
       </div>
     );
   }
