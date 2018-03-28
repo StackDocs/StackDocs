@@ -27,7 +27,6 @@ export class CreateHighlightButton extends Component {
       const highlightObj = createHighlightedObj();
 
       if (document.getSelection().toString().length) {
-        // if (this.props.markInstance) this.props.markInstance.unmark();
         const markInstance = await new Mark(highlightObj.domPath);
         this.props.storeHighlight(
           {

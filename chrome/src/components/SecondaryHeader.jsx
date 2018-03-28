@@ -15,7 +15,6 @@ class SecondaryHeader extends Component {
     const view = this.props.currentView;
     const highlightStr = this.props.highlightObj.newString || null;
     if (view === 'askOrAnnotate' && highlightStr) {
-      console.log(highlightStr);
       this.props.markInstance.unmark({className: highlightStr});
     }
     this.props.goToPreviousView();
