@@ -5,15 +5,59 @@ import Annotations from '../components/Annotations';
 import Interactive from '../components/Interactive';
 import CreateHighlightButton from '../components/CreateHighlightButton';
 import { urlEncode } from '../highlighting';
+import EntryContainer from './EntryContainer';
+
+//Helper func
+const UrlPages = fs.collection('UrlPages');
+let encodedDocUrl = urlEncode(document.location.href);
+
+const sortByVote = array => {
+  const updatedOrder = [];
+  array.forEach(entry => {
+    for (var i = 0; i < array.length; i++){
+      if (!updatedOrder[i] || entry[1].score >= updatedOrder[i][1].score){
+        updatedOrder.splice(i, 0, entry);
+        break;
+      }
+    }
+  });
+  return updatedOrder;
+};
 
 export default class SingleHighlight extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      highlightObj: {},
+      sorted: [],
       selectedHighlight: this.props.activeHL || 'Select Some Text',
       selectedId: this.props.activeId
     };
+  }
+
+  componentDidMount = () => {
+    this.fetchEntries();
+  }
+
+  fetchEntries = () => {
+    UrlPages.doc(encodedDocUrl).collection('highlights').doc(this.state.selectedId)
+    .collection('entries')
+    .get()
+    .then(querySnapshot => {
+      let shareArr = [];
+      querySnapshot.forEach(entry => {
+        shareArr.push([entry.id, entry.data()]);
+      });
+      return shareArr;
+    })
+    .then(shared => {
+      return sortByVote(shared);
+    })
+    .then(sorted => {
+      this.setState({ sorted });
+    })
+    .catch(error => console.log('error: ', error));
   }
 
   componentWillReceiveProps(newProps) {
@@ -21,21 +65,22 @@ export default class SingleHighlight extends Component {
       this.setState({
         selectedHighlight: newProps.activeHL,
         selectedId: newProps.activeId
+      }, () => {
+        this.fetchEntries();
       });
     }
   }
 
   render() {
-    const urlReadOnly = document.location.href;
-    const url = urlEncode(urlReadOnly);
     const setView = this.props.setView;
+    const highlightTitle = this.state.selectedHighlight;
 
     return (
       <div id="highlight-annotation">
         <div className="chromelights-highlight-header">
           <div className="chromelights-highlight-container">
             <h3 className="chromelights-highlight-title">
-              {`...${this.state.selectedHighlight}...`}
+              {highlightTitle === undefined ? 'Loading...' : `...${highlightTitle}...`}
             </h3>
           </div>
           <CreateHighlightButton
@@ -44,41 +89,20 @@ export default class SingleHighlight extends Component {
             activeHL={this.state.activeHL}
           />
         </div>
-        <Map
-          each
-          from={fs
-            .collection('UrlPages')
-            .doc(url)
-            .collection('highlights')
-            .doc(this.state.selectedId)
-            .collection('entries')}
-          Loading={() => <h3>Loading...</h3>}
-          Empty={() => <h3 color="red">No Annotations</h3>}
-          Render={({
-            upVote,
-            downVote,
-            content,
-            comments,
-            user,
-            date,
-            title
-          }) => (
-            <div>
-              <h3>{title}</h3>
-              <Annotations
-                content={content}
-                user={user}
-                date={date.toString().slice(0, 15)}
-              />
-              <Interactive
-                downVote={downVote}
-                upVote={upVote}
-                comments={comments}
-              />
-            </div>
-          )}
-        />
+        {
+          this.state.sorted && this.state.sorted.map(entry => {
+            const { title, content, highlightID, user, date, downVote, upVote, comments } = entry[1];
+            const entryId = entry[0];
+            return (
+              <div key={entry.content}>
+                <EntryContainer entryId={entryId} hlPropsId={highlightID} title={title} content={content} user={user} downVote={downVote} upVote={upVote} comments={comments} date={date} />
+              </div>
+            );
+          })
+
+        }
       </div>
     );
   }
 }
+

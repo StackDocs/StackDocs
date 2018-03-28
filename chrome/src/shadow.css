@@ -39,7 +39,7 @@
   justify-content: space-around;
   align-items: center;
   background-color: rgb(238, 238, 238);
-  box-shadow: 0 2px 20px rgb(214, 212, 212);
+  /* box-shadow: 0 2px 20px rgb(214, 212, 212); */
 }
 
 /* .chromelights-view-btn {

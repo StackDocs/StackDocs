@@ -5,33 +5,78 @@ import Annotations from '../components/Annotations';
 import Interactive from '../components/Interactive';
 import CreateHighlightButton from '../components/CreateHighlightButton';
 import { urlEncode } from '../highlighting';
+import EntryContainer from './EntryContainer';
+
+//Helper func
+let encodedDocUrl = urlEncode(document.location.href);
+const Highlights = fs
+  .collection('UrlPages')
+  .doc(encodedDocUrl)
+  .collection('highlights');
+
+const sortByVote = array => {
+  const updatedOrder = [];
+  array.forEach(entry => {
+    for (var i = 0; i < array.length; i++) {
+      if (!updatedOrder[i] || entry[1].score >= updatedOrder[i][1].score) {
+        updatedOrder.splice(i, 0, entry);
+        break;
+      }
+    }
+  });
+  return updatedOrder;
+};
+
 export default class AllHighlights extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      selectedHighlight: this.props.activeId || 'Select Some Text'
+      highlightObj: {},
+      sorted: []
     };
   }
-  componentWillReceiveProps(newProps) {
-    if (newProps.activeId) {
-      this.setState({
-        selectedHighlight: newProps.activeHL,
-        selectedId: newProps.activeId
-      });
-    }
+
+  componentDidMount = () => {
+    this.fetchEntries();
+  };
+
+  fetchEntries() {
+    Highlights.get()
+      .then(querySnapshot =>
+        Promise.all(
+          querySnapshot.docs.map(highlight =>
+            highlight.ref.collection('entries').get()
+          )
+        )
+      )
+      .then(snapshots =>
+        snapshots.reduce(
+          (all, one) => [
+            ...all,
+            ...one.docs.map(entry => [entry.id, entry.data()])
+          ],
+          []
+        )
+      )
+      .then(shared => {
+        return sortByVote(shared);
+      })
+      .then(sorted => {
+        this.setState({ sorted });
+      })
+      .catch(error => console.log('error: ', error));
   }
+
+
   render() {
-    const urlReadOnly = document.location.href;
-    const url = urlEncode(urlReadOnly);
     const setView = this.props.setView;
-    // console.log('PROPS IN HIGHLIGHTANNOTATIONS: ', this.props);
     return (
       <div id="highlight-annotation">
         <div className="chromelights-highlight-header">
           <div className="chromelights-highlight-container">
             <h3 className="chromelights-highlight-title">
-              {`...${this.state.selectedHighlight}...`}
+              {`...All entries...`}
             </h3>
           </div>
           <CreateHighlightButton
@@ -40,42 +85,35 @@ export default class AllHighlights extends Component {
             activeHL={this.props.activeHL}
           />
         </div>
-        <Map
-          each
-          from={fs
-            .collection('UrlPages')
-            .doc(url)
-            .collection('highlights')
-            .doc(this.state.selectedHighlight)
-            .collection('entries')}
-          Loading={() => <h3>Loading...</h3>}
-          Empty={() => <h3 color="red">No Annotations</h3>}
-          // Render={({
-          //   upVote,
-          //   downVote,
-          //   content,
-          //   comments,
-          //   user,
-          //   date,
-          //   title
-          // }) => (
-          //   <div>
-          //     <h3>{title}</h3>
-          //     {console.log(typeof date)}
-          //     <Annotations
-          //       content={content}
-          //       user={user}
-          //       date="March 20, 2018"
-          //     />
-          //     <Interactive
-          //       downVote={downVote}
-          //       upVote={upVote}
-          //       comments={comments}
-          //     />
-          //   </div>
-          // )}
-          Render={() => <h1>Nothing to show for now</h1>}
-        />
+        {this.state.sorted &&
+          this.state.sorted.map(entry => {
+            const {
+              title,
+              content,
+              user,
+              highlightID,
+              date,
+              downVote,
+              upVote,
+              comments
+            } = entry[1];
+            const entryId = entry[0];
+            return (
+              <div key={entry.content}>
+                <EntryContainer
+                  entryId={entryId}
+                  hlPropsId={highlightID}
+                  title={title}
+                  content={content}
+                  user={user}
+                  downVote={downVote}
+                  upVote={upVote}
+                  comments={comments}
+                  date={date}
+                />
+              </div>
+            );
+          })}
       </div>
     );
   }
