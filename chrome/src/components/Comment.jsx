@@ -7,9 +7,9 @@ export default function Comment(props) {
   return (
     <div className="comment">
       <small>
-        {user}, {date}
+        {/*{user}, {date}*/}
       </small>
-      <p>This is a hard coded comment. {content}</p>
+      {/*<p>This is a hard coded comment. {content}</p>*/}
     </div>
   );
 }
