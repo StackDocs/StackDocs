@@ -50,6 +50,7 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
+    "rxjs": "^5.5.8",
     "style-loader": "^0.20.3",
     "svg-react-loader": "^0.4.5",
     "unique-selector": "^0.3.6",

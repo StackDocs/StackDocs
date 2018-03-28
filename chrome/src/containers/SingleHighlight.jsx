@@ -7,9 +7,18 @@ import CreateHighlightButton from '../components/CreateHighlightButton';
 import { urlEncode } from '../highlighting';
 import EntryContainer from './EntryContainer';
 
+
+import Rx from 'rxjs';
+import { combineLatest } from 'rxjs/observable/combineLatest';
+const watch = ref => Rx.Observable.create(obs => ref.onSnapshot(obs));
+
 //Helper func
-const UrlPages = fs.collection('UrlPages');
 let encodedDocUrl = urlEncode(document.location.href);
+const Highlights = fs
+.collection('UrlPages')
+.doc(encodedDocUrl)
+.collection('highlights');
+
 
 const sortByVote = array => {
   const updatedOrder = [];
@@ -29,52 +38,55 @@ export default class SingleHighlight extends Component {
     super(props);
 
     this.state = {
-      highlightObj: {},
       sorted: [],
-      selectedHighlight: this.props.activeHL || 'Select Some Text',
-      selectedId: this.props.activeId
     };
   }
 
-  componentDidMount = () => {
-    this.fetchEntries();
+  componentDidMount() {
+    this.listen(this.props);
   }
 
-  fetchEntries = () => {
-    UrlPages.doc(encodedDocUrl).collection('highlights').doc(this.state.selectedId)
-    .collection('entries')
-    .get()
-    .then(querySnapshot => {
-      let shareArr = [];
-      querySnapshot.forEach(entry => {
-        shareArr.push([entry.id, entry.data()]);
-      });
-      return shareArr;
-    })
-    .then(shared => {
-      return sortByVote(shared);
-    })
-    .then(sorted => {
-      this.setState({ sorted });
-    })
-    .catch(error => console.log('error: ', error));
+  componentWillReceiveProps(props) {
+    if (props.activeId !== this.props.activeId)
+      this.listen(props)
   }
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.activeId) {
-      this.setState({
-        selectedHighlight: newProps.activeHL,
-        selectedId: newProps.activeId
-      }, () => {
-        this.fetchEntries();
-      });
-    }
+  listen({activeId}) {
+    this.unsub()
+    if (!activeId) return
+
+    const entries = Highlights
+      .doc(activeId)
+      .collection('entries')
+
+    this.subscription = watch(entries)
+        .map(entries => entries.docs.map(_ => _.data()))
+        .map(values => {
+          console.log('values: ', values);
+          return values;
+        })
+        .map(dataArr => dataArr.map(data => [data.entryId, data]))
+        .map(sortArr => sortByVote(sortArr))
+        .subscribe(sorted => this.setState({sorted}));
+  }
+
+  unsub() {
+    if (!this.subscription) return
+    this.subscription.unsubscribe()
+    this.subscription = null
+  }
+
+
+  componentWillUnmount = () => this.unsub()
+
+  selectedHighlight() {
+    return this.props.activeHL || 'Select some text'
   }
 
   render() {
     const setView = this.props.setView;
-    const highlightTitle = this.state.selectedHighlight;
-
+    const highlightTitle = this.selectedHighlight();
+    console.log('higlightTitle', this.props)
     return (
       <div id="highlight-annotation">
         <div className="chromelights-highlight-header">
@@ -95,7 +107,7 @@ export default class SingleHighlight extends Component {
             const entryId = entry[0];
             return (
               <div key={entry.content}>
-                <EntryContainer entryId={entryId} hlPropsId={highlightID} title={title} content={content} user={user} downVote={downVote} upVote={upVote} comments={comments} date={date} />
+                <EntryContainer entryId={entryId} fetch={this.fetchEntries} hlPropsId={highlightID} title={title} content={content} user={user} downVote={downVote} upVote={upVote} comments={comments} date={date} />
               </div>
             );
           })
