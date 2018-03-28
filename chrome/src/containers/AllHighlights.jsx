@@ -70,17 +70,6 @@ export default class AllHighlights extends Component {
   }
 
 
-  componentWillReceiveProps(newProps) {
-    if (newProps.activeId) {
-      this.setState({
-        selectedHighlight: newProps.activeHL,
-        selectedId: newProps.activeId
-      }, () => {
-        this.fetchEntries();
-    })
-  }
-}
-
   render() {
     const setView = this.props.setView;
     return (

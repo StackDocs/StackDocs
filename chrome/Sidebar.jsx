@@ -64,7 +64,7 @@ export default class Sidebar extends Component {
       view,
       previousViews: newPreviousViews
     });
-    // console.log("STATE: ", this.state);
+    console.log("VIEW IN SIDEBAR: ", this.state.view);
   };
 
   goToPreviousView = () => {
