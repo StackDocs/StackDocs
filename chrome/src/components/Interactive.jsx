@@ -80,12 +80,15 @@ export default class Interactive extends Component {
     const { downVote, upVote, comments } = this.props;
     return (
       <div>
-        <ThumbsUp onClick={this.upVote} />
-        {upVote}
-        <ThumbsDown onClick={this.downVote} />
-        {downVote}
-        <CommentIcon />
-        {comments.length}
+        <div className="chromelights-interactive">
+          <ThumbsUp onClick={this.upVote} />
+          {upVote}
+          <ThumbsDown onClick={this.downVote} />
+          {downVote}
+          <CommentIcon />
+          {comments.length}
+        </div>
+        <br />
         <Comment comments={comments} />
       </div>
     );

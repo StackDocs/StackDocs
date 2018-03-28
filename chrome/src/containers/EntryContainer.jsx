@@ -9,7 +9,7 @@ export default class EntryContainer extends Component {
     render() {
         const { entryId, fetch, hlPropsId, title, content, user, date, downVote, upVote, comments } = this.props;
         return (
-            <div>
+            <div className="chromelights-entry">
                 <h3>{title}</h3>
                 <Annotations
                     content={content}

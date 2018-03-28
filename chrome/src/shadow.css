@@ -32,7 +32,7 @@
 
 }
 .chromelights-secondary-header {
-  font-size: 1rem;
+  font-size: 14px;
   color: rgb(155, 154, 154);
   height: 36px;
   display: flex;
@@ -91,7 +91,7 @@
   justify-content: center;
 }
 
-.chromelights-main div {
+.chromelights-main > div {
   width: 100%;
 }
 
@@ -118,7 +118,7 @@
   width: 200px;
   height: auto;
   color: var(--primary-blue);
-  font-size: 1rem;
+  font-size: 14px;
   border: 3px solid var(--primary-blue);
   border-radius: 26px;
   transition: all 500ms;
@@ -135,6 +135,18 @@
   box-shadow: none;
   margin-top: 2px;
   transform: scale (1);
+}
+
+.chromelights-entry {
+ width: 450px;
+ border-top: solid 1px rgb(224, 224, 224);
+ border-bottom: solid 1px rgb(224, 224, 224);
+}
+.chromelights-interactive {
+ display: flex;
+ justify-content: space-between;
+ width: 30%;
+ float: left;
 }
 
 .chromelights-big-icon {
@@ -204,6 +216,6 @@
 .chromelights-entry-form .chromelights-btn {
   width: 100px;
   height: 30px;
-  font-size: 0.75rem;
+  font-size: 12px;
   border: 2px solid var(--primary-blue);
 }
