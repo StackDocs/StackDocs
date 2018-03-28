@@ -1,10 +1,8 @@
-import React, { Component } from "react";
-import { firestore } from "~/fire";
-import ReactDOM from "react-dom";
-import { connect } from "react-redux";
-import Mark from "mark.js";
-import { createHighlightedObj, urlEncode } from "../highlighting";
-import { createHighlight } from "~/chrome/src/store"
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import Mark from 'mark.js';
+import { createHighlightedObj } from '../highlighting';
+import { createHighlight } from '~/chrome/src/store';
 
 
 export class CreateHighlightButton extends Component {
@@ -27,10 +25,8 @@ export class CreateHighlightButton extends Component {
     event.preventDefault();
     try {
       const highlightObj = createHighlightedObj();
-      console.log(highlightObj);
 
       if (document.getSelection().toString().length) {
-        if (this.props.markInstance) this.props.markInstance.unmark();
         const markInstance = await new Mark(highlightObj.domPath);
         this.props.storeHighlight(
           {
@@ -42,7 +38,7 @@ export class CreateHighlightButton extends Component {
         await markInstance.mark(highlightObj.newString, {
           acrossElements: true,
           separateWordSearch: false,
-          className: 'chromelights-highlights'
+          className: `chromelights-highlights ${highlightObj.newString}`
         });
       } else if (document.getElementsByClassName('activeHighlight').length){
         this.props.storeHighlight(
