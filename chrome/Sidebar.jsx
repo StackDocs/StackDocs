@@ -34,9 +34,14 @@ export default class Sidebar extends Component {
 
     document.addEventListener('click', ({target}) => {
       if (!target.classList.contains('chromelights-highlights')) return;
+
       [...document.getElementsByClassName('activeHighlight')]
-        .forEach(_ => _.classList.remove('activeHighlight'));
-      target.classList.add('activeHighlight');
+        .forEach(el => () => {
+          el.classList.remove('activeHighlight');
+          if (el !== target) {
+            target.classList.add('activeHighlight');
+          }
+        });
 
       if (document.getElementsByClassName('activeHighlight').length) {
         const clicked = document.getElementsByClassName('activeHighlight')[0];
