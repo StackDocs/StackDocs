@@ -79,14 +79,14 @@ export default class SingleHighlight extends Component {
 
   componentWillUnmount = () => this.unsub()
 
-  get selectedHighlight() {
-    return this.props.selectedHighlight || 'Select some text'
+  selectedHighlight() {
+    return this.props.activeHL || 'Select some text'
   }
 
   render() {
     const setView = this.props.setView;
-    const highlightTitle = this.selectedHighlight;
-
+    const highlightTitle = this.selectedHighlight();
+    console.log('higlightTitle', this.props)
     return (
       <div id="highlight-annotation">
         <div className="chromelights-highlight-header">
