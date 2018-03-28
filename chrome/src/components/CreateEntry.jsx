@@ -131,7 +131,10 @@ export class CreateEntry extends Component {
         <div id="message-form">
           <form onSubmit={this.onSubmit} className="chromelights-entry-form">
             <div>
-            <label>Title: </label>
+            <label className="chromelights-form-header">
+              Title:
+            </label>
+            <br />
             <input
               type="text"
               name="title"
@@ -142,7 +145,9 @@ export class CreateEntry extends Component {
             />
             </div>
             <br />
-            <label>Add Question/Annotation: </label>
+            <label  className="chromelights-form-header">
+              Add Question/Annotation:
+            </label>
             <textarea
               type="text"
               name="message"
