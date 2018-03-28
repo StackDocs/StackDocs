@@ -28,7 +28,8 @@ export default class Sidebar extends Component {
       view: "home",
       previousViews: [],
       isQuestion: true,
-      activeId: ""
+      activeId: "",
+      activeHL: ''
     };
 
     document.addEventListener("click", ({target}) => {
@@ -38,27 +39,32 @@ export default class Sidebar extends Component {
       target.classList.add('activeHighlight')
 
       if (document.getElementsByClassName("activeHighlight").length) {
-        const activeId = document.getElementsByClassName("activeHighlight")[0]
-          .classList[1];
-        this.setState({ activeId });
+        const clicked = document.getElementsByClassName("activeHighlight")[0]
+        const activeId = clicked.classList[1];
+        const activeHL = clicked.innerText;
+        this.setState({
+          activeId,
+          activeHL
+        });
         this.setView("singleHL");
       }
     });
   }
 
   componentDidMount() {
-    fetchHighlights();
+    this.fetchHighlights();
   }
 
+
   setView = view => {
-    console.log("VIEW IN SET VIEW: ", view);
+    // console.log("VIEW IN SET VIEW: ", view);
     const lastView = this.state.view;
     const newPreviousViews = [...this.state.previousViews, lastView];
     this.setState({
       view,
       previousViews: newPreviousViews
     });
-    console.log("STATE: ", this.state);
+    // console.log("STATE: ", this.state);
   };
 
   goToPreviousView = () => {
@@ -73,29 +79,32 @@ export default class Sidebar extends Component {
 
   selectComponents() {
     switch (this.state.view) {
-      case "home":
+      case 'home':
         return (
           <AllHighlights
             setView={this.setView}
             activeId={this.state.activeId}
+            activeHL={this.state.activeHL}
           />
         );
-      case "singleHL":
+      case 'singleHL':
         return (
           <SingleHighlight
             setView={this.setView}
             activeId={this.state.activeId}
+            activeHL={this.state.activeHL}
           />
         );
-      case "askOrAnnotate":
+      case 'askOrAnnotate':
         return <AskOrAnnotate selectEntryType={this.selectEntryType} />;
       case "createEntry":
         return (
           <CreateEntry
-            user={this.props.user.displayName}
             setView={this.setView}
             isQuestion={this.state.isQuestion}
             user={this.props.user}
+            activeId={this.state.activeId}
+            activeHL={this.state.activeHL}
           />
         );
       default:
@@ -113,6 +122,63 @@ export default class Sidebar extends Component {
     this.setView("createEntry");
   };
 
+  fetchHighlights = async () => {
+    const hlArr = [];
+    let encodedDocUrl = urlEncode(document.location.href);
+    const UrlPages = firestore.collection('UrlPages');
+
+    await UrlPages.doc(encodedDocUrl)
+      .collection('highlights')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(highlight => {
+          const markedId = document.getElementsByClassName(highlight.id);
+
+          if (!markedId.length) {
+            hlArr.push([highlight.data(), highlight.id]);
+          }
+        });
+        return 'next';
+      })
+      .then(() => {
+        hlArr.map(hl => {
+          const markInstance = new Mark(hl[0].domPath);
+          markInstance.mark(hl[0].newString, {
+            acrossElements: true,
+            separateWordSearch: false,
+            className: `chromelights-highlights ${hl[1]}`
+          });
+        });
+      })
+      .then(() => {
+        addEventListener();
+      })
+      .catch(error => console.log('error: ', error));
+
+        const markedEls = document.getElementsByClassName(
+          'chromelights-highlights'
+        );
+
+        for (let i = 0; i < markedEls.length; i++) {
+          markedEls[i].addEventListener('click', (event) => {
+            const activeEl = document.getElementsByClassName('activeHighlight');
+            if (event.target.classList[1] === this.state.activeId) {
+              this.setState({
+                activeHl: '',
+                activeId: ''
+              });
+              this.setView('home');
+            }
+            if (activeEl.length) {
+              const activeId = activeEl[0]
+                .classList[1];
+              const activeHL = activeEl[0].innerText;
+              this.setState({ activeId, activeHL });
+              this.setView('singleHL');
+            }
+          });
+        }
+  }
   //components that will always show got here in the render
   //components that will be only rendered in certain views
   //go above in the selectComponents functions' switch statement
@@ -137,31 +203,3 @@ export default class Sidebar extends Component {
     );
   }
 }
-
-const UrlPages = firestore.collection("UrlPages");
-
-const fetchHighlights = () => {
-  const hlArr = [];
-  let encodedDocUrl = urlEncode(document.location.href);
-
-  UrlPages.doc(encodedDocUrl)
-    .collection("highlights")
-    .onSnapshot(querySnapshot => {
-      querySnapshot.forEach(highlight => {
-        const markedId = document.getElementsByClassName(highlight.id);
-
-        if (!markedId.length) {
-          hlArr.push([highlight.data(), highlight.id]);
-        }
-      });
-      hlArr.map(hl => {
-        const markInstance = new Mark(hl[0].domPath);
-        markInstance.mark(hl[0].newString, {
-          acrossElements: true,
-          separateWordSearch: false,
-          className: `chromelights-highlights ${hl[1]}`
-        });
-      });
-    });
-  // addEventListener();
-};

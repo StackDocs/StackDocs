@@ -29,19 +29,20 @@ export default class SingleHighlight extends Component {
     super(props);
 
     this.state = {
-      selectedHighlight: this.props.activeId || 'Select Some Text',
       highlightObj: {},
-      sorted: []
+      sorted: [],
+      selectedHighlight: this.props.activeHL || 'Select Some Text',
+      selectedId: this.props.activeId
     };
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.fetchEntries();
-    this.fetchHighlight();
+    // this.fetchHighlight();
   }
 
   fetchEntries = () => {
-    UrlPages.doc(encodedDocUrl).collection('highlights').doc(this.state.selectedHighlight)
+    UrlPages.doc(encodedDocUrl).collection('highlights').doc(this.state.selectedId)
     .collection('entries')
     .get()
     .then(querySnapshot => {
@@ -61,28 +62,33 @@ export default class SingleHighlight extends Component {
     .catch(error => console.log('error: ', error));
   }
 
-  fetchHighlight = () => {
-    UrlPages.doc(encodedDocUrl).collection('highlights').doc(this.state.selectedHighlight)
-    .get()
-    .then(highlight => {
-      this.setState({ highlightObj: highlight.data() });
-    });
-  }
+  // fetchHighlight = () => {
+  //   console.log(this.props.activeId)
+  //   UrlPages.doc(encodedDocUrl).collection('highlights').doc(this.props.activeId)
+  //   .get()
+  //   .then(highlight => {
+  //     this.setState({ highlightObj: highlight.data() });
+  //   });
+  // }
 
   componentWillReceiveProps(newProps) {
     if (newProps.activeId) {
-      this.setState({ selectedHighlight: newProps.activeId }, () => {
-        this.fetchHighlight();
+      this.setState({
+        selectedHighlight: newProps.activeHL,
+        selectedId: newProps.activeId
+      }, () => {
+        // this.fetchHighlight();
         this.fetchEntries();
-      });
+      })
     }
   }
 
   render() {
+
     const urlReadOnly = document.location.href;
     const url = urlEncode(urlReadOnly);
     const setView = this.props.setView;
-    const highlightTitle = this.state.highlightObj.newString;
+    const highlightTitle = this.state.selectedHighlight;
     //Set State
 
     console.log('PROPS IN HIGHLIGHTANNOTATIONS: ', this.props);
@@ -94,7 +100,11 @@ export default class SingleHighlight extends Component {
               {highlightTitle === undefined ? 'Loading...' : `...${highlightTitle}...`}
             </h3>
           </div>
-          <CreateHighlightButton setView={setView} />
+          <CreateHighlightButton
+            setView={setView}
+            activeId={this.state.activeId}
+            activeHL={this.state.activeHL}
+          />
         </div>
         {
           this.state.sorted && this.state.sorted.map(entry => {
@@ -102,7 +112,7 @@ export default class SingleHighlight extends Component {
             const entryId = entry[0];
             return (
               <div key={entry.content}>
-                <EntryContainer entryId={entryId} highlightId={this.state.selectedHighlight} title={title} content={content} user={user} downVote={downVote} upVote={upVote} comments={comments} date="March 20, 2018" />
+                <EntryContainer entryId={entryId} highlightId={this.state.selectedHighlight} title={title} content={content} user={user} downVote={downVote} upVote={upVote} comments={comments} date={date.toString().slice(0,15)} />
               </div>
             );
           })

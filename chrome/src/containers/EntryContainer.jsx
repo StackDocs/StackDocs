@@ -14,7 +14,7 @@ export default class EntryContainer extends Component {
                 <Annotations
                     content={content}
                     user={user}
-                    date="March 20, 2018" />
+                    date={date} />
                 <Interactive
                     highlightId={highlightId}
                     entryId={entryId}

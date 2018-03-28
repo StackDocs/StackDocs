@@ -38,7 +38,7 @@ export default class AllHighlights extends Component {
     };
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.fetchEntries();
   };
 
@@ -72,16 +72,17 @@ export default class AllHighlights extends Component {
 
   componentWillReceiveProps(newProps) {
     if (newProps.activeId) {
-      this.setState({ selectedHighlight: newProps.activeId }, () => {
+      this.setState({
+        selectedHighlight: newProps.activeHL,
+        selectedId: newProps.activeId
+      }, () => {
         this.fetchEntries();
-      });
-    }
+    })
   }
+}
 
   render() {
     const setView = this.props.setView;
-
-    console.log('state in all highlights ', this.state);
     return (
       <div id="highlight-annotation">
         <div className="chromelights-highlight-header">
@@ -90,7 +91,11 @@ export default class AllHighlights extends Component {
               {`...All entries...`}
             </h3>
           </div>
-          <CreateHighlightButton setView={setView} />
+          <CreateHighlightButton
+            setView={setView}
+            activeId={this.props.activeId}
+            activeHL={this.props.activeHL}
+          />
         </div>
         {this.state.sorted &&
           this.state.sorted.map(entry => {
@@ -104,6 +109,7 @@ export default class AllHighlights extends Component {
               comments
             } = entry[1];
             const entryId = entry[0];
+            console.log('DATE IN ALL HIGHLIGHTS: ', date, typeof date)
             return (
               <div key={entry.content}>
                 <EntryContainer
@@ -115,7 +121,7 @@ export default class AllHighlights extends Component {
                   downVote={downVote}
                   upVote={upVote}
                   comments={comments}
-                  date="March 20, 2018"
+                  date={date.toString().slice(0, 15)}
                 />
               </div>
             );

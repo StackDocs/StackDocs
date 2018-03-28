@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-//icons
-import ThumbsUp from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/thumbs-up.svg';
-import ThumbsDown from 'svg-react-loader?name=ThumbsDown!~/chrome/src/icons/thumbs-down.svg';
-import Comment from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/comment.svg';
 import { urlEncode } from '../highlighting';
 import { firestore } from '~/fire';
+import Comment from './Comment';
+
+//icons
+import CommentIcon from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/comment.svg';
+import ThumbsUp from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/thumbs-up.svg';
+import ThumbsDown from 'svg-react-loader?name=ThumbsDown!~/chrome/src/icons/thumbs-down.svg';
 
 let encodedDocUrl = urlEncode(document.location.href);
 const UrlPages = firestore.collection('UrlPages');
@@ -33,6 +35,7 @@ export default class Interactive extends Component {
       .then(scores => {
         console.log('scores in upVote ', scores)
         const { newScore, newUpvote } = scores;
+        console.log('HIGHLIGHT ID', this.props.highlightId, 'ENTRY ID', this.props.entryId)
         UrlPages.doc(encodedDocUrl).collection('highlights').doc(this.props.highlightId)
         .collection('entries')
         .doc(this.props.entryId)
@@ -83,8 +86,9 @@ export default class Interactive extends Component {
         {upVote}
         <ThumbsDown onClick={this.downVote} />
         {downVote}
-        <Comment />
+        <CommentIcon />
         {comments.length}
+        <Comment comments={comments} />
       </div>
     );
   }
