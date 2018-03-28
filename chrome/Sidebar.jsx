@@ -1,52 +1,52 @@
-import React, { Component } from "react";
-import ShadowDOM from "react-shadow";
-import Header from "./src/components/Header";
-import SecondaryHeader from "./src/components/SecondaryHeader";
-import { firestore } from "~/fire";
-import Mark from "mark.js";
-import shadowCSS from "./src/shadow.css";
+import React, { Component } from 'react';
+import ShadowDOM from 'react-shadow';
+import Header from './src/components/Header';
+import SecondaryHeader from './src/components/SecondaryHeader';
+import { firestore } from '~/fire';
+import Mark from 'mark.js';
+import shadowCSS from './src/shadow.css';
 
 //Components
-import AllHighlights from "./src/containers/AllHighlights";
-import SingleHighlight from "./src/containers/SingleHighlight";
-import AskOrAnnotate from "./src/components/AskOrAnnotate";
-import CreateEntry from "./src/components/CreateEntry";
-import Logout from "./src/components/Logout";
+import AllHighlights from './src/containers/AllHighlights';
+import SingleHighlight from './src/containers/SingleHighlight';
+import AskOrAnnotate from './src/components/AskOrAnnotate';
+import CreateEntry from './src/components/CreateEntry';
+import Logout from './src/components/Logout';
 
 //helper functions
-import { urlEncode } from "./src/highlighting";
-import { addEventListener } from "./src/index.js";
+import { urlEncode } from './src/highlighting';
+import { addEventListener } from './src/index.js';
 
 // Redux
-import { Provider } from "react-redux";
-import store from "~/chrome/src/store";
+import { Provider } from 'react-redux';
+import store from '~/chrome/src/store';
 
 export default class Sidebar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: "home",
+      view: 'home',
       previousViews: [],
       isQuestion: true,
-      activeId: "",
+      activeId: '',
       activeHL: ''
     };
 
-    document.addEventListener("click", ({target}) => {
-      if (!target.classList.contains('chromelights-highlights')) return
+    document.addEventListener('click', ({target}) => {
+      if (!target.classList.contains('chromelights-highlights')) return;
       [...document.getElementsByClassName('activeHighlight')]
-        .forEach(_ => _.classList.remove('activeHighlight'))
-      target.classList.add('activeHighlight')
+        .forEach(_ => _.classList.remove('activeHighlight'));
+      target.classList.add('activeHighlight');
 
-      if (document.getElementsByClassName("activeHighlight").length) {
-        const clicked = document.getElementsByClassName("activeHighlight")[0]
+      if (document.getElementsByClassName('activeHighlight').length) {
+        const clicked = document.getElementsByClassName('activeHighlight')[0];
         const activeId = clicked.classList[1];
         const activeHL = clicked.innerText;
         this.setState({
           activeId,
           activeHL
         });
-        this.setView("singleHL");
+        this.setView('singleHL');
       }
     });
   }
@@ -64,7 +64,7 @@ export default class Sidebar extends Component {
       view,
       previousViews: newPreviousViews
     });
-    console.log("VIEW IN SIDEBAR: ", this.state.view);
+    console.log('VIEW IN SIDEBAR: ', this.state.view);
   };
 
   goToPreviousView = () => {
@@ -97,7 +97,7 @@ export default class Sidebar extends Component {
         );
       case 'askOrAnnotate':
         return <AskOrAnnotate selectEntryType={this.selectEntryType} />;
-      case "createEntry":
+      case 'createEntry':
         return (
           <CreateEntry
             setView={this.setView}
@@ -109,7 +109,7 @@ export default class Sidebar extends Component {
         );
       default:
         //new = AllEntries
-        return <AllHighlights setView={this.setView} />;
+        return <AllHighlights setView={this.setView} activeId={this.state.activeId} />;
     }
   }
 
@@ -119,7 +119,7 @@ export default class Sidebar extends Component {
     this.setState({
       isQuestion: type
     });
-    this.setView("createEntry");
+    this.setView('createEntry');
   };
 
   fetchHighlights = async () => {

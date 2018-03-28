@@ -32,7 +32,6 @@ export default class AllHighlights extends Component {
     super(props);
 
     this.state = {
-      selectedHighlight: this.props.activeId || 'Select Some Text',
       highlightObj: {},
       sorted: []
     };
@@ -92,25 +91,25 @@ export default class AllHighlights extends Component {
               title,
               content,
               user,
+              highlightID,
               date,
               downVote,
               upVote,
               comments
             } = entry[1];
             const entryId = entry[0];
-            console.log('DATE IN ALL HIGHLIGHTS: ', date, typeof date)
             return (
               <div key={entry.content}>
                 <EntryContainer
                   entryId={entryId}
-                  highlightId={this.state.selectedHighlight}
+                  hlPropsId={highlightID}
                   title={title}
                   content={content}
                   user={user}
                   downVote={downVote}
                   upVote={upVote}
                   comments={comments}
-                  date={date.toString().slice(0, 15)}
+                  date={date}
                 />
               </div>
             );
