@@ -38,7 +38,6 @@ export default class SingleHighlight extends Component {
 
   componentDidMount = () => {
     this.fetchEntries();
-    // this.fetchHighlight();
   }
 
   fetchEntries = () => {
@@ -48,12 +47,11 @@ export default class SingleHighlight extends Component {
     .then(querySnapshot => {
       let shareArr = [];
       querySnapshot.forEach(entry => {
-        shareArr.push([entry.id, entry.data()]); //added array
+        shareArr.push([entry.id, entry.data()]);
       });
       return shareArr;
     })
     .then(shared => {
-      console.log('sharrArr with newID added!!!!!!', shared);
       return sortByVote(shared);
     })
     .then(sorted => {
@@ -62,36 +60,21 @@ export default class SingleHighlight extends Component {
     .catch(error => console.log('error: ', error));
   }
 
-  // fetchHighlight = () => {
-  //   console.log(this.props.activeId)
-  //   UrlPages.doc(encodedDocUrl).collection('highlights').doc(this.props.activeId)
-  //   .get()
-  //   .then(highlight => {
-  //     this.setState({ highlightObj: highlight.data() });
-  //   });
-  // }
-
   componentWillReceiveProps(newProps) {
     if (newProps.activeId) {
       this.setState({
         selectedHighlight: newProps.activeHL,
         selectedId: newProps.activeId
       }, () => {
-        // this.fetchHighlight();
         this.fetchEntries();
-      })
+      });
     }
   }
 
   render() {
-
-    const urlReadOnly = document.location.href;
-    const url = urlEncode(urlReadOnly);
     const setView = this.props.setView;
     const highlightTitle = this.state.selectedHighlight;
-    //Set State
 
-    console.log('PROPS IN HIGHLIGHTANNOTATIONS: ', this.props);
     return (
       <div id="highlight-annotation">
         <div className="chromelights-highlight-header">
@@ -108,11 +91,11 @@ export default class SingleHighlight extends Component {
         </div>
         {
           this.state.sorted && this.state.sorted.map(entry => {
-            const { title, content, user, date, downVote, upVote, comments } = entry[1];
+            const { title, content, highlightID, user, date, downVote, upVote, comments } = entry[1];
             const entryId = entry[0];
             return (
               <div key={entry.content}>
-                <EntryContainer entryId={entryId} highlightId={this.state.selectedHighlight} title={title} content={content} user={user} downVote={downVote} upVote={upVote} comments={comments} date={date.toString().slice(0,15)} />
+                <EntryContainer entryId={entryId} hlPropsId={highlightID} title={title} content={content} user={user} downVote={downVote} upVote={upVote} comments={comments} date={date} />
               </div>
             );
           })
