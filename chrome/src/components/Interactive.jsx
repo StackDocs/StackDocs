@@ -13,6 +13,7 @@ import ThumbsUp from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/thumbs-u
 import ThumbsDown from 'svg-react-loader?name=ThumbsDown!~/chrome/src/icons/thumbs-down.svg';
 
 let encodedDocUrl = urlEncode(document.location.href);
+console.log(encodedDocUrl,"this should be fine")
 const Highlights = firestore
   .collection('UrlPages')
   .doc(encodedDocUrl)
@@ -28,23 +29,23 @@ export default class Interactive extends Component {
     console.log('hit upvote', this.props);
     try {
       Entries.doc(this.props.entryId)
-      .get() //Change to onSnapshot
-      .then(entry => {
-        console.log('oldvote', entry.data().upVote);
-        let newScore = +entry.data().score + 1;
-        let newUpvote = +entry.data().upVote + 1;
-        return {newScore, newUpvote};
-      })
-      .then(scores => {
-        const { newScore, newUpvote } = scores;
-        Entries.doc(this.props.entryId)
-        .set({
-          upVote: newUpvote,
-          score: newScore
-        }, {
-          merge: true
-        });
-      })
+        .get() //Change to onSnapshot
+        .then(entry => {
+          console.log('oldvote', entry.data().upVote);
+          let newScore = +entry.data().score + 1;
+          let newUpvote = +entry.data().upVote + 1;
+          return { newScore, newUpvote };
+        })
+        .then(scores => {
+          const { newScore, newUpvote } = scores;
+          Entries.doc(this.props.entryId)
+            .set({
+              upVote: newUpvote,
+              score: newScore
+            }, {
+                merge: true
+              });
+        })
       // .then(_ => {
       //   console.log('fetch new entries', this.props.fetch);
       //   this.props.fetch();
@@ -58,23 +59,23 @@ export default class Interactive extends Component {
     const Entries = Highlights.doc(this.props.hlPropsId).collection('entries');
     console.log('hit downvote');
     try {
-     Entries.doc(this.props.entryId)
-      .get()
-      .then(entry => {
-        let newScore = entry.data().score - 1;
-        let newDownvote = entry.data().downVote + 1;
-        return {newScore, newDownvote};
-      })
-      .then(scores => {
-        const { newScore, newDownvote } = scores;
-        Entries.doc(this.props.entryId)
-        .set({
-          downVote: newDownvote,
-          score: newScore
-        }, {
-          merge: true
-        });
-      })
+      Entries.doc(this.props.entryId)
+        .get()
+        .then(entry => {
+          let newScore = entry.data().score - 1;
+          let newDownvote = entry.data().downVote + 1;
+          return { newScore, newDownvote };
+        })
+        .then(scores => {
+          const { newScore, newDownvote } = scores;
+          Entries.doc(this.props.entryId)
+            .set({
+              downVote: newDownvote,
+              score: newScore
+            }, {
+                merge: true
+              });
+        })
       // .then(_ => {
       //   console.log('fetch new entries', this.props.fetch);
       //   this.props.fetch();
@@ -84,6 +85,10 @@ export default class Interactive extends Component {
     }
   };
 
+  allComments = () =>{
+
+  }
+
   render() {
     const {
       downVote,
@@ -92,8 +97,8 @@ export default class Interactive extends Component {
       entryId,
       currentUser
     } = this.props;
-    let encodedUrl = urlEncode(document.location.href);
-    console.log(encodedUrl, highlightId, entryId, "this is everything that is killing me")
+    
+    console.log(encodedDocUrl, highlightId, entryId, "this is everything that is killing me")
     return (
       <div>
         <ThumbsUp onClick={this.upVote} />
@@ -102,25 +107,13 @@ export default class Interactive extends Component {
         {downVote}
         <CommentIcon />
         {/*{Comments.length}*/}
-        <Map each
-          from={firestore.collection('UrlPages')
-            .doc(encodedUrl)
-            .collection('highlights')
-            .doc(highlightId)
-            .collection('entries')
-            .doc(entryId)
-            .collection('comments')}
-          Loading={() => <p>Comments are loading!</p>}
-          Empty={() => <p>There are no comments!</p>}
-          Render={({ content }) => (
-            <div><h1>{content}</h1></div>)}
-        />
-        <CreateComment
+       <AllComments entryId={entryId} highlightId={highlightId}/>
+        {/* <CreateComment
           currentUser={currentUser}
-          // comments={comments}
+          //comments={comments}
           highlightId={highlightId}
           entryId={entryId}
-        />
+        /> */}
       </div>
     );
   }
@@ -135,3 +128,28 @@ export default class Interactive extends Component {
       //         date={date}
       //      />*/}
       // , userDisplayName, cmtUpVote, cmtDownVote, date
+
+
+
+    //   <Map 
+    //   each
+    //   from={
+    //     // firestore.collection('UrlPages')
+    //     // .doc('hackernoon.com%%%waymos-all-electric-jaguar-will-rule-the-self-driving-fleets-of-the-future-425406ac4d40')
+    //     // .collection('highlights')
+    //     // .doc('JGLZGsHnRvMR3st7DvT8')
+    //     // .collection('entries')
+    //     // .doc('uzs5TfBA1JECgAYn9FyN')
+    //     // .collection('comments')
+    //     Highlights.doc(`${highlightId}/entries/${entryId}/comments`)
+    //   }
+    //   Loading={() => <h3>Comments are loading!</h3>}
+    //   Empty={() => <h3>There are no comments!</h3>}
+    //   Render={({ 
+    //     content, userDisplayName, cmtUpVote, cmtDownVote, date, score, userId
+    //    }) => (
+    //     <div>
+    //       {console.log(content, "content")}<h1>{content}</h1>
+    //       </div>
+    //   )}
+    // /> 

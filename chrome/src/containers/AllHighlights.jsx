@@ -74,7 +74,7 @@ export default class AllHighlights extends Component {
 
   render() {
     const setView = this.props.setView;
-
+    const { currentUser, activeId, activeHL } = this.props
 
     return (
       <div id="highlight-annotation">
@@ -86,8 +86,8 @@ export default class AllHighlights extends Component {
           </div>
           <CreateHighlightButton
             setView={setView}
-            activeId={this.props.activeId}
-            activeHL={this.props.activeHL}
+            activeId={activeId}
+            activeHL={activeHL}
           />
         </div>
         {this.state.sorted &&
@@ -116,6 +116,7 @@ export default class AllHighlights extends Component {
                   upVote={upVote}
                   comments={comments}
                   date={date}
+                  currentUser={currentUser}
                 />
               </div>
             );

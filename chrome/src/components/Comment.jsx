@@ -7,15 +7,9 @@ export default function Comment(props) {
   return (
     <div className="comment">
       <small>
-<<<<<<< HEAD
         {userDisplayName}, {date}
       </small>
       <p>{content}</p>
-=======
-        {/*{user}, {date}*/}
-      </small>
-      {/*<p>This is a hard coded comment. {content}</p>*/}
->>>>>>> master
     </div>
   );
 }

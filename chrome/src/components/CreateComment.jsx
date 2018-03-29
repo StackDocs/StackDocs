@@ -48,6 +48,18 @@ export default class CreateComment extends Component {
     .add({
       newComment
     })
+    .then(comment => {
+      UrlPages
+    .collection('highlights')
+    .doc(highlightId)
+    .collection('entries')
+    .doc(entryId)
+    .collection('comments')
+    .doc(comment.id)
+    .add({
+      commentId: comment.id
+    })
+    })
     .catch(err => console.log('error: ', err))
     this.setState({ content} )
 
