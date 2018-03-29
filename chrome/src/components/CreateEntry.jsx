@@ -117,8 +117,8 @@ export class CreateEntry extends Component {
         return highlight;
       })
       .then(highlight => {
-        const newHL = document.getElementsByClassName(newFireHL.newString)[0];
         const classStr = newFireHL.newString.split(' ').join('').trim();
+        const newHL = document.getElementsByClassName(classStr)[0];
         newHL.classList.remove(classStr);
         newHL.classList.add(highlight.id.toString());
       })
