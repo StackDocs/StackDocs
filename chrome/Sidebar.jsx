@@ -67,8 +67,13 @@ export default class Sidebar extends Component {
   };
 
   goToPreviousView = () => {
+    const lastView = this.state.previousViews[this.state.previousViews.length - 1];
+    const activeEl = document.getElementsByClassName('activeHighlight');
+    if (activeEl.length && (lastView === 'home' || '')) {
+      activeEl[0].classList.remove('activeHighlight');
+    }
     this.setState({
-      view: this.state.previousViews[this.state.previousViews.length - 1],
+      view: lastView,
       previousViews: this.state.previousViews.slice(0, -1)
     });
   };
@@ -84,6 +89,7 @@ export default class Sidebar extends Component {
             setView={this.setView}
             activeId={this.state.activeId}
             activeHL={this.state.activeHL}
+            currentUser={this.props.user}
           />
         );
       case 'singleHL':
@@ -92,6 +98,7 @@ export default class Sidebar extends Component {
             setView={this.setView}
             activeId={this.state.activeId}
             activeHL={this.state.activeHL}
+            currentUser={this.props.user}
           />
         );
       case 'askOrAnnotate':
@@ -107,7 +114,8 @@ export default class Sidebar extends Component {
           />
         );
       default:
-        return <AllHighlights setView={this.setView} activeId={this.state.activeId} />;
+        //new = AllEntries
+        return <AllHighlights setView={this.setView} activeId={this.state.activeId} currentUser={this.props.user}/>;
     }
   }
 
