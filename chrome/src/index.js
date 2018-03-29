@@ -43,26 +43,3 @@ export function toggleSidebar(user) {
 }
 
 document.addEventListener('mouseup', createHighlightedObj);
-
-
-export const addEventListener = () => {
-  const highlightedElements = document.getElementsByClassName('chromelights-highlights');
-
-  for (let i = 0; i < highlightedElements.length; i++) {
-    highlightedElements[i].addEventListener('click', () => {
-      // console.log(event.target.innerText);
-      const self = highlightedElements[i];
-
-      const alreadyActive = document.getElementsByClassName('activeHighlight');
-
-      highlightedElements[i].classList.toggle('activeHighlight');
-
-      for (let j = 0; j < alreadyActive.length; j++) {
-        if (alreadyActive[j] !== self) {
-          console.log('alreadyActive !== self');
-          alreadyActive[j].classList.remove('activeHighlight');
-        }
-      }
-    });
-  }
-};
