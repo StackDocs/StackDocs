@@ -68,9 +68,9 @@ export default class Sidebar extends Component {
 
   goToPreviousView = () => {
     const lastView = this.state.previousViews[this.state.previousViews.length - 1];
-    const activeEl = document.getElementsByClassName('activeHighlight')[0];
-    if (lastView === 'home' || '' && activeEl.length) {
-      activeEl.classList.remove('activeHighlight');
+    const activeEl = document.getElementsByClassName('activeHighlight');
+    if (activeEl.length && lastView === 'home' || '') {
+      activeEl[0].classList.remove('activeHighlight');
     }
     this.setState({
       view: lastView,
