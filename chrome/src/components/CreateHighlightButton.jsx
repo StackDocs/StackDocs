@@ -38,7 +38,7 @@ export class CreateHighlightButton extends Component {
         await markInstance.mark(highlightObj.newString, {
           acrossElements: true,
           separateWordSearch: false,
-          className: `chromelights-highlights ${highlightObj.newString}`
+          className: `chromelights-highlights ${highlightObj.newString.trim()}`
         });
       } else if (document.getElementsByClassName('activeHighlight').length){
         this.props.storeHighlight(

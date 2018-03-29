@@ -7,16 +7,9 @@ import shadowCSS from './src/shadow.css';
 //Components
 import { Header, SecondaryHeader, AskOrAnnotate, CreateEntry } from './src/components';
 import { AllHighlights, SingleHighlight } from './src/containers';
-// import Header from './src/components/Header';
-// import SecondaryHeader from './src/components/SecondaryHeader';
-// import AskOrAnnotate from './src/components/AskOrAnnotate';
-// import CreateEntry from './src/components/CreateEntry';
-// import AllHighlights from './src/containers/AllHighlights';
-// import SingleHighlight from './src/containers/SingleHighlight';
 
 //helper functions
 import { urlEncode } from './src/highlighting';
-import { addEventListener } from './src/index.js';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -36,13 +29,15 @@ export default class Sidebar extends Component {
     document.addEventListener('click', ({target}) => {
       if (!target.classList.contains('chromelights-highlights')) return;
 
-      [...document.getElementsByClassName('activeHighlight')]
-        .forEach(el => () => {
-          el.classList.remove('activeHighlight');
-          if (el !== target) {
-            target.classList.add('activeHighlight');
-          }
-        });
+      target.classList.toggle('activeHighlight');
+
+      const alreadyActive = [...document.getElementsByClassName('activeHighlight')];
+
+      for (let i = 0; i < alreadyActive.length; i++) {
+        if (alreadyActive[i] !== target) {
+          alreadyActive[i].classList.remove('activeHighlight');
+        }
+      }
 
       if (document.getElementsByClassName('activeHighlight').length) {
         const clicked = document.getElementsByClassName('activeHighlight')[0];
@@ -63,14 +58,12 @@ export default class Sidebar extends Component {
 
 
   setView = view => {
-    // console.log("VIEW IN SET VIEW: ", view);
     const lastView = this.state.view;
     const newPreviousViews = [...this.state.previousViews, lastView];
     this.setState({
       view,
       previousViews: newPreviousViews
     });
-    console.log('VIEW IN SIDEBAR: ', this.state.view);
   };
 
   goToPreviousView = () => {
@@ -114,7 +107,6 @@ export default class Sidebar extends Component {
           />
         );
       default:
-        //new = AllEntries
         return <AllHighlights setView={this.setView} activeId={this.state.activeId} />;
     }
   }
