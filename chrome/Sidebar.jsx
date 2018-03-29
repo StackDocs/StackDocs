@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import ShadowDOM from 'react-shadow';
-import Header from './src/components/Header';
-import SecondaryHeader from './src/components/SecondaryHeader';
 import { firestore } from '~/fire';
 import Mark from 'mark.js';
 import shadowCSS from './src/shadow.css';
 
 //Components
-import AllHighlights from './src/containers/AllHighlights';
-import SingleHighlight from './src/containers/SingleHighlight';
-import AskOrAnnotate from './src/components/AskOrAnnotate';
-import CreateEntry from './src/components/CreateEntry';
-import Logout from './src/components/Logout';
+import { Header, SecondaryHeader, AskOrAnnotate, CreateEntry } from './src/components';
+import { AllHighlights, SingleHighlight } from './src/containers';
+// import Header from './src/components/Header';
+// import SecondaryHeader from './src/components/SecondaryHeader';
+// import AskOrAnnotate from './src/components/AskOrAnnotate';
+// import CreateEntry from './src/components/CreateEntry';
+// import AllHighlights from './src/containers/AllHighlights';
+// import SingleHighlight from './src/containers/SingleHighlight';
 
 //helper functions
 import { urlEncode } from './src/highlighting';
@@ -34,9 +35,14 @@ export default class Sidebar extends Component {
 
     document.addEventListener('click', ({target}) => {
       if (!target.classList.contains('chromelights-highlights')) return;
+
       [...document.getElementsByClassName('activeHighlight')]
-        .forEach(_ => _.classList.remove('activeHighlight'));
-      target.classList.add('activeHighlight');
+        .forEach(el => () => {
+          el.classList.remove('activeHighlight');
+          if (el !== target) {
+            target.classList.add('activeHighlight');
+          }
+        });
 
       if (document.getElementsByClassName('activeHighlight').length) {
         const clicked = document.getElementsByClassName('activeHighlight')[0];
@@ -196,6 +202,7 @@ export default class Sidebar extends Component {
               <SecondaryHeader
                 goToPreviousView={this.goToPreviousView}
                 userDisplayName={this.props.user.displayName}
+                currentView={this.state.view}
               />
               <div className="chromelights-main">{this.selectComponents()}</div>
             </div>

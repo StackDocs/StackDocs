@@ -7,9 +7,9 @@ export default class EntryContainer extends Component {
         super(props);
     }
     render() {
-        const { entryId, hlPropsId, title, content, user, date, downVote, upVote, comments, currentUser } = this.props;
+        const { entryId, fetch, hlPropsId, title, content, user, date, downVote, upVote, comments, currentUser } = this.props;
         return (
-            <div>
+            <div className="chromelights-entry">
                 <h3>{title}</h3>
                 <Annotations
                     content={content}
@@ -17,6 +17,7 @@ export default class EntryContainer extends Component {
                     date={date} />
                 <Interactive
                     highlightId={hlPropsId}
+                    fetch={fetch}
                     entryId={entryId}
                     downVote={downVote}
                     upVote={upVote}

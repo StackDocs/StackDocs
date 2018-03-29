@@ -6,9 +6,7 @@ import Mark from 'mark.js';
 import { createHighlightedObj, urlEncode } from '../highlighting';
 
 //Firestore
-const Annotations = firestore.collection('Annotations');
 const UrlPages = firestore.collection('UrlPages');
-const Entries = firestore.collection('Entries');
 
 export class CreateEntry extends Component {
   constructor(props) {

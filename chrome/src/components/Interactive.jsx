@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import { urlEncode } from '../highlighting';
 import { firestore } from '~/fire';
 import { Map } from 'fireview';
-import Comment from './Comment';
+
+//React
 import CreateComment from './CreateComment';
+import { Comment } from './index';
 
 //icons
 import CommentIcon from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/comment.svg';
@@ -22,66 +24,61 @@ export default class Interactive extends Component {
   }
 
   upVote = () => {
-    const { highlightId, entryId } = this.props;
-    console.log('hit downvote');
+    const Entries = Highlights.doc(this.props.hlPropsId).collection('entries');
+    console.log('hit upvote', this.props);
     try {
-      Highlights.doc(highlightId)
-        .collection('entries')
-        .doc(entryId)
-        .get() //Change to onSnapshot
-        .then(entry => {
-          console.log('oldvote', entry.data().upVote);
-          let newScore = +entry.data().score + 1;
-          let newUpvote = +entry.data().upVote + 1;
-          return { newScore, newUpvote };
-        })
-        .then(scores => {
-          const { newScore, newUpvote } = scores;
-          Highlights.doc(highlightId)
-            .collection('entries')
-            .doc(entryId)
-            .set(
-              {
-                upVote: newUpvote,
-                score: newScore
-              },
-              {
-                merge: true
-              }
-            );
+      Entries.doc(this.props.entryId)
+      .get() //Change to onSnapshot
+      .then(entry => {
+        console.log('oldvote', entry.data().upVote);
+        let newScore = +entry.data().score + 1;
+        let newUpvote = +entry.data().upVote + 1;
+        return {newScore, newUpvote};
+      })
+      .then(scores => {
+        const { newScore, newUpvote } = scores;
+        Entries.doc(this.props.entryId)
+        .set({
+          upVote: newUpvote,
+          score: newScore
+        }, {
+          merge: true
         });
+      })
+      // .then(_ => {
+      //   console.log('fetch new entries', this.props.fetch);
+      //   this.props.fetch();
+      // })
     } catch (err) {
       console.error(err);
     }
-  };
+  }
+
   downVote = () => {
-    const highlightPathId = this.props.highlightId;
+    const Entries = Highlights.doc(this.props.hlPropsId).collection('entries');
     console.log('hit downvote');
     try {
-      Highlights.doc(highlightPathId)
-        .collection('entries')
-        .doc(this.props.entryId)
-        .get()
-        .then(entry => {
-          let newScore = entry.data().score - 1;
-          let newDownvote = entry.data().downVote + 1;
-          return { newScore, newDownvote };
-        })
-        .then(scores => {
-          const { newScore, newDownvote } = scores;
-          Highlights.doc(highlightPathId)
-            .collection('entries')
-            .doc(this.props.entryId)
-            .set(
-              {
-                downVote: newDownvote,
-                score: newScore
-              },
-              {
-                merge: true
-              }
-            );
+     Entries.doc(this.props.entryId)
+      .get()
+      .then(entry => {
+        let newScore = entry.data().score - 1;
+        let newDownvote = entry.data().downVote + 1;
+        return {newScore, newDownvote};
+      })
+      .then(scores => {
+        const { newScore, newDownvote } = scores;
+        Entries.doc(this.props.entryId)
+        .set({
+          downVote: newDownvote,
+          score: newScore
+        }, {
+          merge: true
         });
+      })
+      // .then(_ => {
+      //   console.log('fetch new entries', this.props.fetch);
+      //   this.props.fetch();
+      // })
     } catch (err) {
       console.error(err);
     }
