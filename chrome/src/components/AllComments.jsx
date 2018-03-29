@@ -81,9 +81,6 @@ export default class AllComments extends Component {
     //   }
 
     render() {
-        const setView = this.props.setView;
-        const highlightTitle = this.state.selectedHighlight;
-        const currentUser = this.props.currentUser;
 
         return (
             <div>
@@ -91,8 +88,9 @@ export default class AllComments extends Component {
                     const { content, userDisplayName, cmtUpVote, cmtDownVote, date, score, userId } = comment[1];
                     const commentId = comment[0];
                     return (
-                        <div key={entry.content}>
-                            <Comment content={content}
+                        <div key={commentId}>
+                            <Comment 
+                                content={content}
                                 userDisplayName={userDisplayName}
                                 cmtUpVote={cmtUpVote}
                                 cmtDownVote={cmtDownVote}
