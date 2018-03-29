@@ -121,9 +121,10 @@ export default class Sidebar extends Component {
 
   selectEntryType = evt => {
     evt.preventDefault();
-    const type = evt.target.value;
+    const typeString = evt.target.value;
+    const isQuestion = typeString === 'true' ? true : false;
     this.setState({
-      isQuestion: type
+      isQuestion
     });
     this.setView('createEntry');
   };

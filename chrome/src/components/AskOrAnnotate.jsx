@@ -12,7 +12,7 @@ export function AskOrAnnotate(props) {
       <button
         className="chromelights-btn"
         onClick={selectEntryType}
-        value={true}
+        value={'true'}
       >
         Ask
       </button>
@@ -20,7 +20,7 @@ export function AskOrAnnotate(props) {
       <button
         className="chromelights-btn"
         onClick={selectEntryType}
-        value={false}
+        value={'false'}
       >
         Annotate
       </button>
