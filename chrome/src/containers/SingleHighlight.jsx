@@ -55,14 +55,14 @@ export default class SingleHighlight extends Component {
     const entries = Highlights.doc(activeId).collection('entries');
 
     this.subscription = watch(entries)
-      .map(entries => entries.docs.map(_ => _.data()))
-      .map(values => {
-        console.log('values: ', values);
-        return values;
-      })
-      .map(dataArr => dataArr.map(data => [data.entryId, data]))
-      .map(sortArr => sortByVote(sortArr))
-      .subscribe(sorted => this.setState({ sorted }));
+        .map(entries => entries.docs.map(_ => _.data()))
+        .map(values => {
+          // console.log('values: ', values);
+          return values;
+        })
+        .map(dataArr => dataArr.map(data => [data.entryId, data]))
+        .map(sortArr => sortByVote(sortArr))
+        .subscribe(sorted => this.setState({sorted}));
   }
 
   unsub() {
@@ -80,7 +80,7 @@ export default class SingleHighlight extends Component {
   render() {
     const setView = this.props.setView;
     const highlightTitle = this.selectedHighlight();
-    console.log('higlightTitle', this.props);
+    // console.log('higlightTitle', this.props)
     return (
       <div id="highlight-annotation">
         <div className="chromelights-highlight-header">
