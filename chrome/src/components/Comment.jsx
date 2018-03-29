@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-export default function Comment(props) {
-  const { userDisplayName, date, content, cmtUpvote, cmtDonwVote } = props;
-  console.log('PROPS ON COMMENT', props);
+export default class Comment extends Component{
+  constructor(props) {
+    super(props);
+
+}
+render(){
+
+  const { userDisplayName, date, content, cmtUpvote, cmtDonwVote } = this.props;
+  console.log('PROPS ON COMMENT', this.props);
 
   return (
     <div className="comment">
@@ -12,4 +18,5 @@ export default function Comment(props) {
       <p>{content}</p>
     </div>
   );
+}
 }

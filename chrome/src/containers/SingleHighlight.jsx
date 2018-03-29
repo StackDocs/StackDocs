@@ -85,7 +85,7 @@ export default class SingleHighlight extends Component {
 
   render() {
     const setView = this.props.setView;
-    const highlightTitle = this.state.selectedHighlight;
+    const highlightTitle = this.props.activeHL;
     const currentUser = this.props.currentUser;
 
     return (

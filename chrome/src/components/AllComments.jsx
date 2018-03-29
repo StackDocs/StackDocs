@@ -9,7 +9,7 @@ const watch = ref => Rx.Observable.create(obs => ref.onSnapshot(obs));
 
 //Helper func
 let encodedDocUrl = urlEncode(document.location.href);
-const Highlights = fs
+const Highlights = firestore
     .collection('UrlPages')
     .doc(encodedDocUrl)
     .collection('highlights');
@@ -47,6 +47,8 @@ export default class AllComments extends Component {
     }
 
     listen({ entryId, highlightId }) {
+        console.log(entryId, "entryId")
+        console.log(highlightId, "highlightId")
         this.unsub()
         if (!entryId) return
 
@@ -87,6 +89,7 @@ export default class AllComments extends Component {
                 {this.state.allComments && this.state.allComments.map(comment => {
                     const { content, userDisplayName, cmtUpVote, cmtDownVote, date, score, userId } = comment[1];
                     const commentId = comment[0];
+                    console.log(comment,"singe comment")
                     return (
                         <div key={commentId}>
                             <Comment 

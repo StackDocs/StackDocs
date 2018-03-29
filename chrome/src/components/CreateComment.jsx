@@ -45,9 +45,7 @@ export default class CreateComment extends Component {
     .collection('entries')
     .doc(entryId)
     .collection('comments')
-    .add({
-      newComment
-    })
+    .add(newComment)
     .then(comment => {
       UrlPages
     .collection('highlights')

@@ -1,7 +1,7 @@
 export { default as Annotations } from "./Annotations";
 export { default as AskOrAnnotate } from "./AskOrAnnotate";
 export { default as Comment } from "./Comment";
-export { default as AllComment } from "./AllComment";
+export { default as AllComments } from "./AllComments";
 export { default as CreateComment } from "./CreateComment";
 export { default as CreateEntry } from "./CreateEntry";
 export { default as CreateHighlightButton } from "./CreateHighlightButton";
