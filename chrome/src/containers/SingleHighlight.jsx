@@ -79,14 +79,9 @@ export default class SingleHighlight extends Component {
 
   render() {
     const setView = this.props.setView;
-<<<<<<< HEAD
     const highlightTitle = this.props.activeHL;
     const currentUser = this.props.currentUser;
 
-=======
-    const highlightTitle = this.selectedHighlight();
-    // console.log('higlightTitle', this.props)
->>>>>>> master
     return (
       <div id="highlight-annotation">
         <div className="chromelights-highlight-header">
@@ -118,26 +113,9 @@ export default class SingleHighlight extends Component {
             } = entry[1];
             const entryId = entry[0];
             return (
-<<<<<<< HEAD
               <div key={entry.content}>
                 <EntryContainer entryId={entryId} fetch={this.fetchEntries} hlPropsId={highlightID} title={title} content={content} user={user} downVote={downVote} upVote={upVote} comments={comments} date={date} currentUser={currentUser}/>
               </div>
-=======
-              <EntryContainer
-                key={entry.content}
-                entryId={entryId}
-                fetch={this.fetchEntries}
-                hlPropsId={highlightID}
-                title={title}
-                isQuestion={isQuestion}
-                content={content}
-                user={user}
-                downVote={downVote}
-                upVote={upVote}
-                comments={comments}
-                date={date}
-              />
->>>>>>> master
             );
           })}
       </div>

@@ -24,7 +24,7 @@ export default class Interactive extends Component {
   }
 
   upVote = () => {
-    const Entries = Highlights.doc(this.props.hlPropsId).collection('entries');
+    const Entries = Highlights.doc(this.props.highlightId).collection('entries');
     console.log('hit upvote', this.props);
     try {
       Entries.doc(this.props.entryId)
@@ -55,7 +55,7 @@ export default class Interactive extends Component {
   }
 
   downVote = () => {
-    const Entries = Highlights.doc(this.props.hlPropsId).collection('entries');
+    const Entries = Highlights.doc(this.props.highlightId).collection('entries');
     console.log('hit downvote');
     try {
      Entries.doc(this.props.entryId)
