@@ -29,7 +29,6 @@
 
 .chromelights-logo {
   width: 240px;
-
 }
 .chromelights-secondary-header {
   font-size: 14px;
@@ -96,7 +95,6 @@
 }
 
 .chromelights-highlight-header {
-
 }
 .chromelights-highlight-container {
   display: flex;
@@ -104,11 +102,22 @@
 }
 
 .chromelights-highlight-title {
+  font-size: 20px;
   display: block;
-  margin: 40px auto 40px auto;
-  font-weight: normal;
+  margin: 20px auto 20px auto;
+  font-weight: 600;
   background-color: var(--highlight-color);
   transition: background-color 0.3s;
+  font-family: 'Courier New', sans-serif;
+}
+
+
+
+.chromelights-highlight-text {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  background-color: var(--highlight-color);
   font-family: 'Courier New', sans-serif;
 }
 
@@ -138,21 +147,26 @@
 }
 
 .chromelights-entry {
- width: 450px;
- border-top: solid 1px rgb(224, 224, 224);
- border-bottom: solid 1px rgb(224, 224, 224);
+  width: 450px;
+  border-top: solid 1px rgb(224, 224, 224);
+  /* border-bottom: solid 1px rgb(224, 224, 224); */
+  padding-bottom: 20px;
 }
+
+.chromelights-entry:last-child {
+  border-bottom: solid 1px rgb(224, 224, 224);
+}
+
 .chromelights-interactive {
- display: flex;
- justify-content: space-between;
- width: 30%;
- float: left;
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+  float: left;
 }
 
 .chromelights-big-icon {
   display: block;
   margin: 40px auto;
-
 }
 
 .chromelights-question-icon {
@@ -160,7 +174,29 @@
 }
 
 .chromelights-annotation-icon {
-  fill: rgb(243, 136, 43)
+  fill: rgb(243, 136, 43);
+}
+
+.chromelights-entry-header {
+  display: flex;
+  align-items: center;
+}
+
+.chromelights-small-icon {
+  display: inline;
+}
+
+.chromelights-question-icon {
+  fill: rgb(95, 186, 124);
+}
+
+.chromelights-annotation-icon {
+  fill: rgb(243, 136, 43);
+}
+
+.chromelights-entry-title-header {
+  display: inline;
+  margin-left: 10px;
 }
 
 .chromelights-entry-form {
@@ -188,7 +224,7 @@
 
 .chromelights-entry-title:focus {
   outline: 0;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   box-shadow: 0 0 5px var(--primary-blue);
   border: 1px solid var(--light-gray);
   transition: all 0.5s;
@@ -207,7 +243,7 @@
 
 .chromelights-entry-input:focus {
   outline: 0;
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   box-shadow: 0 0 5px var(--primary-blue);
   border: 1px solid var(--light-gray);
   transition: all 0.5s;

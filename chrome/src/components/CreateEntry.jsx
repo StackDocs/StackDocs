@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ReactDOM from 'react-dom';
 import { firestore } from '~/fire';
-import Mark from 'mark.js';
-import { createHighlightedObj, urlEncode } from '../highlighting';
+import { urlEncode } from '../highlighting';
 
 //Firestore
 const UrlPages = firestore.collection('UrlPages');
@@ -65,7 +63,8 @@ export class CreateEntry extends Component {
       user: this.props.user.displayName,
       userId: this.props.user.uid,
       date: newDate.toString().slice(0, 15),
-      title: this.state.title
+      title: this.state.title,
+      highlightText: newString
     })
     .then(entry => {
             UrlPages.doc(submitUrl)
@@ -100,7 +99,8 @@ export class CreateEntry extends Component {
             user: this.props.user.displayName,
             userId: this.props.user.uid,
             date: newDate.toString().slice(0, 15),
-            title: this.state.title
+            title: this.state.title,
+            highlightText: newString
           })
           .then(entry => {
             UrlPages.doc(submitUrl)
@@ -114,6 +114,12 @@ export class CreateEntry extends Component {
             .catch(error => console.log('error: ', error));
           })
           .catch(error => console.log('error: ', error));
+        return highlight;
+      })
+      .then(highlight => {
+        const newHL = document.getElementsByClassName(newFireHL.newString)[0];
+        newHL.classList.remove(newFireHL.newString.trim());
+        newHL.classList.add(highlight.id.toString());
       })
       .then(_ => setView(''))
       .catch(error => console.log('error: ', error));
