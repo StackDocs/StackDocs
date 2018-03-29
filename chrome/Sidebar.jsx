@@ -67,8 +67,13 @@ export default class Sidebar extends Component {
   };
 
   goToPreviousView = () => {
+    const lastView = this.state.previousViews[this.state.previousViews.length - 1];
+    const activeEl = document.getElementsByClassName('activeHighlight')[0];
+    if (lastView === 'home' || '' && activeEl.length) {
+      activeEl.classList.remove('activeHighlight');
+    }
     this.setState({
-      view: this.state.previousViews[this.state.previousViews.length - 1],
+      view: lastView,
       previousViews: this.state.previousViews.slice(0, -1)
     });
   };

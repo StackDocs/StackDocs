@@ -13,7 +13,7 @@ class SecondaryHeader extends Component {
 
   clickBack = () => {
     const view = this.props.currentView;
-    const highlightStr = this.props.highlightObj.newString || null;
+    const highlightStr = this.props.highlightObj ? this.props.highlightObj.newString : null;
     if (view === 'askOrAnnotate' && highlightStr && this.props.markInstance) {
       this.props.markInstance.unmark({className: highlightStr});
     }
