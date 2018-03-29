@@ -21,8 +21,8 @@ export default class Annotations extends Component {
   }
 
   truncateContent(content) {
-    if (content.length > 80) {
-      return content.slice(0, 80) + '...';
+    if (content.length > 90) {
+      return content.slice(0, 90) + '...';
     } else {
         return content;
     }

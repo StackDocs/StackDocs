@@ -72,6 +72,7 @@ export default class AllHighlights extends Component {
   render() {
     const setView = this.props.setView;
     console.log('STATE IN ALL HIGHLIGHTS', this.state);
+    console.log("props on all highlights: ", this.props)
 
     return (
       <div id="highlight-annotation">
@@ -92,6 +93,7 @@ export default class AllHighlights extends Component {
             const {
               isQuestion,
               title,
+              highlightText,
               content,
               user,
               highlightID,
@@ -105,6 +107,7 @@ export default class AllHighlights extends Component {
               <EntryContainer
                 key={entry.content}
                 entryId={entryId}
+                highlightText={highlightText}
                 isQuestion={isQuestion}
                 fetch={this.fetchEntries}
                 hlPropsId={highlightID}

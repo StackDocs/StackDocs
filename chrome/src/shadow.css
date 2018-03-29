@@ -102,11 +102,22 @@
 }
 
 .chromelights-highlight-title {
+  font-size: 20px;
   display: block;
-  margin: 40px auto 40px auto;
-  font-weight: normal;
+  margin: 20px auto 20px auto;
+  font-weight: 600;
   background-color: var(--highlight-color);
   transition: background-color 0.3s;
+  font-family: 'Courier New', sans-serif;
+}
+
+
+
+.chromelights-highlight-text {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  background-color: var(--highlight-color);
   font-family: 'Courier New', sans-serif;
 }
 

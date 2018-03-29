@@ -64,7 +64,8 @@ export class CreateEntry extends Component {
       user: this.props.user.displayName,
       userId: this.props.user.uid,
       date: newDate.toString().slice(0, 15),
-      title: this.state.title
+      title: this.state.title,
+      highlightText: newString
     })
     .then(entry => {
             UrlPages.doc(submitUrl)
@@ -99,7 +100,8 @@ export class CreateEntry extends Component {
             user: this.props.user.displayName,
             userId: this.props.user.uid,
             date: newDate.toString().slice(0, 15),
-            title: this.state.title
+            title: this.state.title,
+            highlightText: newString
           })
           .then(entry => {
             UrlPages.doc(submitUrl)
