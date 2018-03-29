@@ -21,10 +21,10 @@ export default class Annotations extends Component {
   }
 
   truncateContent(content) {
-    if (content.length > 90) {
-      return content.slice(0, 90) + '...';
+    if (content.length > 140) {
+      return content.slice(0, 140) + '...';
     } else {
-        return content;
+      return content;
     }
   }
 
@@ -33,14 +33,25 @@ export default class Annotations extends Component {
     // console.log('CONTENT in render', this.props.content);
     const content = this.props.content;
     const { user, date } = this.props;
+    const contentIsLong = content.length > 140;
+
     return (
       <div id="chromelight-entry">
         <small>
           {user}, {date}
         </small>
-        <p onClick={e => this.toggleTruncate(e)}>
-          {this.state.isTruncated ? this.truncateContent(content) : content}
-        </p>
+        {
+          contentIsLong && this.state.isTruncated ?
+          <div>
+            <p className="chromelights-entry-content" > {this.truncateContent(content)}</p>
+            <p className="chromelights-read-more" onClick={this.toggleTruncate} >Read more</p>
+          </div> :
+            <p>{content}</p>
+        }
+        {
+          !this.state.isTruncated &&
+          <p className="chromelights-read-more" onClick={this.toggleTruncate} >Read less</p>
+        }
       </div>
     );
   }
