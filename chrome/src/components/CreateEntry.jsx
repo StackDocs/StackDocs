@@ -60,7 +60,6 @@ export class CreateEntry extends Component {
       score: 0,
       content: messageSubmit,
       highlightID: activeId,
-      comments: [],
       user: this.props.user.displayName,
       userId: this.props.user.uid,
       date: newDate.toString().slice(0, 15),

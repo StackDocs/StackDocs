@@ -71,8 +71,7 @@ export default class AllHighlights extends Component {
 
   render() {
     const setView = this.props.setView;
-    console.log('STATE IN ALL HIGHLIGHTS', this.state);
-    console.log("props on all highlights: ", this.props)
+    const { currentUser, activeId, activeHL } = this.props
 
     return (
       <div id="highlight-annotation">
@@ -84,8 +83,8 @@ export default class AllHighlights extends Component {
           </div>
           <CreateHighlightButton
             setView={setView}
-            activeId={this.props.activeId}
-            activeHL={this.props.activeHL}
+            activeId={activeId}
+            activeHL={activeHL}
           />
         </div>
         {this.state.sorted &&
@@ -104,21 +103,21 @@ export default class AllHighlights extends Component {
             } = entry[1];
             const entryId = entry[0];
             return (
-              <EntryContainer
-                key={entry.content}
-                entryId={entryId}
-                highlightText={highlightText}
-                isQuestion={isQuestion}
-                fetch={this.fetchEntries}
-                hlPropsId={highlightID}
-                title={title}
-                content={content}
-                user={user}
-                downVote={downVote}
-                upVote={upVote}
-                comments={comments}
-                date={date}
-              />
+              <div key={entryId}>
+                <EntryContainer
+                  entryId={entryId}
+                  fetch={this.fetchEntries}
+                  hlPropsId={highlightID}
+                  title={title}
+                  content={content}
+                  user={user}
+                  downVote={downVote}
+                  upVote={upVote}
+                  comments={comments}
+                  date={date}
+                  currentUser={currentUser}
+                />
+              </div>
             );
           })}
       </div>
