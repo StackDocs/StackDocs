@@ -32,7 +32,6 @@ const sortByVote = array => {
   return updatedOrder;
 };
 
-
 export default class AllHighlights extends Component {
   constructor(props) {
     super(props);
@@ -50,10 +49,8 @@ export default class AllHighlights extends Component {
   fetchEntries = () => {
     this.subscription = watch(Highlights)
       .map(highlights =>
-        highlights.docs.map(
-          highlight =>
-            watch(highlight.ref.collection('entries'))
-              .map(entry => entry.docs)
+        highlights.docs.map(highlight =>
+          watch(highlight.ref.collection('entries')).map(entry => entry.docs)
         )
       )
       .switchMap(entryObs => combineLatest(...entryObs))
@@ -65,16 +62,16 @@ export default class AllHighlights extends Component {
       // })
       .map(dataArr => dataArr.map(data => [data.entryId, data]))
       .map(sortArr => sortByVote(sortArr))
-      .subscribe(sorted => this.setState({sorted}));
-  }
+      .subscribe(sorted => this.setState({ sorted }));
+  };
 
   componentWillUnmount = () => {
-    this.subscription.unsubscribe()
-  }
+    this.subscription.unsubscribe();
+  };
 
   render() {
     const setView = this.props.setView;
-
+    console.log('STATE IN ALL HIGHLIGHTS', this.state);
 
     return (
       <div id="highlight-annotation">
@@ -93,6 +90,7 @@ export default class AllHighlights extends Component {
         {this.state.sorted &&
           this.state.sorted.map(entry => {
             const {
+              isQuestion,
               title,
               content,
               user,
@@ -104,20 +102,20 @@ export default class AllHighlights extends Component {
             } = entry[1];
             const entryId = entry[0];
             return (
-              <div key={entry.content}>
-                <EntryContainer
-                  entryId={entryId}
-                  fetch={this.fetchEntries}
-                  hlPropsId={highlightID}
-                  title={title}
-                  content={content}
-                  user={user}
-                  downVote={downVote}
-                  upVote={upVote}
-                  comments={comments}
-                  date={date}
-                />
-              </div>
+              <EntryContainer
+                key={entry.content}
+                entryId={entryId}
+                isQuestion={isQuestion}
+                fetch={this.fetchEntries}
+                hlPropsId={highlightID}
+                title={title}
+                content={content}
+                user={user}
+                downVote={downVote}
+                upVote={upVote}
+                comments={comments}
+                date={date}
+              />
             );
           })}
       </div>
