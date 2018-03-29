@@ -25,6 +25,7 @@ export class CreateHighlightButton extends Component {
     event.preventDefault();
     try {
       const highlightObj = createHighlightedObj();
+      const classStr = highlightObj.newString.split(' ').join('').trim();
 
       if (document.getSelection().toString().length) {
         const markInstance = await new Mark(highlightObj.domPath);
@@ -38,7 +39,7 @@ export class CreateHighlightButton extends Component {
         await markInstance.mark(highlightObj.newString, {
           acrossElements: true,
           separateWordSearch: false,
-          className: `chromelights-highlights ${highlightObj.newString.trim()}`
+          className: `chromelights-highlights ${classStr}`
         });
       } else if (document.getElementsByClassName('activeHighlight').length){
         this.props.storeHighlight(

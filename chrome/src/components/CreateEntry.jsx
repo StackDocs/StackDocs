@@ -118,7 +118,8 @@ export class CreateEntry extends Component {
       })
       .then(highlight => {
         const newHL = document.getElementsByClassName(newFireHL.newString)[0];
-        newHL.classList.remove(newFireHL.newString.trim());
+        const classStr = newFireHL.newString.split(' ').join('').trim();
+        newHL.classList.remove(classStr);
         newHL.classList.add(highlight.id.toString());
       })
       .then(_ => setView(''))
