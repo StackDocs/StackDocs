@@ -18,6 +18,7 @@ export default class EntryContainer extends Component {
       fetch,
       hlPropsId,
       title,
+      highlightText,
       content,
       user,
       date,
@@ -27,7 +28,11 @@ export default class EntryContainer extends Component {
     } = this.props;
     return (
       <div className="chromelights-entry">
+      { highlightText && <h3 className="chromelights-highlight-text">
+            {`...${highlightText}...`}
+          </h3> }
         <div className="chromelights-entry-header">
+            <br />
           {isQuestion ?
             <QuestionIcon className="chromelights-question-icon chromelights-small-icon" /> :
             <AnnotationIcon className="chromelights-annotation-icon chromelights-small-icon" />}
