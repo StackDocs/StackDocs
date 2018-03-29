@@ -156,12 +156,23 @@
 .chromelights-entry:last-child {
   border-bottom: solid 1px rgb(224, 224, 224);
 }
+ .chromelights-entry-content {
+   margin-bottom: 0;
+ }
+
+.chromelights-read-more {
+  cursor: pointer;
+  margin-top: 6px;
+  font-style: italic;
+  color: grey;
+}
 
 .chromelights-interactive {
   display: flex;
   justify-content: space-between;
   width: 30%;
   float: left;
+  margin-top: 6px;
 }
 
 .chromelights-big-icon {
