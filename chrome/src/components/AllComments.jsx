@@ -37,7 +37,7 @@ export default class AllComments extends Component {
         this.subscription = watch(Comments)
             .map(comments => comments.docs.map(_ => _.data()))
             .map(dataArr => dataArr.map(data => [data.commentId, data]))
-            .subscribe(allComments => this.setState({ allComments }));
+            .subscribe(allComments => this.setState({ allComments }, () => this.props.commentCount(allComments.length)));
     }
 
     unsub() {
