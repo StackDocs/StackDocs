@@ -12,10 +12,19 @@ export default class EntryContainer extends Component {
         super(props);
     }
     render() {
-        const { entryId, fetch, hlPropsId, title, content, user, date, downVote, upVote, comments, currentUser } = this.props;
+        const { entryId, highlightText, isQuestion, fetch, hlPropsId, title, content, user, date, downVote, upVote, comments, currentUser } = this.props;
         return (
-            <div className="chromelights-entry">
-                <h3>{title}</h3>
+          <div className="chromelights-entry">
+          { highlightText && <h3 className="chromelights-highlight-text">
+                {`...${highlightText}...`}
+              </h3> }
+            <div className="chromelights-entry-header">
+                <br />
+              {isQuestion ?
+                <QuestionIcon className="chromelights-question-icon chromelights-small-icon" /> :
+                <AnnotationIcon className="chromelights-annotation-icon chromelights-small-icon" />}
+              <h3 className="chromelights-entry-title-header"> {title}</h3>
+            </div>
                 <Annotations
                     content={content}
                     user={user}

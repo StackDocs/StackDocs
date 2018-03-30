@@ -24,27 +24,31 @@ export default class Interactive extends Component {
   }
 
   upVote = () => {
-    const Entries = Highlights.doc(this.props.highlightId).collection('entries');
+    const Entries = Highlights.doc(this.props.highlightId).collection(
+      'entries'
+    );
     console.log('hit upvote', this.props);
     try {
       Entries.doc(this.props.entryId)
-      .get() //Change to onSnapshot
-      .then(entry => {
-        console.log('oldvote', entry.data().upVote);
-        let newScore = +entry.data().score + 1;
-        let newUpvote = +entry.data().upVote + 1;
-        return {newScore, newUpvote};
-      })
-      .then(scores => {
-        const { newScore, newUpvote } = scores;
-        Entries.doc(this.props.entryId)
-        .set({
-          upVote: newUpvote,
-          score: newScore
-        }, {
-          merge: true
+        .get() //Change to onSnapshot
+        .then(entry => {
+          console.log('oldvote', entry.data().upVote);
+          let newScore = +entry.data().score + 1;
+          let newUpvote = +entry.data().upVote + 1;
+          return { newScore, newUpvote };
+        })
+        .then(scores => {
+          const { newScore, newUpvote } = scores;
+          Entries.doc(this.props.entryId).set(
+            {
+              upVote: newUpvote,
+              score: newScore
+            },
+            {
+              merge: true
+            }
+          );
         });
-      })
       // .then(_ => {
       //   console.log('fetch new entries', this.props.fetch);
       //   this.props.fetch();
@@ -52,29 +56,33 @@ export default class Interactive extends Component {
     } catch (err) {
       console.error(err);
     }
-  }
+  };
 
   downVote = () => {
-    const Entries = Highlights.doc(this.props.highlightId).collection('entries');
+    const Entries = Highlights.doc(this.props.highlightId).collection(
+      'entries'
+    );
     console.log('hit downvote');
     try {
-     Entries.doc(this.props.entryId)
-      .get()
-      .then(entry => {
-        let newScore = entry.data().score - 1;
-        let newDownvote = entry.data().downVote + 1;
-        return {newScore, newDownvote};
-      })
-      .then(scores => {
-        const { newScore, newDownvote } = scores;
-        Entries.doc(this.props.entryId)
-        .set({
-          downVote: newDownvote,
-          score: newScore
-        }, {
-          merge: true
+      Entries.doc(this.props.entryId)
+        .get()
+        .then(entry => {
+          let newScore = entry.data().score - 1;
+          let newDownvote = entry.data().downVote + 1;
+          return { newScore, newDownvote };
+        })
+        .then(scores => {
+          const { newScore, newDownvote } = scores;
+          Entries.doc(this.props.entryId).set(
+            {
+              downVote: newDownvote,
+              score: newScore
+            },
+            {
+              merge: true
+            }
+          );
         });
-      })
       // .then(_ => {
       //   console.log('fetch new entries', this.props.fetch);
       //   this.props.fetch();
@@ -85,24 +93,27 @@ export default class Interactive extends Component {
   };
 
   render() {
-    const {
-      downVote,
-      upVote,
+    const { downVote, upVote, highlightId, entryId, currentUser } = this.props;
+    let encodedUrl = urlEncode(document.location.href);
+    console.log(
+      encodedUrl,
       highlightId,
       entryId,
-      currentUser
-    } = this.props;
-    let encodedUrl = urlEncode(document.location.href);
-    console.log(encodedUrl, highlightId, entryId, "this is everything that is killing me")
+      'this is everything that is killing me'
+    );
     return (
       <div>
-        <ThumbsUp onClick={this.upVote} />
-        {upVote}
-        <ThumbsDown onClick={this.downVote} />
-        {downVote}
-        <CommentIcon />
-        {/*{Comments.length}*/}
-        <AllComments highlightId={highlightId} entryId={entryId}/>
+        <div className="chromelights-interactive">
+          <ThumbsUp onClick={this.upVote} />
+          {upVote}
+          <ThumbsDown onClick={this.downVote} />
+          {downVote}
+          <CommentIcon />
+          {/*{Comments.length}*/}
+        </div>
+        <br />
+        <AllComments highlightId={highlightId} entryId={entryId} />
+
         <CreateComment
           currentUser={currentUser}
           // comments={comments}
@@ -114,26 +125,25 @@ export default class Interactive extends Component {
   }
 }
 
+// {/* <Comment
+//         content={content}
+//         userDisplayName={userDisplayName}
+//         cmtUpVote={cmtUpVote}
+//         cmtDownVote={cmtDownVote}
+//         date={date}
+//      />*/}
+// , userDisplayName, cmtUpVote, cmtDownVote, date
 
-      // {/* <Comment
-      //         content={content}
-      //         userDisplayName={userDisplayName}
-      //         cmtUpVote={cmtUpVote}
-      //         cmtDownVote={cmtDownVote}
-      //         date={date}
-      //      />*/}
-      // , userDisplayName, cmtUpVote, cmtDownVote, date
-
-    //   <Map each
-    //   from={firestore.collection('UrlPages')
-    //     .doc(encodedUrl)
-    //     .collection('highlights')
-    //     .doc(highlightId)
-    //     .collection('entries')
-    //     .doc(entryId)
-    //     .collection('comments')}
-    //   Loading={() => <p>Comments are loading!</p>}
-    //   Empty={() => <p>There are no comments!</p>}
-    //   Render={({ content }) => (
-    //     <div><h1>{content}</h1></div>)}
-    // />
+//   <Map each
+//   from={firestore.collection('UrlPages')
+//     .doc(encodedUrl)
+//     .collection('highlights')
+//     .doc(highlightId)
+//     .collection('entries')
+//     .doc(entryId)
+//     .collection('comments')}
+//   Loading={() => <p>Comments are loading!</p>}
+//   Empty={() => <p>There are no comments!</p>}
+//   Render={({ content }) => (
+//     <div><h1>{content}</h1></div>)}
+// />
