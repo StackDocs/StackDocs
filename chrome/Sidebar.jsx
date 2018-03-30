@@ -157,9 +157,6 @@ export default class Sidebar extends Component {
           });
         });
       })
-      .then(() => {
-        addEventListener();
-      })
       .catch(error => console.log('error: ', error));
 
         const markedEls = document.getElementsByClassName(
