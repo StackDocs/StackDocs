@@ -106,23 +106,17 @@ export default class Interactive extends Component {
           <CommentIcon onClick={this.showComments} />
           {this.state.commentCount}
         </div>
-<<<<<<< HEAD
+
         <p onClick={this.showComments}>
           {this.state.commentCount
             ? this.state.showComments ? "hide comments" : "show comments"
             : null}
         </p>
-=======
-<<<<<<< HEAD
-        <p onClick={this.showComments}>{this.state.commentCount ? (this.state.showComments ? 'hide comments' : 'show comments') : null}</p>
-=======
-        <div className="chromelights-interactive-showComments">
-          <p onClick={this.showComments}>
-            {this.state.showComments ? "Hide Comments" : "Show Comments"}
-          </p>
-        </div>
->>>>>>> ce3b06e3115605857f0b3b765a04a1c3b03338f9
->>>>>>> master
+        <p onClick={this.showComments}>
+          {this.state.commentCount
+            ? this.state.showComments ? "hide comments" : "show comments"
+            : null}
+        </p>
         <br />
         {/* <button onClick={this.showComments}><small>Show Comments</small></button> */}
         <AllComments
