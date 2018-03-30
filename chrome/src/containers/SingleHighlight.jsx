@@ -114,7 +114,7 @@ export default class SingleHighlight extends Component {
             const entryId = entry[0];
             return (
               <div key={entry.content}>
-                <EntryContainer entryId={entryId} fetch={this.fetchEntries} hlPropsId={highlightID} title={title} content={content} user={user} downVote={downVote} upVote={upVote} comments={comments} date={date} currentUser={currentUser}/>
+                <EntryContainer entryId={entryId} isQuestion={isQuestion} fetch={this.fetchEntries} hlPropsId={highlightID} title={title} content={content} user={user} downVote={downVote} upVote={upVote} comments={comments} date={date} currentUser={currentUser}/>
               </div>
             );
           })}
