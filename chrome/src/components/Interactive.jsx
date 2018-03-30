@@ -23,7 +23,8 @@ export default class Interactive extends Component {
     super(props);
     this.state = {
       commentCount: 0,
-    };
+      showComments: false,
+    }
   }
 
   upVote = () => {
@@ -89,6 +90,10 @@ export default class Interactive extends Component {
     this.setState({commentCount});
   }
 
+  showComments = () => {
+    this.setState({showComments: !this.state.showComments})
+  }
+
   render() {
     const { downVote, upVote, highlightId, entryId, currentUser } = this.props;
     return (
@@ -98,12 +103,13 @@ export default class Interactive extends Component {
           {upVote}
           <ThumbsDown onClick={this.downVote} />
           {downVote}
-          <CommentIcon />
+          <CommentIcon onClick={this.showComments}/>
           {this.state.commentCount}
         </div>
+        <p onClick={this.showComments}>{this.state.showComments ? "hide comments" : "show comments"}</p>
         <br />
-        <AllComments highlightId={highlightId} entryId={entryId} commentCount={this.commentCount} />
-
+        {/* <button onClick={this.showComments}><small>Show Comments</small></button> */}
+        {this.state.showComments && <AllComments highlightId={highlightId} entryId={entryId} commentCount={this.commentCount}/>}
         <CreateComment
           currentUser={currentUser}
           highlightId={highlightId}
