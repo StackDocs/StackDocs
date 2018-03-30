@@ -106,12 +106,6 @@ export default class Interactive extends Component {
           <CommentIcon onClick={this.showComments} />
           {this.state.commentCount}
         </div>
-
-        <p onClick={this.showComments}>
-          {this.state.commentCount
-            ? this.state.showComments ? "hide comments" : "show comments"
-            : null}
-        </p>
         <p onClick={this.showComments}>
           {this.state.commentCount
             ? this.state.showComments ? "hide comments" : "show comments"
