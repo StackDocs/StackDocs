@@ -59,7 +59,7 @@ export default class CreateComment extends Component {
     })
     })
     .catch(err => console.log('error: ', err))
-    this.setState({ content} )
+    this.setState({ content: '' });
 
     //   .collection('entries')
     //   .doc(entryId)

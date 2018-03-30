@@ -8,7 +8,9 @@ import { createHighlight } from '~/chrome/src/store';
 export class CreateHighlightButton extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      newString: ''
+    };
 
     this.onHighlightClick = this.onHighlightClick.bind(this);
   }
@@ -25,9 +27,15 @@ export class CreateHighlightButton extends Component {
     event.preventDefault();
     try {
       const highlightObj = createHighlightedObj();
-      const classStr = highlightObj.newString.split(' ').join('').trim();
+      const classStr = highlightObj.newString ? highlightObj.newString.split(' ').join('').trim() : '';
+      const clickedHL = document.getElementsByClassName('activeHighlight');
 
-      if (document.getSelection().toString().length) {
+      if (!classStr.length && !clickedHL.length) return;
+
+      if (classStr.length) {
+        this.setState({
+          newString: classStr
+        });
         const markInstance = await new Mark(highlightObj.domPath);
         this.props.storeHighlight(
           {
@@ -41,7 +49,7 @@ export class CreateHighlightButton extends Component {
           separateWordSearch: false,
           className: `chromelights-highlights ${classStr}`
         });
-      } else if (document.getElementsByClassName('activeHighlight').length){
+      } else if (clickedHL.length){
         this.props.storeHighlight(
           {
             highlightObj,
@@ -67,6 +75,11 @@ export class CreateHighlightButton extends Component {
             'Create a Highlight'
           }
         </button>
+          {/*
+            !this.state.newString.length && !isClicked ?
+            'Please select some text, or click on a highlight!' :
+            null
+          */}
       </div>
     );
   }
