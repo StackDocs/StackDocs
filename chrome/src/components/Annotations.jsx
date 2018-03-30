@@ -36,10 +36,10 @@ export default class Annotations extends Component {
     const contentIsLong = content.length > 140;
 
     return (
-      <div id="chromelight-entry">
-        <small>
+      <div id="chromelights-entry">
+        <p className="chromelights-entry-name">
           {user}, {date}
-        </small>
+        </p>
         {
           contentIsLong && this.state.isTruncated ?
           <div>
