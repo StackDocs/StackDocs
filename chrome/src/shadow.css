@@ -266,3 +266,30 @@
   font-size: 12px;
   border: 2px solid var(--primary-blue);
 }
+
+.chromelights-comment-form > textarea {
+  font-size: 10px;
+  border: 1px solid var(--light-gray);
+  resize: none;
+  transition: all 0.5s;
+}
+
+.chromelights-comment-form > textarea:focus {
+  outline: 0;
+  background-color: #f5f5f5;
+  box-shadow: 0 0 5px var(--primary-blue);
+  border: 1px solid var(--light-gray);
+  transition: all 0.5s;
+}
+
+.chromelights-comment {
+  font-size: 14px;
+}
+
+.chromelights-comment > small {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--darker-blue);
+}
+
+/*#0857a5*/

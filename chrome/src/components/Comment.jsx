@@ -11,7 +11,7 @@ render(){
   console.log('PROPS ON COMMENT', this.props);
 
   return (
-    <div className="comment">
+    <div className="chromelights-comment">
       <small>
         {userDisplayName}, {date}
       </small>
