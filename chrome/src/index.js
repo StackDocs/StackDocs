@@ -2,6 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Rx from 'rxjs';
 // import Mark from 'mark.js';
 
 import Sidebar from '~/chrome/Sidebar';
@@ -43,3 +44,19 @@ export function toggleSidebar(user) {
 }
 
 document.addEventListener('mouseup', createHighlightedObj);
+
+//Sort
+export const sortByVote = array => {
+  const updatedOrder = [];
+  array.forEach(entry => {
+    for (var i = 0; i < array.length; i++) {
+      if (!updatedOrder[i] || entry[1].score >= updatedOrder[i][1].score) {
+        updatedOrder.splice(i, 0, entry);
+        break;
+      }
+    }
+  });
+  return updatedOrder;
+};
+
+export const watch = ref => Rx.Observable.create(obs => ref.onSnapshot(obs));

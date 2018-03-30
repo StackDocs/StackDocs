@@ -13,7 +13,6 @@ export default class EntryContainer extends Component {
     }
     render() {
         const { entryId, highlightText, isQuestion, fetch, hlPropsId, title, content, user, date, downVote, upVote, comments, currentUser } = this.props;
-        console.log('is question????: ', isQuestion);
         return (
           <div className="chromelights-entry">
           { highlightText && <h3 className="chromelights-highlight-text">
