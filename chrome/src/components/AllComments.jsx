@@ -13,6 +13,7 @@ export default class AllComments extends Component {
         super(props);
         this.state = {
             allComments: [],
+            showComments: false
         };
     }
 
@@ -21,7 +22,12 @@ export default class AllComments extends Component {
     }
 
     componentWillReceiveProps(props) {
+<<<<<<< HEAD
+        if (props.entryId !== this.props.entryId) this.listen(props)
+        else if( props.showComments !== this.state.showComments) this.setState({showComments: props.showComments})
+=======
         if (props.entryId !== this.props.entryId) {this.listen(props)};
+>>>>>>> master
     }
 
     listen({ entryId, highlightId }) {
@@ -52,7 +58,7 @@ export default class AllComments extends Component {
 
         return (
             <div>
-                {this.state.allComments && this.state.allComments.map(comment => {
+                {this.state.showComments ? this.state.allComments && this.state.allComments.map(comment => {
                     const { content, userDisplayName, cmtUpVote, cmtDownVote, date, score, userId } = comment[1];
                     const commentId = comment[0];
                     return (
@@ -65,7 +71,7 @@ export default class AllComments extends Component {
                                 date={date} />
                         </div>
                     );
-                })}
+                }) : null }
             </div>
         );
     }

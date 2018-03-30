@@ -106,10 +106,10 @@ export default class Interactive extends Component {
           <CommentIcon onClick={this.showComments}/>
           {this.state.commentCount}
         </div>
-        <p onClick={this.showComments}>{this.state.showComments ? "hide comments" : "show comments"}</p>
+        <p onClick={this.showComments}>{this.state.commentCount ? (this.state.showComments ? "hide comments" : "show comments") : null}</p>
         <br />
         {/* <button onClick={this.showComments}><small>Show Comments</small></button> */}
-        {this.state.showComments && <AllComments highlightId={highlightId} entryId={entryId} commentCount={this.commentCount}/>}
+        <AllComments highlightId={highlightId} entryId={entryId} commentCount={this.commentCount} showComments={this.state.showComments}/>
         <CreateComment
           currentUser={currentUser}
           highlightId={highlightId}
@@ -118,4 +118,8 @@ export default class Interactive extends Component {
       </div>
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> master
