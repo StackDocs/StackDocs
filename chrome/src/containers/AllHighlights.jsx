@@ -105,7 +105,10 @@ export default class AllHighlights extends Component {
             return (
               <div key={entryId}>
                 <EntryContainer
+                  key={entryId}
                   entryId={entryId}
+                  highlightText={highlightText}
+                  isQuestion={isQuestion}
                   fetch={this.fetchEntries}
                   hlPropsId={highlightID}
                   title={title}
