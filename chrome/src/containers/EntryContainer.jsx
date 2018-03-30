@@ -16,14 +16,14 @@ export default class EntryContainer extends Component {
         return (
           <div className="chromelights-entry">
           { highlightText && <h3 className="chromelights-highlight-text">
-                {`...${highlightText}...`}
+                <span>{`...${highlightText}...`}</span>
               </h3> }
             <div className="chromelights-entry-header">
                 <br />
               {isQuestion ?
                 <QuestionIcon className="chromelights-question-icon chromelights-small-icon" /> :
                 <AnnotationIcon className="chromelights-annotation-icon chromelights-small-icon" />}
-              <h3 className="chromelights-entry-title-header"> {title}</h3>
+              <h3 className="chromelights-entry-title-header">{title}</h3>
             </div>
                 <Annotations
                     content={content}
