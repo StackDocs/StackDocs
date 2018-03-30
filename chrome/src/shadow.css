@@ -114,11 +114,16 @@
 
 
 .chromelights-highlight-text {
-  display: inline-block;
+  display: inline;
+  width: auto;
   margin-bottom: 0;
   font-weight: normal;
-  background-color: var(--highlight-color);
+  font-size: 14px;
   font-family: 'Courier New', sans-serif;
+}
+
+.chromelights-highlight-text > span {
+  background-color: var(--highlight-color);
 }
 
 .chromelights-btn {
@@ -147,32 +152,68 @@
 }
 
 .chromelights-entry {
-  width: 450px;
+  display: flex;
+  flex-direction: column;
+  width: 95%;
   border-top: solid 1px rgb(224, 224, 224);
   /* border-bottom: solid 1px rgb(224, 224, 224); */
-  padding-bottom: 20px;
+  /*padding-bottom: 20px;*/
+}
+
+.chromelights-entry-name {
+  font-size: 10px;
+  font-style: italic;
+  margin: 0px;
 }
 
 .chromelights-entry:last-child {
   border-bottom: solid 1px rgb(224, 224, 224);
 }
  .chromelights-entry-content {
-   margin-bottom: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  width: 95%;
  }
 
 .chromelights-read-more {
   cursor: pointer;
   margin-top: 6px;
   font-style: italic;
+  font-size: 12px;
+  align-self: flex-end;
   color: grey;
+}
+
+.chromelights-interactive-all {
+  height: auto;
 }
 
 .chromelights-interactive {
   display: flex;
   justify-content: space-between;
-  width: 30%;
+  font-size: 16px;
+  width: 40%;
   /* float: left; */
   margin-top: 6px;
+}
+
+.chromelights-interactive svg {
+  height: 15px;
+  width: auto;
+}
+
+.chromelights-interactive-showComments {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--darker-gray);
+}
+
+.chromelights-interactive-showComments:hover {
+  cursor: pointer;
+}
+
+.chromelights-interactive-showComments > p {
+  margin: 5px 0 -10px 0;
 }
 
 .chromelights-big-icon {
@@ -188,17 +229,16 @@
   fill: rgb(243, 136, 43);
 }
 
-.chromelights-entry-header {
-  display: flex;
-  align-items: center;
-}
-
 .chromelights-small-icon {
   display: inline;
+  height: 22px;
+  width: auto;
+  margin-top: 5px;
 }
 
 .chromelights-question-icon {
   fill: rgb(95, 186, 124);
+  align-self: center;
 }
 
 .chromelights-annotation-icon {
@@ -206,8 +246,9 @@
 }
 
 .chromelights-entry-title-header {
-  display: inline;
-  margin-left: 10px;
+  /*display: inline;*/
+  font-size: 20px;
+  margin: 5px 10px 5px 5px;
 }
 
 .chromelights-entry-form {
@@ -220,7 +261,10 @@
 }
 
 .chromelights-entry-header {
-  align-self: center;
+  align-self: flex-start;
+  display: flex;
+  align-items: flex-start;
+  margin-top: 10px;
 }
 
 .chromelights-entry-title {
@@ -262,15 +306,26 @@
 
 .chromelights-entry-form .chromelights-btn {
   width: 100px;
-  height: 30px;
+  height: 15px;
   font-size: 12px;
   border: 2px solid var(--primary-blue);
+  margin-left: 10px;
+}
+
+.chromelights-comment-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 60px;
+  margin: 0 0 10px 0;
 }
 
 .chromelights-comment-form > textarea {
   font-size: 10px;
   border: 1px solid var(--light-gray);
   resize: none;
+  height: 95%;
+  width: 95%;
   transition: all 0.5s;
 }
 
@@ -282,14 +337,32 @@
   transition: all 0.5s;
 }
 
+.chromelights-comment-form > input {
+  height: 40px;
+  width: 50px;
+  font-size: 10px;
+  margin: 0 0 2px 0;
+  border-radius: 10px;
+  text-align: center;
+  transition: all 500ms;
+}
+
+.chromelights-comment-form > input:hover {
+  transition: all 500ms;
+  cursor: pointer;
+  box-shadow: 1px 1px 2px var(--darker-gray);
+}
+
 .chromelights-comment {
-  font-size: 14px;
+  font-size: 12px;
+  margin-bottom: 10px;
 }
 
 .chromelights-comment > small {
-  font-size: 12px;
+  font-size: 10px;
   font-style: italic;
   color: var(--darker-blue);
+  margin-bottom: -3px;
 }
 
 /*#0857a5*/

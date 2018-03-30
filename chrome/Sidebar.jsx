@@ -200,7 +200,9 @@ export default class Sidebar extends Component {
                 userDisplayName={this.props.user.displayName}
                 currentView={this.state.view}
               />
-              <div className="chromelights-main">{this.selectComponents()}</div>
+              <div className="chromelights-main">
+                {this.selectComponents()}
+              </div>
             </div>
           </Provider>
         </div>
