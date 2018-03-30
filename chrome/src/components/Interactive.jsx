@@ -125,10 +125,10 @@ export default class Interactive extends Component {
           <CommentIcon onClick={this.showComments}/>
           {this.state.commentCount}
         </div>
-        <p onClick={this.showComments}>{this.state.showComments ? "hide comments" : "show comments"}</p>
+        <p onClick={this.showComments}>{this.state.commentCount ? (this.state.showComments ? "hide comments" : "show comments") : null}</p>
         <br />
         {/* <button onClick={this.showComments}><small>Show Comments</small></button> */}
-        {this.state.showComments && <AllComments highlightId={highlightId} entryId={entryId} commentCount={this.commentCount}/>}
+        <AllComments highlightId={highlightId} entryId={entryId} commentCount={this.commentCount} showComments={this.state.showComments}/>
         <CreateComment
           currentUser={currentUser}
           // comments={comments}
@@ -139,26 +139,3 @@ export default class Interactive extends Component {
     );
   }
 }
-
-// {/* <Comment
-//         content={content}
-//         userDisplayName={userDisplayName}
-//         cmtUpVote={cmtUpVote}
-//         cmtDownVote={cmtDownVote}
-//         date={date}
-//      />*/}
-// , userDisplayName, cmtUpVote, cmtDownVote, date
-
-//   <Map each
-//   from={firestore.collection('UrlPages')
-//     .doc(encodedUrl)
-//     .collection('highlights')
-//     .doc(highlightId)
-//     .collection('entries')
-//     .doc(entryId)
-//     .collection('comments')}
-//   Loading={() => <p>Comments are loading!</p>}
-//   Empty={() => <p>There are no comments!</p>}
-//   Render={({ content }) => (
-//     <div><h1>{content}</h1></div>)}
-// />
