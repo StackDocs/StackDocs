@@ -97,7 +97,7 @@ export default class Interactive extends Component {
   render() {
     const { downVote, upVote, highlightId, entryId, currentUser } = this.props;
     return (
-      <div>
+      <div className="chromelights-interactive-all">
         <div className="chromelights-interactive">
           <ThumbsUp onClick={this.upVote} />
           {upVote}
@@ -106,7 +106,11 @@ export default class Interactive extends Component {
           <CommentIcon onClick={this.showComments}/>
           {this.state.commentCount}
         </div>
-        <p onClick={this.showComments}>{this.state.commentCount ? (this.state.showComments ? "hide comments" : "show comments") : null}</p>
+        <div className="chromelights-interactive-showComments">
+          <p onClick={this.showComments}>
+            {this.state.showComments ? "Hide Comments" : "Show Comments"}
+          </p>
+        </div>
         <br />
         {/* <button onClick={this.showComments}><small>Show Comments</small></button> */}
         <AllComments highlightId={highlightId} entryId={entryId} commentCount={this.commentCount} showComments={this.state.showComments}/>
@@ -118,8 +122,4 @@ export default class Interactive extends Component {
       </div>
     );
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> master
