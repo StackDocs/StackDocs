@@ -21,6 +21,9 @@ const Highlights = firestore
 export default class Interactive extends Component {
   constructor(props) {
     super(props);
+    this.state={
+      commentCount: 0,
+    }
   }
 
   upVote = () => {
@@ -92,6 +95,12 @@ export default class Interactive extends Component {
     }
   };
 
+  commentCount = (val) => {
+    const commentCount = val;
+    this.setState({commentCount})
+    console.log(this.state,"the state")
+  }
+
   render() {
     const { downVote, upVote, highlightId, entryId, currentUser } = this.props;
     let encodedUrl = urlEncode(document.location.href);
@@ -109,10 +118,10 @@ export default class Interactive extends Component {
           <ThumbsDown onClick={this.downVote} />
           {downVote}
           <CommentIcon />
-          {/*{Comments.length}*/}
+          {this.state.commentCount}
         </div>
         <br />
-        <AllComments highlightId={highlightId} entryId={entryId} />
+        <AllComments highlightId={highlightId} entryId={entryId} commentCount={this.commentCount}/>
 
         <CreateComment
           currentUser={currentUser}

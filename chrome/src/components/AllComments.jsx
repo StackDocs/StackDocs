@@ -66,7 +66,7 @@ export default class AllComments extends Component {
                 return values;
             })
             .map(dataArr => dataArr.map(data => [data.commentId, data]))
-            .subscribe(allComments => this.setState({ allComments }));
+            .subscribe(allComments => this.setState({ allComments }, () => this.props.commentCount(allComments.length)));
     }
 
     unsub() {
