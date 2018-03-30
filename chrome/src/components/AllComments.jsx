@@ -22,12 +22,8 @@ export default class AllComments extends Component {
     }
 
     componentWillReceiveProps(props) {
-<<<<<<< HEAD
-        if (props.entryId !== this.props.entryId) this.listen(props)
-        else if( props.showComments !== this.state.showComments) this.setState({showComments: props.showComments})
-=======
-        if (props.entryId !== this.props.entryId) {this.listen(props)};
->>>>>>> master
+        if (props.entryId !== this.props.entryId) this.listen(props);
+        else if ( props.showComments !== this.state.showComments) this.setState({showComments: props.showComments});
     }
 
     listen({ entryId, highlightId }) {

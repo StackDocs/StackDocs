@@ -1,35 +1,35 @@
-import React, { Component } from 'react';
-import { urlEncode } from '../highlighting';
-import { firestore } from '~/fire';
-import { Map } from 'fireview';
+import React, { Component } from "react";
+import { urlEncode } from "../highlighting";
+import { firestore } from "~/fire";
+import { Map } from "fireview";
 
 //React
-import CreateComment from './CreateComment';
-import { Comment, AllComments } from './index';
+import CreateComment from "./CreateComment";
+import { Comment, AllComments } from "./index";
 
 //icons
-import CommentIcon from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/comment.svg';
-import ThumbsUp from 'svg-react-loader?name=ThumbsUp!~/chrome/src/icons/thumbs-up.svg';
-import ThumbsDown from 'svg-react-loader?name=ThumbsDown!~/chrome/src/icons/thumbs-down.svg';
+import CommentIcon from "svg-react-loader?name=ThumbsUp!~/chrome/src/icons/comment.svg";
+import ThumbsUp from "svg-react-loader?name=ThumbsUp!~/chrome/src/icons/thumbs-up.svg";
+import ThumbsDown from "svg-react-loader?name=ThumbsDown!~/chrome/src/icons/thumbs-down.svg";
 
 let encodedDocUrl = urlEncode(document.location.href);
 const Highlights = firestore
-  .collection('UrlPages')
+  .collection("UrlPages")
   .doc(encodedDocUrl)
-  .collection('highlights');
+  .collection("highlights");
 
 export default class Interactive extends Component {
   constructor(props) {
     super(props);
     this.state = {
       commentCount: 0,
-      showComments: false,
-    }
+      showComments: false
+    };
   }
 
   upVote = () => {
     const Entries = Highlights.doc(this.props.highlightId).collection(
-      'entries'
+      "entries"
     );
     try {
       Entries.doc(this.props.entryId)
@@ -58,7 +58,7 @@ export default class Interactive extends Component {
 
   downVote = () => {
     const Entries = Highlights.doc(this.props.highlightId).collection(
-      'entries'
+      "entries"
     );
     try {
       Entries.doc(this.props.entryId)
@@ -85,14 +85,14 @@ export default class Interactive extends Component {
     }
   };
 
-  commentCount = (val) => {
+  commentCount = val => {
     const commentCount = val;
-    this.setState({commentCount});
-  }
+    this.setState({ commentCount });
+  };
 
   showComments = () => {
-    this.setState({showComments: !this.state.showComments})
-  }
+    this.setState({ showComments: !this.state.showComments });
+  };
 
   render() {
     const { downVote, upVote, highlightId, entryId, currentUser } = this.props;
@@ -103,17 +103,28 @@ export default class Interactive extends Component {
           {upVote}
           <ThumbsDown onClick={this.downVote} />
           {downVote}
-          <CommentIcon onClick={this.showComments}/>
+          <CommentIcon onClick={this.showComments} />
           {this.state.commentCount}
         </div>
-        <div className="chromelights-interactive-showComments">
-          <p onClick={this.showComments}>
-            {this.state.showComments ? "Hide Comments" : "Show Comments"}
-          </p>
-        </div>
+
+        <p onClick={this.showComments}>
+          {this.state.commentCount
+            ? this.state.showComments ? "hide comments" : "show comments"
+            : null}
+        </p>
+        <p onClick={this.showComments}>
+          {this.state.commentCount
+            ? this.state.showComments ? "hide comments" : "show comments"
+            : null}
+        </p>
         <br />
         {/* <button onClick={this.showComments}><small>Show Comments</small></button> */}
-        <AllComments highlightId={highlightId} entryId={entryId} commentCount={this.commentCount} showComments={this.state.showComments}/>
+        <AllComments
+          highlightId={highlightId}
+          entryId={entryId}
+          commentCount={this.commentCount}
+          showComments={this.state.showComments}
+        />
         <CreateComment
           currentUser={currentUser}
           highlightId={highlightId}
