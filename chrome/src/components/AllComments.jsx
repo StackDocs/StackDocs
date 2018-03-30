@@ -2,36 +2,15 @@ import React, { Component } from 'react';
 import { urlEncode } from '../highlighting';
 import { firestore } from '~/fire';
 import { Comment } from './index';
-
-import Rx from 'rxjs';
-import { combineLatest } from 'rxjs/observable/combineLatest';
-const watch = ref => Rx.Observable.create(obs => ref.onSnapshot(obs));
+import { watch } from '../index.js';
 
 //Helper func
 let encodedDocUrl = urlEncode(document.location.href);
-const Highlights = firestore
-    .collection('UrlPages')
-    .doc(encodedDocUrl)
-    .collection('highlights');
-
-
-// const sortByVote = array => {
-//   const updatedOrder = [];
-//   array.forEach(entry => {
-//     for (var i = 0; i < array.length; i++){
-//       if (!updatedOrder[i] || entry[1].score >= updatedOrder[i][1].score){
-//         updatedOrder.splice(i, 0, entry);
-//         break;
-//       }
-//     }
-//   });
-//   return updatedOrder;
-// };
+const Highlights = firestore.collection('UrlPages').doc(encodedDocUrl).collection('highlights');
 
 export default class AllComments extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             allComments: [],
             showComments: false
@@ -43,45 +22,37 @@ export default class AllComments extends Component {
     }
 
     componentWillReceiveProps(props) {
+<<<<<<< HEAD
         if (props.entryId !== this.props.entryId) this.listen(props)
         else if( props.showComments !== this.state.showComments) this.setState({showComments: props.showComments})
+=======
+        if (props.entryId !== this.props.entryId) {this.listen(props)};
+>>>>>>> master
     }
 
     listen({ entryId, highlightId }) {
-        console.log(entryId, "entryId")
-        console.log(highlightId, "highlightId")
-        this.unsub()
-        if (!entryId) return
+        this.unsub();
+        if (!entryId) return;
 
         const Comments = Highlights
             .doc(highlightId)
             .collection('entries')
             .doc(entryId)
-            .collection('comments')
-
+            .collection('comments');
 
         this.subscription = watch(Comments)
             .map(comments => comments.docs.map(_ => _.data()))
-            .map(values => {
-                console.log('values: ', values);
-                return values;
-            })
             .map(dataArr => dataArr.map(data => [data.commentId, data]))
             .subscribe(allComments => this.setState({ allComments }, () => this.props.commentCount(allComments.length)));
     }
 
     unsub() {
-        if (!this.subscription) return
-        this.subscription.unsubscribe()
-        this.subscription = null
+        if (!this.subscription) return;
+        this.subscription.unsubscribe();
+        this.subscription = null;
     }
 
-
     componentWillUnmount = () => this.unsub()
-
-    //   selectedHighlight() {
-    //     return this.props.activeHL || 'Select some text'
-    //   }
 
     render() {
 
@@ -90,10 +61,9 @@ export default class AllComments extends Component {
                 {this.state.showComments ? this.state.allComments && this.state.allComments.map(comment => {
                     const { content, userDisplayName, cmtUpVote, cmtDownVote, date, score, userId } = comment[1];
                     const commentId = comment[0];
-                    console.log(comment,"singe comment")
                     return (
                         <div key={commentId}>
-                            <Comment 
+                            <Comment
                                 content={content}
                                 userDisplayName={userDisplayName}
                                 cmtUpVote={cmtUpVote}

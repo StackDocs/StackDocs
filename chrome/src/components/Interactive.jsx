@@ -21,7 +21,7 @@ const Highlights = firestore
 export default class Interactive extends Component {
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
       commentCount: 0,
       showComments: false,
     }
@@ -31,12 +31,10 @@ export default class Interactive extends Component {
     const Entries = Highlights.doc(this.props.highlightId).collection(
       'entries'
     );
-    console.log('hit upvote', this.props);
     try {
       Entries.doc(this.props.entryId)
-        .get() //Change to onSnapshot
+        .get()
         .then(entry => {
-          console.log('oldvote', entry.data().upVote);
           let newScore = +entry.data().score + 1;
           let newUpvote = +entry.data().upVote + 1;
           return { newScore, newUpvote };
@@ -53,10 +51,6 @@ export default class Interactive extends Component {
             }
           );
         });
-      // .then(_ => {
-      //   console.log('fetch new entries', this.props.fetch);
-      //   this.props.fetch();
-      // })
     } catch (err) {
       console.error(err);
     }
@@ -66,7 +60,6 @@ export default class Interactive extends Component {
     const Entries = Highlights.doc(this.props.highlightId).collection(
       'entries'
     );
-    console.log('hit downvote');
     try {
       Entries.doc(this.props.entryId)
         .get()
@@ -87,10 +80,6 @@ export default class Interactive extends Component {
             }
           );
         });
-      // .then(_ => {
-      //   console.log('fetch new entries', this.props.fetch);
-      //   this.props.fetch();
-      // })
     } catch (err) {
       console.error(err);
     }
@@ -98,8 +87,7 @@ export default class Interactive extends Component {
 
   commentCount = (val) => {
     const commentCount = val;
-    this.setState({commentCount})
-    console.log(this.state,"the state")
+    this.setState({commentCount});
   }
 
   showComments = () => {
@@ -108,13 +96,6 @@ export default class Interactive extends Component {
 
   render() {
     const { downVote, upVote, highlightId, entryId, currentUser } = this.props;
-    let encodedUrl = urlEncode(document.location.href);
-    console.log(
-      encodedUrl,
-      highlightId,
-      entryId,
-      'this is everything that is killing me'
-    );
     return (
       <div>
         <div className="chromelights-interactive">
@@ -131,11 +112,14 @@ export default class Interactive extends Component {
         <AllComments highlightId={highlightId} entryId={entryId} commentCount={this.commentCount} showComments={this.state.showComments}/>
         <CreateComment
           currentUser={currentUser}
-          // comments={comments}
           highlightId={highlightId}
           entryId={entryId}
         />
       </div>
     );
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> master

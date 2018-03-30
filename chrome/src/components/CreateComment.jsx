@@ -24,8 +24,6 @@ export default class CreateComment extends Component {
   handleSubmit = event => {
     event.preventDefault();
     const { currentUser, comments, highlightId, entryId } = this.props;
-    console.log('STATE.CONTENT', this.state.content);
-    console.log('USER', currentUser);
     const content = this.state.content;
     const newDate = new Date();
     const newComment = {
@@ -56,17 +54,10 @@ export default class CreateComment extends Component {
     .doc(comment.id)
     .add({
       commentId: comment.id
+    });
     })
-    })
-    .catch(err => console.log('error: ', err))
+    .catch(err => console.log('error: ', err));
     this.setState({ content: '' });
-
-    //   .collection('entries')
-    //   .doc(entryId)
-    //   .update({
-    //     comments: [...comments, newComment]
-    //   })
-    //   .catch(error => console.log('error: ', error));
   }
 
   render() {
@@ -76,6 +67,6 @@ export default class CreateComment extends Component {
           <br />
           <input type="submit" value="Submit" />
         </form>
-    )
+    );
   }
 }
