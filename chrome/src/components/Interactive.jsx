@@ -113,7 +113,7 @@ export default class Interactive extends Component {
         </div>
         <br />
         {/* <button onClick={this.showComments}><small>Show Comments</small></button> */}
-        {this.state.showComments && <AllComments highlightId={highlightId} entryId={entryId} commentCount={this.commentCount}/>}
+        <AllComments highlightId={highlightId} entryId={entryId} commentCount={this.commentCount} showComments={this.state.showComments}/>
         <CreateComment
           currentUser={currentUser}
           highlightId={highlightId}
