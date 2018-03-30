@@ -51,3 +51,4 @@ export default class EntryContainer extends Component {
     );
   }
 }
+
