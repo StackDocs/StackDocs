@@ -17,6 +17,12 @@
     "default_icon": "stackdocs-browser-icon.png",
     "default_title": "StackDocs"
   },
+  "commands": {
+    "_execute_page_action": {
+      "suggested_key": {
+        "mac": "Ctrl+Shift+K"
+      }
+  },
   "options_ui": {
     "page": "options.html",
     "chrome_style": true
