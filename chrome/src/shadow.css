@@ -151,6 +151,10 @@
   transform: scale (1);
 }
 
+.chromelights-btn:focus {
+  outline: none;
+}
+
 .chromelights-entry {
   display: flex;
   flex-direction: column;
