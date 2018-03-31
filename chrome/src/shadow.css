@@ -218,7 +218,7 @@
 
 .chromelights-big-icon {
   display: block;
-  margin: 40px auto;
+  margin: 20px auto;
 }
 
 .chromelights-question-icon {
@@ -245,35 +245,25 @@
   fill: rgb(243, 136, 43);
 }
 
-.chromelights-entry-title-header {
+.chromelights-entry-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.chromelights-entry-title > label {
   /*display: inline;*/
-  font-size: 20px;
+  font-size: 16px;
   margin: 5px 10px 5px 5px;
 }
 
-.chromelights-entry-form {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-self: center;
-  width: 100%;
-  padding: 0;
-}
-
-.chromelights-entry-header {
-  align-self: flex-start;
-  display: flex;
-  align-items: flex-start;
-  margin-top: 10px;
-}
-
-.chromelights-entry-title {
-  align-self: center;
-  font-size: 20px;
+.chromelights-entry-title > input {
+  font-size: 15px;
   width: 10vw;
-  height: 25px;
+  height: 20px;
   border: 1px solid var(--light-gray);
   resize: none;
+  margin-left: 5px;
   transition: all 0.5s;
 }
 
@@ -285,12 +275,37 @@
   transition: all 0.5s;
 }
 
+.chromelights-entry-form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-self: center;
+  width: 100%;
+  padding: 0;
+}
+
+.chromelights-form-header {
+  font-size: 16px;
+}
+
+.chromelights-entry-header {
+  align-self: flex-start;
+  display: flex;
+  align-items: flex-start;
+  margin-top: 5px;
+}
+
+.chromelights-entry-header > h3 {
+  font-size: 20px;
+  margin: 9px 0 5px 5px;
+}
+
 .chromelights-entry-input {
   align-self: center;
   margin-top: 10px;
   font-size: 15px;
   width: 25vw;
-  height: 300px;
+  height: 150px;
   border: 1px solid var(--light-gray);
   resize: none;
   transition: all 0.5s;
@@ -304,9 +319,9 @@
   transition: all 0.5s;
 }
 
-.chromelights-entry-form .chromelights-btn {
+.chromelights-entry-form > .chromelights-btn {
   width: 100px;
-  height: 15px;
+  height: 20px;
   font-size: 12px;
   border: 2px solid var(--primary-blue);
   margin-left: 10px;
