@@ -134,15 +134,14 @@ export class CreateEntry extends Component {
         </div>
         <div id="message-form">
           <form onSubmit={this.onSubmit} className="chromelights-entry-form">
-            <div>
-            <label className="chromelights-form-header">
+            <div className="chromelights-entry-title">
+            <label>
               Title:
             </label>
             <br />
             <input
               type="text"
               name="title"
-              className="chromelights-entry-title"
               onChange={this.handleChange}
               value={this.state.title}
               required
@@ -164,7 +163,7 @@ export class CreateEntry extends Component {
             <input
               type="submit"
               value="Submit"
-              className="chromelights-btn"
+              className="chromelights-btn submit"
               required
             />
           </form>
