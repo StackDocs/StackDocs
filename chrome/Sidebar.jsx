@@ -114,7 +114,6 @@ export default class Sidebar extends Component {
           />
         );
       default:
-        //new = AllEntries
         return <AllHighlights setView={this.setView} activeId={this.state.activeId} currentUser={this.props.user}/>;
     }
   }

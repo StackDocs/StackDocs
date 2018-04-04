@@ -47,7 +47,7 @@ export class CreateEntry extends Component {
       domPath,
       submitUrl
     };
-    console.log('newFireHL', newFireHL);
+
     isAddingEntry ?
     UrlPages.doc(submitUrl)
     .collection('highlights')
