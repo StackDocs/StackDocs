@@ -1,1 +1,2 @@
-New README HERE!!!
+Have you ever been frustrated with the quality of technical documentation, wanting to add information yourself or needing clarification on a specific section or topic? StackDocs is for you! 
+StackDocs is a chrome extension written with the needs of software engineers in mind. It allows users to highlight text on any documentation site, and add their own questions or annotations. Other users can see these entries and add their own comments. Entries can also be up or downvoted so that the best responses to highlighted text will appear first. StackDocs facilitates collaborative improvement of documentation among a community of developers. To try StackDocs for yourself, visit us on the Chrome Web Store at bit.ly/StackDocs!
