@@ -4,7 +4,7 @@ import { firestore } from '~/fire';
 import { Comment } from './index';
 import { watch } from '../index.js';
 
-//Helper func
+//make url firebase compatible
 let encodedDocUrl = urlEncode(document.location.href);
 const Highlights = firestore.collection('UrlPages').doc(encodedDocUrl).collection('highlights');
 
@@ -55,7 +55,7 @@ export default class AllComments extends Component {
         return (
             <div>
                 {this.state.showComments ? this.state.allComments && this.state.allComments.map(comment => {
-                    const { content, userDisplayName, cmtUpVote, cmtDownVote, date, score, userId } = comment[1];
+                    const { content, userDisplayName, cmtUpVote, cmtDownVote, date } = comment[1];
                     const commentId = comment[0];
                     return (
                         <div key={commentId}>

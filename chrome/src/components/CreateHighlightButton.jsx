@@ -75,11 +75,6 @@ export class CreateHighlightButton extends Component {
             'Create a Highlight'
           }
         </button>
-          {/*
-            !this.state.newString.length && !isClicked ?
-            'Please select some text, or click on a highlight!' :
-            null
-          */}
       </div>
     );
   }
